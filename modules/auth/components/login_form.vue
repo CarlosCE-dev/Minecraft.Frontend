@@ -1,0 +1,113 @@
+<template>
+    <div class="login__form d-flex flex-column justify-center">
+        <LoginLogo/>
+        <LoginHeader/>    
+        <v-form ref="form" v-model="valid" lazy-validation>
+            <v-text-field
+                color="purple-light"
+                label="Enter your e-mail address"
+                v-model="email"
+                :rules="emailRules"
+                required
+                outlined
+            ></v-text-field>
+            <v-text-field
+                color="purple-light"
+                label="Enter your password"
+                v-model="password"
+                :type="visibility ? 'password' : 'text'"
+                :rules="passwordRules"
+                required
+                outlined
+                v-on:keyup.enter="login">
+                <v-icon slot="append" 
+                        @click="visibility = !visibility"
+                        color="purple-light"
+                        v-text="visibility ? 'mdi-eye' : 'mdi-eye-off'">
+                </v-icon>
+            </v-text-field>
+            <v-checkbox label="Keep me logged in" 
+                        dense
+                        hide-details 
+                        hint-text
+                        color="purple-light"
+                        v-model="rememberMe">
+            </v-checkbox>
+            <v-btn color="purple-light" 
+                    class="login__button white--text" 
+                    @click="login" 
+                    block
+                    light
+                    :disabled="!valid">
+                Login
+            </v-btn>
+            <div class="pt-4 d-flex align-center justify-center">
+                 <v-btn color="purple-light" text>Forgot password?</v-btn>
+            </div>
+        </v-form>
+    </div>
+</template>
+
+<script>
+import LoginLogo from '@/modules/auth/components/login_logo.vue'
+import LoginHeader from '@/modules/auth/components/login_header.vue'
+
+export default {
+    components: {
+        LoginLogo,
+        LoginHeader
+    },
+    data: () => ({
+        valid: false,
+        visibility: true,
+        password: '',
+        passwordRules: [
+            (v) => !!v || 'Password is required',
+        ],
+        email: '',
+        emailRules: [
+            (v) => !!v || 'E-mail is required',
+            (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+        ],
+        rememberMe: false
+    }),
+    methods: {
+        login() {
+
+            // TODO: Agregar alerta al usuario para indicar que algo salio mal
+            if ( !this.$refs.form.validate() ) return;
+
+            localStorage.setItem("x-token", "tjksdfg7147hczs8714u");
+                
+            this.$store.commit('auth/setAuth', true );
+            this.$router.push({path: '/'});
+        }
+    },
+}
+</script>
+
+<style lang="scss" scoped>
+.login__form {
+    padding: 40px;
+    width: 35%;
+}
+.login__button {
+   margin-top: 40px;
+}
+@media screen and (max-width: $large-size) {
+    .login__form {
+        width: 50%;
+    }
+}
+@media screen and (max-width: $medium-size) {
+    .login__form {
+        width: 90%;
+    }
+}
+@media screen and (max-width: $small-size) {
+    .login__form {
+        padding: 20px;
+        width: 100%;
+    }
+}
+</style>

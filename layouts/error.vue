@@ -33,7 +33,10 @@ export default {
     return {
       title
     }
-  }
+  },
+  created () {
+    console.log(this.error)
+  },
 }
 </script>
 
