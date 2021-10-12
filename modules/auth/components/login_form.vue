@@ -11,7 +11,9 @@
                 required
                 outlined
             ></v-text-field>
+
             <v-text-field
+                v-if="loginForm"
                 color="purple-light"
                 label="Enter your password"
                 v-model="password"
@@ -26,6 +28,26 @@
                         v-text="visibility ? 'mdi-eye' : 'mdi-eye-off'">
                 </v-icon>
             </v-text-field>
+
+             <v-text-field
+                v-if="isPremium"
+                color="purple-light"
+                label="Minecraft account"
+                placeholder="Write the name of your minecraft account"
+                v-model="password"
+                :rules="inputRequired"
+                required
+                outlined>
+            </v-text-field>
+
+             <v-checkbox label="Premium minecraft account" 
+                        dense
+                        hide-details 
+                        hint-text
+                        color="purple-light"
+                        v-model="isPremium">
+            </v-checkbox>
+
             <v-checkbox label="Keep me logged in" 
                         dense
                         hide-details 
@@ -33,16 +55,19 @@
                         color="purple-light"
                         v-model="rememberMe">
             </v-checkbox>
+           
             <v-btn color="purple-light" 
                     class="login__button white--text" 
                     @click="login" 
                     block
                     light
                     :disabled="!valid">
-                Login
+                {{ titleButton }}
             </v-btn>
-            <div class="pt-4 d-flex align-center justify-center">
-                 <v-btn color="purple-light" text>Forgot password?</v-btn>
+             <div class="d-flex justify-end mt-4">
+                <v-btn text :to="redirectLink">
+                    {{ redirectButton }}
+                </v-btn>
             </div>
         </v-form>
     </div>
@@ -58,19 +83,36 @@ export default {
         LoginHeader
     },
     data: () => ({
+        isPremium: false,
         valid: false,
         visibility: true,
         password: '',
+        minecraftUsername: "",
         passwordRules: [
             (v) => !!v || 'Password is required',
+        ],
+        inputRequired: [
+            (v) => !!v || 'This field is required',
         ],
         email: '',
         emailRules: [
             (v) => !!v || 'E-mail is required',
             (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
         ],
-        rememberMe: false
+        rememberMe: false,
+        titleButton: "Login",
+        redirectButton: "Register",
+        redirectLink: "/auth/register",
+        loginForm: true,
     }),
+    created () {
+        if (this.$route.name === "auth-register") {
+            this.titleButton = "Register"
+            this.redirectButton = "Login"
+            this.redirectLink = "/auth/login"
+            this.loginForm = false
+        }
+    },
     methods: {
         login() {
 

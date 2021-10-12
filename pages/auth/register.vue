@@ -8,18 +8,19 @@
 import LoginCard from '@/modules/auth/components/login_card.vue'
 
 export default {
-  components: {
-    LoginCard,
-  },
-  layout: 'auth',
-  head() {
-    return {
-      title: "Login",
-    }
-  },
-  mounted () {
-      this.$store.commit('window/setPageTitle', this.title)
-  },
+    components: {
+        LoginCard,
+    },
+    layout: 'auth',
+    head() {
+        return {
+            title: "Register",
+        }
+    },
+    mounted () {
+        this.$store.commit('window/setPageTitle', this.title)
+    },
+    layout: 'auth',
 }
 </script>
 

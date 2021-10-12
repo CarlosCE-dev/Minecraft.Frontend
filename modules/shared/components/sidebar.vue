@@ -3,7 +3,11 @@
             
         <v-list-item dense class="navigation__profile animate__animated animate__fadeInLeft animate__faster">
             <v-list-item-avatar>
-                <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
+                <v-img
+                    height="40"
+                    width="40"
+                    src="https://crafatar.com/avatars/7338f82a17934955947d4b57e9401da0">
+                </v-img>
             </v-list-item-avatar>
 
             <v-list-item-content>
@@ -25,7 +29,7 @@
 
         <template v-slot:append>
            <v-list nav dense>
-                <v-list-item link class="animate__animated animate__fadeInLeft animate__faster">
+                <v-list-item link class="animate__animated animate__fadeInLeft animate__faster" @click="logOut">
                     <v-list-item-icon>
                         <v-icon>mdi-login-variant</v-icon>
                     </v-list-item-icon>
@@ -63,6 +67,13 @@ export default {
             set (value) {
                 this.$emit('input', value)
             }
+        }
+    },
+    methods: {
+        logOut() {
+            localStorage.clear();
+            this.$store.commit('auth/setAuth', false );
+            this.$router.push({ path: "/auth/login" });
         }
     }, 
 }

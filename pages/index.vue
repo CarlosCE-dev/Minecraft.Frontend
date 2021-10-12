@@ -1,34 +1,10 @@
 <template>
      <div>
 
-        <h3> Botones con roles </h3>
-        
         <div class="d-flex index__botones">
-            <v-btn color="purple-light" :disabled="!role.canAdd">
-                Can Add
+            <v-btn color="purple-light" dark>
+                Generar diamante
             </v-btn>
-
-            <v-btn color="purple-light" :disabled="!role.canDelete">
-                Can Delete
-            </v-btn>
-
-            <v-btn color="purple-light" :disabled="!role.canEdit">
-                Can Edit
-            </v-btn>
-
-            <v-btn color="purple-light" :disabled="!role.canView">
-                Can View
-            </v-btn>
-        </div>
-
-        <h3> Paginas </h3>
-
-        <div class="d-flex">
-        
-            <v-btn class="ma-2" @click="logOut">
-                Log off
-            </v-btn>
-
         </div>
         
     </div>
@@ -45,13 +21,6 @@ export default {
     computed: {
         role() {
             return this.$store.state.auth.role
-        }
-    },
-    methods: {
-        logOut() {
-            localStorage.clear();
-            this.$store.commit('auth/setAuth', false );
-            this.$router.push({ path: "/auth/login" });
         }
     },
     mounted () {
