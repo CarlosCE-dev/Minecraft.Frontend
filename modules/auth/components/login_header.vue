@@ -1,13 +1,18 @@
 <template>
     <div class="font-weight-bold">
-        Log in.
-        <p class="caption pt-1">Log in with your personal information</p>
+        {{ title }}
+        <p class="caption pt-1">Maincrakt</p>
     </div>
 </template>
 
 <script>
     export default {
-        
+        props: {
+            title: {
+                type: String,
+                require: true
+            },
+        },
     }
 </script>
 

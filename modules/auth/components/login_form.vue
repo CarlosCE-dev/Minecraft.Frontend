@@ -1,11 +1,11 @@
 <template>
     <div class="login__form d-flex flex-column justify-center">
         <LoginLogo/>
-        <LoginHeader/>    
+        <LoginHeader :title="titleButton"/>    
         <v-form ref="form" v-model="valid" lazy-validation>
             <v-text-field
                 color="purple-light"
-                label="Enter your e-mail address"
+                label="Ingresa tu correo"
                 v-model="email"
                 :rules="emailRules"
                 required
@@ -18,7 +18,7 @@
                 label="Enter your password"
                 v-model="password"
                 :type="visibility ? 'password' : 'text'"
-                :rules="passwordRules"
+                :rules="inputRequired"
                 required
                 outlined
                 v-on:keyup.enter="login">
@@ -30,25 +30,23 @@
             </v-text-field>
 
              <v-text-field
-                v-if="isPremium"
+                v-if="!loginForm"
                 color="purple-light"
-                label="Minecraft account"
-                placeholder="Write the name of your minecraft account"
-                v-model="password"
+                label="Cuenta de minecraft"
+                placeholder="Nombre exacto de tu cuenta de minecraft"
+                v-model="minecraftUsername"
                 :rules="inputRequired"
                 required
                 outlined>
             </v-text-field>
 
-             <v-checkbox label="Premium minecraft account" 
-                        dense
-                        hide-details 
-                        hint-text
-                        color="purple-light"
-                        v-model="isPremium">
-            </v-checkbox>
+            <small>
+                <v-icon small color="orange">mdi-alert-circle</v-icon>
+                Para evitar errores asegurarte de escribir el nombre exacto de la cuenta de minecraft que utilizas
+            </small>
 
-            <v-checkbox label="Keep me logged in" 
+            <v-checkbox v-if="loginForm"
+                        label="Mantener sesión iniciada" 
                         dense
                         hide-details 
                         hint-text
@@ -58,7 +56,7 @@
            
             <v-btn color="purple-light" 
                     class="login__button white--text" 
-                    @click="login" 
+                    @click="submitForm" 
                     block
                     light
                     :disabled="!valid">
@@ -69,7 +67,35 @@
                     {{ redirectButton }}
                 </v-btn>
             </div>
+
         </v-form>
+
+        <v-snackbar v-model="snackbar.state" dark :color="snackbar.color">
+            {{ snackbar.message }}
+            <template v-slot:action="{ attrs }">
+                <v-btn text v-bind="attrs" @click="snackbar.state = false">
+                    Cerrar
+                </v-btn>
+            </template>
+        </v-snackbar>
+
+        <v-dialog v-model="registerFormSuccess" persistent max-width="290">
+            <v-card>
+                <v-card-title class="text-h5">
+                    Exito!
+                </v-card-title>
+                <v-card-text>
+                    Se creo el usuario exitosamente, contacte el administrador para que te proporcione la clave de acceso del usuario registrado
+                </v-card-text>
+                <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="green darken-1" text to="/auth/login">
+                    Ok
+                </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
     </div>
 </template>
 
@@ -83,46 +109,90 @@ export default {
         LoginHeader
     },
     data: () => ({
-        isPremium: false,
         valid: false,
         visibility: true,
         password: '',
         minecraftUsername: "",
-        passwordRules: [
-            (v) => !!v || 'Password is required',
-        ],
         inputRequired: [
-            (v) => !!v || 'This field is required',
+            (v) => !!v || 'Este campo es requerido',
         ],
         email: '',
         emailRules: [
-            (v) => !!v || 'E-mail is required',
-            (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+            (v) => !!v || 'Este campo es requerido',
+            (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'El correo no es valido'
         ],
         rememberMe: false,
-        titleButton: "Login",
-        redirectButton: "Register",
+        titleButton: "Iniciar sesión",
+        redirectButton: "Crear usuario",
         redirectLink: "/auth/register",
         loginForm: true,
+        snackbar: {
+            message: "",
+            state: false,
+            color: "primary"
+        },
+        registerFormSuccess: false,
     }),
     created () {
         if (this.$route.name === "auth-register") {
-            this.titleButton = "Register"
-            this.redirectButton = "Login"
+            this.titleButton = "Crear usuario"
+            this.redirectButton = "Iniciar sesión"
             this.redirectLink = "/auth/login"
             this.loginForm = false
         }
     },
     methods: {
-        login() {
-
+        async submitForm() {
+            this.registerFormSuccess = false
             // TODO: Agregar alerta al usuario para indicar que algo salio mal
             if ( !this.$refs.form.validate() ) return;
 
-            localStorage.setItem("x-token", "tjksdfg7147hczs8714u");
+            const payload = {
+                email: this.email,
+                minecraftUsername: this.minecraftUsername
+            }
+
+            try {
+                const data = await this.$axios.$post(`http://127.0.0.1:3333/auth/register`, payload);
+                console.log(data)
+
+                if (data.status === 200){
+                    this.registerFormSuccess = true
+                } else {
+
+                    if (data.isEmailAlreadyTaken){
+                        this.snackbar = {
+                            state: true,
+                            message: "El correo proporcionado ya esta registrado",
+                            color: 'red'
+                        }
+                        return
+                    }
+
+                    if (data.isUsernameAlreadyTaken){
+                        this.snackbar = {
+                            state: true,
+                            message: "La cuenta de minecraft proporcionada ya esta registrada",
+                            color: 'red'
+                        }
+                        return
+                    }
+                }
+
+
+            } catch (error) {
+                this.snackbar = {
+                    state: true,
+                    message: "Ocurrio un error mientras se intento crear el usuario",
+                    color: 'red',
+                }
+            }
+
+
+            // localStorage.setItem("x-token", "tjksdfg7147hczs8714u");
                 
-            this.$store.commit('auth/setAuth', true );
-            this.$router.push({path: '/'});
+            // this.$store.commit('auth/setAuth', true );
+            // this.$router.push({path: '/'});
         }
     },
 }

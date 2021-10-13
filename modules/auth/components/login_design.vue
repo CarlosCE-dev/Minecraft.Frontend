@@ -1,10 +1,10 @@
 <template>
     <div class="login__design d-flex flex-row justify-end">
         <!-- <img src="~/assets/images/city-01.jpg"  class="login__image" alt=""> -->
-        <!-- <div class="login__squares_pattern login__squares_pattern--middle"></div>
-        <div class="login__squares_pattern login__squares_pattern--top"></div> -->
+        <div class="login__squares_pattern login__squares_pattern--middle"></div>
+        <div class="login__squares_pattern login__squares_pattern--top"></div>
         <div class="d-flex align-end justify-center pb-4">
-            <p class="login__text white--text caption">
+            <p class="login__text white--text caption d-none">
                 Lorem Ipsum is simply dummy text of the printing and typesetting 
                 industry. Lorem Ipsum has been the industry's standard dummy
                 text ever since the 1500s, when an unknown printer took a galley 
