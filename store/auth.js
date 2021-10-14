@@ -6,15 +6,16 @@ export const state = () => ({
 
 export const mutations = {
     setAuth(state, payload){
-        state.isAuthenticated = payload;
-        
-        // TODO: Store user data
+        console.log(payload)
+        state.user = {...payload}
+        console.log(state.user)
+        state.isAuthenticated = true
     },
-    logOut(state, payload){
-        state.isAuthenticated = false;
+    logOut(state){
+        state.isAuthenticated = false
         state.user = null
     },
     init( state ){
-        state.initApplication = true;
+        state.initApplication = true
     }
 }

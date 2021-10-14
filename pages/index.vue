@@ -18,11 +18,6 @@ export default {
             title: "Home",
         }
     },
-    computed: {
-        role() {
-            return this.$store.state.auth.role
-        }
-    },
     mounted () {
         this.$store.commit('window/setPageTitle', this.title)
     },

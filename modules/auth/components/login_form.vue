@@ -40,7 +40,7 @@
                 outlined>
             </v-text-field>
 
-            <small>
+            <small v-if="!loginForm">
                 <v-icon small color="orange">mdi-alert-circle</v-icon>
                 Para evitar errores asegurarte de escribir el nombre exacto de la cuenta de minecraft que utilizas
             </small>
@@ -56,7 +56,7 @@
            
             <v-btn color="purple-light" 
                     class="login__button white--text" 
-                    @click="submitForm" 
+                    @click="loginForm ? onLoginForm() : onRegisterForm()" 
                     block
                     light
                     :disabled="!valid">
@@ -96,6 +96,13 @@
             </v-card>
         </v-dialog>
 
+        <v-overlay :value="loader">
+            <v-progress-circular
+                indeterminate
+                size="64"
+            ></v-progress-circular>
+        </v-overlay>
+
     </div>
 </template>
 
@@ -121,7 +128,7 @@ export default {
             (v) => !!v || 'Este campo es requerido',
             (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'El correo no es valido'
         ],
-        rememberMe: false,
+        rememberMe: true,
         titleButton: "Iniciar sesión",
         redirectButton: "Crear usuario",
         redirectLink: "/auth/register",
@@ -132,6 +139,7 @@ export default {
             color: "primary"
         },
         registerFormSuccess: false,
+        loader: false
     }),
     created () {
         if (this.$route.name === "auth-register") {
@@ -142,10 +150,11 @@ export default {
         }
     },
     methods: {
-        async submitForm() {
+        async onRegisterForm() {
             this.registerFormSuccess = false
-            // TODO: Agregar alerta al usuario para indicar que algo salio mal
             if ( !this.$refs.form.validate() ) return;
+
+            this.loader = true
 
             const payload = {
                 email: this.email,
@@ -154,7 +163,8 @@ export default {
 
             try {
                 const data = await this.$axios.$post(`http://127.0.0.1:3333/auth/register`, payload);
-                console.log(data)
+
+                this.loader = false
 
                 if (data.status === 200){
                     this.registerFormSuccess = true
@@ -181,6 +191,7 @@ export default {
 
 
             } catch (error) {
+                this.loader = false
                 this.snackbar = {
                     state: true,
                     message: "Ocurrio un error mientras se intento crear el usuario",
@@ -188,11 +199,38 @@ export default {
                 }
             }
 
+            
+        },
+        async onLoginForm(){
+            if ( !this.$refs.form.validate() ) return;
 
-            // localStorage.setItem("x-token", "tjksdfg7147hczs8714u");
+            this.loader = true
+
+            const payload = {
+                email: this.email,
+                password: this.password
+            }
+
+            try {
+
+                const { user, auth } = await this.$axios.$post(`http://127.0.0.1:3333/auth/login`, payload);
+                this.loader = false
                 
-            // this.$store.commit('auth/setAuth', true );
-            // this.$router.push({path: '/'});
+                if (this.rememberMe){
+                    localStorage.setItem("x-token", auth.token);
+                }
+                
+                this.$store.commit('auth/setAuth', user);
+                this.$router.replace({ name: 'index' });
+
+            } catch (error) {
+                this.loader = false
+                this.snackbar = {
+                    state: true,
+                    message: "Se ha producido un problema al iniciar sesión. Comprueba el correo electrónico y la contraseña o crea una cuenta.",
+                    color: 'red',
+                }
+            }
         }
     },
 }

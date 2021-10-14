@@ -1,18 +1,18 @@
 <template>
     <v-navigation-drawer color="purple-light" dark left app expand-on-hover :fixed="fix" floating persistent v-model="drawer">
             
-        <v-list-item dense class="navigation__profile animate__animated animate__fadeInLeft animate__faster">
+        <v-list-item dense class="navigation__profile animate__animated animate__fadeInLeft animate__faster" v-if="user">
             <v-list-item-avatar>
                 <v-img
                     height="40"
                     width="40"
-                    src="https://crafatar.com/avatars/7338f82a17934955947d4b57e9401da0">
+                    :src="minecraftAvatar">
                 </v-img>
             </v-list-item-avatar>
 
             <v-list-item-content>
-                <v-list-item-title>Sandra Adams</v-list-item-title>
-                <v-list-item-subtitle>sandra_a88@gmail.com</v-list-item-subtitle>
+                <v-list-item-title>{{ user.minecraft_username }}</v-list-item-title>
+                <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
             </v-list-item-content>
         </v-list-item>
 
@@ -42,11 +42,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
     props: ['value','fixed'],
-    data: () => ({
-        
-    }),
     watch: {
         fixed: function( fixed ) {
             this.fix = fixed;
@@ -67,13 +66,19 @@ export default {
             set (value) {
                 this.$emit('input', value)
             }
+        },
+        ...mapState('auth', [
+            "user"
+        ]),
+        minecraftAvatar(){
+            return `https://crafatar.com/avatars/${this.user.minecraft_id}`
         }
     },
     methods: {
         logOut() {
             localStorage.clear();
-            this.$store.commit('auth/setAuth', false );
-            this.$router.push({ path: "/auth/login" });
+            this.$store.commit('auth/logOut');
+            this.$router.push({ path: "auth-login" });
         }
     }, 
 }

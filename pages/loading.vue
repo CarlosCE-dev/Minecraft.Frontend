@@ -20,22 +20,31 @@ export default {
             this.$store.commit('auth/init');
         }
 
-        // TODO: Verify token on backend
-        const token = localStorage.getItem("x-token");
-        await new Promise(resolve => setTimeout(resolve, 400));
-
         // Get the route that the user try to navigate
-        let route = ( this.$cookies.get('routePath') ) ? this.$cookies.get('routePath') : "/";
+        const token = localStorage.getItem("x-token");
+        let route = ( this.$cookies.get('routePath') ) ? this.$cookies.get('routePath') : "index"
+        
+        if (token === null ) {
+          this.$router.push({ name:'auth-login' })
+          return
+        }
 
-        if (token){
-          
-          // Store user data in store
-          this.$store.commit('auth/setAuth', true );
-          this.$router.push({ path: route });
+        try {
 
-        } else {
-          
-          this.$router.push({path: '/auth/login'});
+          const { user } = await this.$axios.$get(`http://127.0.0.1:3333/auth/get`, {
+            headers: {
+              'Authorization': `Bearer ${token}` 
+            }
+          });
+
+           // Store user data in store
+          this.$store.commit('auth/setAuth', user)
+          this.$router.push({ name: route })
+
+        } catch (error) {
+
+            localStorage.clear("x-token")
+            this.$router.push({ name:'auth-login' })
 
         }
     },
