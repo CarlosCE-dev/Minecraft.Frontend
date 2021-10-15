@@ -4,23 +4,15 @@
            
             <v-toolbar-title class="title">{{$store.state.window.pageTitle}}</v-toolbar-title>
             <v-spacer></v-spacer>
-            
-            <AppbarMenu/>  
-
         </v-app-bar>
     </div>
 </template>
 
 <script>
-import AppbarMenu from '@/modules/shared/components/appbar_menu.vue'
-
 export default {
     data: () => ({
         icon: false,
     }),
-    components: {
-        AppbarMenu
-    },
     methods: {
         action() {
             this.$emit('action')

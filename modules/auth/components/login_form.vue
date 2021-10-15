@@ -4,7 +4,7 @@
         <LoginHeader :title="titleButton"/>    
         <v-form ref="form" v-model="valid" lazy-validation>
             <v-text-field
-                color="purple-light"
+                color="green-light"
                 label="Ingresa tu correo"
                 v-model="email"
                 :rules="emailRules"
@@ -14,7 +14,7 @@
 
             <v-text-field
                 v-if="loginForm"
-                color="purple-light"
+                color="green-light"
                 label="Enter your password"
                 v-model="password"
                 :type="visibility ? 'password' : 'text'"
@@ -24,14 +24,14 @@
                 v-on:keyup.enter="login">
                 <v-icon slot="append" 
                         @click="visibility = !visibility"
-                        color="purple-light"
+                        color="green-light"
                         v-text="visibility ? 'mdi-eye' : 'mdi-eye-off'">
                 </v-icon>
             </v-text-field>
 
              <v-text-field
                 v-if="!loginForm"
-                color="purple-light"
+                color="green-light"
                 label="Cuenta de minecraft"
                 placeholder="Nombre exacto de tu cuenta de minecraft"
                 v-model="minecraftUsername"
@@ -50,11 +50,11 @@
                         dense
                         hide-details 
                         hint-text
-                        color="purple-light"
+                        color="green-light"
                         v-model="rememberMe">
             </v-checkbox>
            
-            <v-btn color="purple-light" 
+            <v-btn color="green-light" 
                     class="login__button white--text" 
                     @click="loginForm ? onLoginForm() : onRegisterForm()" 
                     block
@@ -63,7 +63,7 @@
                 {{ titleButton }}
             </v-btn>
              <div class="d-flex justify-end mt-4">
-                <v-btn text :to="redirectLink">
+                <v-btn text :to="redirectLink" color="brown-primary">
                     {{ redirectButton }}
                 </v-btn>
             </div>

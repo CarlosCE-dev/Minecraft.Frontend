@@ -17,7 +17,7 @@ export default {
 
 <style lang="scss" scoped>
 .login__background {
-    background: linear-gradient(90deg, #EAE8F3 65%, #F4F5F7 35%);
+    background: linear-gradient(90deg, #f2fdf2 65%, #b8ebcd 35%);
     overflow:hidden;
 }
 </style>

@@ -27,7 +27,7 @@ export default {
 }
 .login_card--border {
     border-radius: 30px;
-    background-color: #DCD4EF;
+    background-color: $secondary;
     padding: 12px;
     height: 80%;
     width: 85%;

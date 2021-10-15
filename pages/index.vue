@@ -1,22 +1,22 @@
 <template>
      <div>
 
-        <div class="d-flex index__botones">
-            <v-btn color="purple-light" dark>
-                Generar diamante
-            </v-btn>
-        </div>
+         <commands/>
         
     </div>
 </template>
 
 <script>
+import Commands from '@/modules/dashboard/components/commands.vue'
 
 export default {
     head() {
         return {
             title: "Home",
         }
+    },
+    components: {
+        Commands,
     },
     mounted () {
         this.$store.commit('window/setPageTitle', this.title)

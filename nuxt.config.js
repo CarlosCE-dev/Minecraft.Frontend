@@ -74,7 +74,12 @@ export default {
         },
         light: {
           'purple-light' :  '#5C62C5',
-          'black' : "#434B54"
+          'black' : "#434B54",
+          'brown-dark': '#3E2B1D',
+          'brown-light' : '#694C34',
+          'brown-primary' : '#563C29',
+          'green-primary' : '#3D6C20',
+          'green-light' : "#72B248"
         }
       }
     }

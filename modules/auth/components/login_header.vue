@@ -1,6 +1,6 @@
 <template>
     <div class="font-weight-bold">
-        {{ title }}
+        <span class="green-primary--text">{{ title }}</span>
         <p class="caption pt-1">Maincrakt</p>
     </div>
 </template>

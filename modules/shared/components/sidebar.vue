@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer color="purple-light" dark left app expand-on-hover :fixed="fix" floating persistent v-model="drawer">
+    <v-navigation-drawer color="brown-primary" dark left app expand-on-hover :fixed="fix" floating persistent v-model="drawer" permanent>
             
         <v-list-item dense class="navigation__profile animate__animated animate__fadeInLeft animate__faster" v-if="user">
             <v-list-item-avatar>

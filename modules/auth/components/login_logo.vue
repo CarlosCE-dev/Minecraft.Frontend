@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex align-center justify-start">
-        <v-icon color="purple-light" small class="pr-2">mdi-minecraft</v-icon>
+        <v-icon color="green-light" small class="pr-2">mdi-minecraft</v-icon>
         La vecindad
     </div>
 </template>

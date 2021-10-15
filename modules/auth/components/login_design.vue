@@ -41,7 +41,7 @@
     position: relative;
     overflow: hidden;
     border-radius: 0px !important;
-    background-color: $primary;
+    background-color: $primary-light;
     width: 65%;
 }
 
@@ -49,8 +49,8 @@
     display: block;
     z-index: 1;
     position: absolute;
-    background-image: repeating-linear-gradient(to bottom, transparent, transparent 5px, $primary 5px, $primary 10px),
-        repeating-linear-gradient(to right, lighten($primary, 5%), lighten($primary, 5%) 5px,  $primary 5px,  $primary 10px);
+    background-image: repeating-linear-gradient(to bottom, transparent, transparent 5px, $primary-light 5px, $primary-light 10px),
+        repeating-linear-gradient(to right, lighten($primary-light, 5%), lighten($primary-light, 5%) 5px,  $primary-light 5px,  $primary-light 10px);
 }
 
 .login__squares_pattern--middle {
