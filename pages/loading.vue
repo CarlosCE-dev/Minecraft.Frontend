@@ -31,7 +31,7 @@ export default {
 
         try {
 
-          const { user } = await this.$axios.$get(`http://127.0.0.1:3333/auth/get`, {
+          const { user } = await this.$axios.$get(`${process.env.baseUrl}/auth/get`, {
             headers: {
               'Authorization': `Bearer ${token}` 
             }

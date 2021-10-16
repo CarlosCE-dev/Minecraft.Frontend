@@ -87,5 +87,11 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+  env: {
+    baseUrl:
+      process.env.NODE_ENV === 'dev'
+        ? 'http://127.0.0.1:3333'
+        : 'https://minecraft-vecindad.herokuapp.com'
   }
 }

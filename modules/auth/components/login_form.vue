@@ -162,7 +162,7 @@ export default {
             }
 
             try {
-                const data = await this.$axios.$post(`http://127.0.0.1:3333/auth/register`, payload);
+                const data = await this.$axios.$post(`${process.env.baseUrl}/auth/register`, payload);
 
                 this.loader = false
 
@@ -213,7 +213,7 @@ export default {
 
             try {
 
-                const { user, auth } = await this.$axios.$post(`http://127.0.0.1:3333/auth/login`, payload);
+                const { user, auth } = await this.$axios.$post(`${process.env.baseUrl}/auth/login`, payload);
                 this.loader = false
                 
                 if (this.rememberMe){

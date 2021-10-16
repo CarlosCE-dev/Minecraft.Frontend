@@ -1,19 +1,23 @@
 const buttons = [
     { 
         title: "Generar diamante",
-        comando: "",
+        command: "give {0} minecraft:diamond 1",
+        needUser: true
     },
     { 
         title: "Generar tnt",
-        comando: "",
+        command: "give {0} minecraft:tnt 1",
+        needUser: true
     },
     { 
         title: "Generar comida",
-        comando: "",
+        command: "give {0} minecraft:cooked_beef 1",
+        needUser: true
     },
     { 
         title: "Generar zombie",
-        comando: "",
+        command: "summon zombie",
+        needUser: false
     }
 ];
 
