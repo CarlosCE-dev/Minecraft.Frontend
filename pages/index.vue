@@ -1,13 +1,15 @@
 <template>
      <div>
 
-         <commands/>
+         <Commands/>
+         <DailyRewards/>
         
     </div>
 </template>
 
 <script>
 import Commands from '@/modules/dashboard/components/commands.vue'
+import DailyRewards from '@/modules/dashboard/components/daily_rewards.vue'
 
 export default {
     head() {
@@ -17,6 +19,7 @@ export default {
     },
     components: {
         Commands,
+        DailyRewards
     },
     mounted () {
         this.$store.commit('window/setPageTitle', this.title)
