@@ -22,29 +22,29 @@ export default {
 
         // Get the route that the user try to navigate
         const token = localStorage.getItem("x-token");
-        let route = ( this.$cookies.get('routePath') ) ? this.$cookies.get('routePath') : "index"
+        let route = ( this.$cookies.get('routePath') ) ? this.$cookies.get('routePath') : "index";
         
         if (token === null ) {
-          this.$router.push({ name:'auth-login' })
+          this.$router.push({ name:'auth-login' });
           return
         }
 
         try {
 
-          const { user } = await this.$axios.$get(`${process.env.baseUrl}/auth/get`, {
+          const { data } = await this.$axios.$get(`${process.env.baseUrl}/auth/get`, {
             headers: {
               'Authorization': `Bearer ${token}` 
             }
           });
 
-           // Store user data in store
-          this.$store.commit('auth/setAuth', user)
-          this.$router.push({ name: route })
+          // Store user data in store
+          this.$store.commit('auth/setAuth', data.user );
+          this.$router.push({ name: route });
 
         } catch (error) {
 
-            localStorage.clear("x-token")
-            this.$router.push({ name:'auth-login' })
+            localStorage.clear("x-token");
+            this.$router.push({ name:'auth-login' });
 
         }
     },

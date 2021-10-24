@@ -162,21 +162,17 @@ export default {
             }
 
             try {
-                const data = await this.$axios.$post(`${process.env.baseUrl}/auth/register`, payload);
+                const { status, statusCode, data } = await this.$axios.$post(`${process.env.baseUrl}/auth/register`, payload);
+                this.loader = false;
 
-                this.loader = false
-
-                if (data.status === 200){
-                    this.registerFormSuccess = true
-                } else {
-
+                if (!status && statusCode === 202) {
                     if (data.isEmailAlreadyTaken){
                         this.snackbar = {
                             state: true,
                             message: "El correo proporcionado ya esta registrado",
                             color: 'red'
                         }
-                        return
+                        return;
                     }
 
                     if (data.isUsernameAlreadyTaken){
@@ -185,13 +181,15 @@ export default {
                             message: "La cuenta de minecraft proporcionada ya esta registrada",
                             color: 'red'
                         }
-                        return
+                        return;
                     }
                 }
 
+                if (!status) throw "Error";
+                this.registerFormSuccess = true;
 
             } catch (error) {
-                this.loader = false
+                this.loader = false;
                 this.snackbar = {
                     state: true,
                     message: "Ocurrio un error mientras se intento crear el usuario",
@@ -213,14 +211,14 @@ export default {
 
             try {
 
-                const { user, auth } = await this.$axios.$post(`${process.env.baseUrl}/auth/login`, payload);
+                const { data } = await this.$axios.$post(`${process.env.baseUrl}/auth/login`, payload);
                 this.loader = false
                 
                 if (this.rememberMe){
-                    localStorage.setItem("x-token", auth.token);
+                    localStorage.setItem("x-token", data.auth.token);
                 }
                 
-                this.$store.commit('auth/setAuth', user);
+                this.$store.commit('auth/setAuth', data.user);
                 this.$router.replace({ name: 'index' });
 
             } catch (error) {
