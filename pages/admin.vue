@@ -1,0 +1,34 @@
+<template>
+    <div class="content ma-0 pa-0 pb-1">
+        <v-bottom-navigation :value="value" background-color="green" horizontal dark class="elevation-0">
+            <v-btn :to="{ name: 'admin-reward' }">
+                <span>Rewards</span>
+                <v-icon>mdi-gift</v-icon>
+            </v-btn>
+
+            <v-btn :to="{ name: 'admin-group' }">
+                <span>Groups</span>
+                <v-icon>mdi-heart</v-icon>
+            </v-btn>
+
+        </v-bottom-navigation>
+        <nuxt-child />
+    </div>
+</template>
+
+<script>
+export default {
+ data() {
+     return {
+         value: 0
+     }
+ },
+}
+</script>
+
+<style scoped>
+.content {
+    width: 100%!important;
+    background: white;
+}
+</style>

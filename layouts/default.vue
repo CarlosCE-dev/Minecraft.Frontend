@@ -50,6 +50,6 @@ export default {
 
 <style lang="scss" scoped>
 .content{
-  background: lighten($primary-light, 45%);
+    background: whitesmoke
 }
 </style>
