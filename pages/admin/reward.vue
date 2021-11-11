@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex ">
+    <div>
         <RewardList/>
     </div>
 </template>

@@ -72,7 +72,13 @@ export default {
           'brown-light' : '#694C34',
           'brown-primary' : '#563C29',
           'green-primary' : '#3D6C20',
-          'green-light' : "#72B248"
+          'green-light' : "#72B248",
+          "common": "#989898",
+          "uncommon": "#2F8D31",
+          "rare": "#4B4FF0",
+          "epic": "#974AB7",
+          "legendary": "#EAA91A",
+          "mythic": "#F4CA2C",
         }
       }
     }
