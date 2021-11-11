@@ -77,6 +77,7 @@ export default {
     methods: {
         logOut() {
             localStorage.clear();
+            this.$axios.setToken(false);
             this.$store.commit('auth/logOut');
             this.$router.push({ path: "auth-login" });
         }

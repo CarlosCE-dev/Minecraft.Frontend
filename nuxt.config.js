@@ -34,17 +34,14 @@ export default {
     ]
   },
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+  plugins: [],
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
-
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
   ],
-
   /*
   ** Nuxt.js modules
   */ 
@@ -54,10 +51,6 @@ export default {
     '@nuxtjs/style-resources',
     'cookie-universal-nuxt',
   ],
-
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
-
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     theme: {
@@ -84,14 +77,10 @@ export default {
       }
     }
   },
-
-  // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  },
   env: {
-    baseUrl:
+    baseUrl: 
       process.env.NODE_ENV === 'dev'
-        ? 'http://127.0.0.1:3333'
-        : 'https://minecraft-vecindad.herokuapp.com'
+      ? 'http://127.0.0.1:3333'
+      : 'https://minecraft-vecindad.herokuapp.com'
   }
 }

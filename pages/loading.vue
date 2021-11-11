@@ -24,18 +24,17 @@ export default {
         const token = localStorage.getItem("x-token");
         let route = ( this.$cookies.get('routePath') ) ? this.$cookies.get('routePath') : "index";
         
+
         if (token === null ) {
           this.$router.push({ name:'auth-login' });
-          return
+          return;
+        } else {
+          this.$axios.setToken(`Bearer ${token}`);
         }
 
         try {
 
-          const { data } = await this.$axios.$get(`${process.env.baseUrl}/auth/get`, {
-            headers: {
-              'Authorization': `Bearer ${token}` 
-            }
-          });
+          const { data } = await this.$axios.$get(`${process.env.baseUrl}/auth/get`);
 
           // Store user data in store
           this.$store.commit('auth/setAuth', data.user );

@@ -1,15 +1,15 @@
 <template>
     <div class="d-flex ">
-        <Rewards/>
+        <RewardList/>
     </div>
 </template>
 
 <script>
-import Rewards from '@/modules/reward/components/Rewards'
+import RewardList from '@/modules/reward/components/RewardList'
 
 export default {
     components: {
-        Rewards,
+        RewardList,
     },
 }
 </script>

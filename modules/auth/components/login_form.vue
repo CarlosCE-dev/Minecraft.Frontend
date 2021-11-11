@@ -216,6 +216,7 @@ export default {
                 
                 if (this.rememberMe){
                     localStorage.setItem("x-token", data.auth.token);
+                    this.$axios.setToken(`Bearer ${data.auth.token}`);
                 }
                 
                 this.$store.commit('auth/setAuth', data.user);
