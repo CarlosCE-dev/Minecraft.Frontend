@@ -22,7 +22,7 @@ export default {
         DailyRewards
     },
     mounted () {
-        this.$store.commit('window/setPageTitle', this.title)
+        this.$store.commit('window/setPageTitle', this.$metaInfo.title)
     },
 }
 </script>

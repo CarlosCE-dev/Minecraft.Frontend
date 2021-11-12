@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-app-bar color="transparent" flat light fixed app>
+        <v-app-bar flat light fixed app>
            
             <v-toolbar-title class="title">{{$store.state.window.pageTitle}}</v-toolbar-title>
             <v-spacer></v-spacer>

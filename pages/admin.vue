@@ -18,11 +18,19 @@
 
 <script>
 export default {
- data() {
-     return {
-         value: 0
-     }
- },
+    head() {
+        return {
+            title: "Admin",
+        }
+    },
+    data() {
+        return {
+            value: 0
+        }
+    },
+    mounted () {
+        this.$store.commit('window/setPageTitle', this.$metaInfo.title)
+    },
 }
 </script>
 
