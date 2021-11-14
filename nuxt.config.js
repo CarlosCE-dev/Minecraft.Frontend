@@ -28,9 +28,9 @@ export default {
   */
   styleResources: {
     scss: [
-        'assets/scss/main.scss',
-        'assets/scss/color.scss',
-        'assets/scss/table.scss',
+      'assets/scss/main.scss',
+      'assets/scss/color.scss',
+      'assets/scss/table.scss',
     ]
   },
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -46,12 +46,13 @@ export default {
   ],
   /*
   ** Nuxt.js modules
-  */ 
+  */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/style-resources',
     'cookie-universal-nuxt',
+    '@nuxtjs/i18n',
   ],
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
@@ -68,13 +69,13 @@ export default {
           success: colors.green.accent3
         },
         light: {
-          'purple-light' :  '#5C62C5',
-          'black' : "#434B54",
+          'purple-light': '#5C62C5',
+          'black': "#434B54",
           'brown-dark': '#3E2B1D',
-          'brown-light' : '#694C34',
-          'brown-primary' : '#563C29',
-          'green-primary' : '#3D6C20',
-          'green-light' : "#72B248",
+          'brown-light': '#694C34',
+          'brown-primary': '#563C29',
+          'green-primary': '#3D6C20',
+          'green-light': "#72B248",
           "common": "#989898",
           "uncommon": "#2F8D31",
           "rare": "#4B4FF0",
@@ -86,9 +87,21 @@ export default {
     }
   },
   env: {
-    baseUrl: 
+    baseUrl:
       process.env.NODE_ENV === 'dev'
-      ? 'http://127.0.0.1:3333'
-      : 'https://minecraft-vecindad.herokuapp.com'
+        ? 'http://127.0.0.1:3333'
+        : 'https://minecraft-vecindad.herokuapp.com'
+  },
+  i18n: {
+    strategy: "no_prefix",
+    locales: [
+      { 
+        code: 'es',
+        file: 'es-ES.js'
+      }
+    ],
+    defaultLocale: 'es',
+    lazy: true,
+    langDir: 'resources/'
   }
 }

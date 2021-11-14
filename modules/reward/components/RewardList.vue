@@ -44,14 +44,17 @@ export default {
         },
         async loadRewards(page){
             try {
-                const { status, pages } = await this.$axios.$post(`${process.env.baseUrl}/reward/pages`, { page });
-                if ( status ) {
-                    return { data: pages.data, meta: pages.meta }
-                } else {
-                    //TODO: Add snackbar
-                }
+                const { pages } = await this.$axios.$post(`${process.env.baseUrl}/reward/pages`, { page });
+                return { data: pages.data, meta: pages.meta }
             } catch (error) {
-                //TODO: Add snackbar
+                const snackbar = { color: 'green', timeout: 3000, state: true , text: this.$t('ErrorWhenObtainingRewards'), top: true };
+                this.$store.commit('ui/snackbar', snackbar);
+            }
+        },
+        add(reward){
+            if (this.totalCount === this.items.length) {
+                this.totalCount = this.totalCount + 1;
+                this.items.push(reward);
             }
         }
     },

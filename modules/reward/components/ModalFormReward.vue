@@ -165,15 +165,15 @@ export default {
            
             const fr = new FileReader();
             fr.onload = (event) => {
-                const image = new Image();
-                image.src = event.target.result;
+                const imageTester = new Image();
+                imageTester.src = event.target.result;
 
-                image.onload = (event) => {
-                    const [image] = event.path;
-                    const { height, width } = image;
+                imageTester.onload = (event) => {
+                    const [element] = event.path;
+                    const { height, width } = element;
 
                     if (height > 800 || width > 800 ) {
-                        const snackbar = { color: 'red', timeout: 3000, state: true , text: 'La imagen proporcionada debe ser menor a 800 x 800', top: true };
+                        const snackbar = { color: 'red', timeout: 3000, state: true , text: this.$t('ImageToBig'), top: true };
                         return this.$store.commit('ui/snackbar', snackbar);
                     }
 
@@ -189,6 +189,8 @@ export default {
         async sendData(){
 
             if (!this.$refs.form.validate()) return;
+            this.$store.commit('ui/loader', true);
+            
 
             const formData = new FormData();
             formData.append('image', this.file);
@@ -200,15 +202,29 @@ export default {
 
             try {
                 const { status, data, message } = await this.$axios.$post(`${process.env.baseUrl}/reward/create`, formData);
-                console.log(status, data, message );
-                if ( status ) {
-                } else {
-                    //TODO: Add snackbar
+
+                if (!status) {
+                    const snackbar = { color: 'red', timeout: 3000, state: true , text: message, top: true };
+                    this.$store.commit('ui/loader', false);
+                    return this.$store.commit('ui/snackbar', snackbar);
                 }
+
+                this.dialog = false;
+                await new Promise(resolve => setTimeout(resolve, 700));
+
+                const snackbar = { color: 'green', timeout: 3000, state: true , text: message, top: true };
+                this.$store.commit('ui/snackbar', snackbar);
+
+                this.$store.commit('ui/loader', false);
+                this.$emit('add', data);
+
             } catch (error) {
-                console.log("Error", error);
-                //TODO: Add snackbar
+                const snackbar = { color: 'red', timeout: 3000, state: true , text: this.$t('ErrorWhenUploadingImage'), top: true };
+                this.$store.commit('ui/loader', false);
+                this.$store.commit('ui/snackbar', snackbar);
             }
+
+            this.$store.commit('ui/loader', false);
         }
     },
 };
