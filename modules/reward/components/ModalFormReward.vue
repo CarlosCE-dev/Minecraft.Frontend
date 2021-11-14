@@ -159,22 +159,18 @@ export default {
         onSelectedImage(event){
             const [image] = event.target.files;
             if (!image) {
-                this.file = null;
-                return;
+                return this.file = null;
             }
                 
            
             const fr = new FileReader();
             fr.onload = (event) => {
-                console.log(event)
                 const image = new Image();
                 image.src = event.target.result;
 
                 image.onload = (event) => {
                     const [image] = event.path;
-                    console.log(image)
                     const { height, width } = image;
-                    console.log(height, width)
 
                     if (height > 800 || width > 800 ) {
                         const snackbar = { color: 'red', timeout: 3000, state: true , text: 'La imagen proporcionada debe ser menor a 800 x 800', top: true };
