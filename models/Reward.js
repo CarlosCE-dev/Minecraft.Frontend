@@ -1,10 +1,10 @@
-const { CommandTypes } = require("./enums/CommandTypes");
-const { RarityTypes } = require("./enums/RarityTypes");
+import { RarityTypes } from "./enums/RarityTypes";
+import { CommandTypes } from "./enums/CommandTypes";
 
 /**
  * Reward model
  */
-export class Reward {
+export default class Reward {
     /**
      * Unique name of the reward
      */
@@ -20,7 +20,7 @@ export class Reward {
     /**
      * The amount of item given from these rewards
      */
-    amount = 0;
+    amount = 1;
     /**
      * The command type for the reward
      */
@@ -32,5 +32,5 @@ export class Reward {
     /**
      * Image reference of the reward
      */
-    img
+    img = "";
 }

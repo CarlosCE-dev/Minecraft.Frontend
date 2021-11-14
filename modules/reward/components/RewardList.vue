@@ -1,5 +1,11 @@
 <template>
     <v-row no-gutters class="mt-4">
+        <v-col cols="12">
+            <div class="mb-2 mx-2">
+                <h2>Premios disponbiles</h2>
+                <v-divider></v-divider>
+            </div>
+        </v-col>
         <v-col v-for="item in items" :key="item.id" cols="4">
              <RewardCard :reward="item" />
         </v-col>

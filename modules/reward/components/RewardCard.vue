@@ -12,7 +12,7 @@
                 </v-list-item-title>
                 <v-list-item-subtitle>{{ rarityName }} </v-list-item-subtitle>
             </v-list-item-content>
-            <v-list-item-avatar rounded size="80" :color="`${rarityColor} lighten-1`">
+            <v-list-item-avatar rounded size="80" :color="`${rarityColor} lighten-1`" v-if="reward.image">
                 <v-img :src="reward.image" 
                     :lazy-src="reward.image"
                     max-width="50"

@@ -1,0 +1,219 @@
+<template>
+  <v-row justify="center">
+    <v-dialog v-model="dialog" persistent max-width="600px">
+        <v-form ref="form" v-model="valid" lazy-validation> 
+            <v-card>
+                <v-card-title>
+                    <span class="text-h5">Crear nuevo premio</span>
+                </v-card-title>
+                <v-card-text>
+                    <v-container>
+                        <v-row>
+                            <v-col cols="12">
+                                <v-text-field
+                                    color="green-light"
+                                    label="Nombre clave del premio"
+                                    v-model="reward.name"
+                                    :rules="inputRequired"
+                                    required
+                                    outlined
+                                ></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-text-field
+                                    color="green-light"
+                                    label="Titulo del premio"
+                                    v-model="reward.title"
+                                    :rules="inputRequired"
+                                    required
+                                    outlined
+                                ></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-text-field
+                                    type="number"
+                                    color="green-light"
+                                    label="Cantidad a entregar"
+                                    v-model="reward.amount"
+                                    :rules="numberRequired"
+                                    required
+                                    outlined
+                                ></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-select
+                                    :items="rarityTypes"
+                                    item-text="name"
+                                    item-value="value"
+                                    color="green-light"
+                                    label="Rareza"
+                                    v-model="reward.rarity"
+                                    required
+                                    outlined
+                                ></v-select>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-select
+                                    :items="commandTypes"
+                                    item-text="name"
+                                    item-value="value"
+                                    color="green-light"
+                                    label="Tipo de comando"
+                                    v-model="reward.commandType"
+                                    required
+                                    outlined
+                                ></v-select>
+                            </v-col>
+                        </v-row>
+                        <div class="d-flex justify-end align-center">
+                            Subir imagen
+                            <input type="file" v-show="false" accept="image/png, image/jpeg" ref="imageSelector" @change="onSelectedImage">
+                            <v-btn class="ml-2" fab color="primary" depressed small @click="onSelectImage">
+                                <v-icon>mdi-upload</v-icon>
+                            </v-btn>
+                            <v-btn v-if="localImage" class="ml-2" fab color="red" depressed small @click="clearImage" dark>
+                                <v-icon>mdi-broom</v-icon>
+                            </v-btn>
+                            <div class="ml-2">
+                                <img v-if="reward.img && !localImage"
+                                    :src="reward.img" 
+                                    alt="picture-picture" 
+                                    width="100"
+                                    height="100"
+                                    class="img-thumbnail rounded-circle animate__animated animate__fadeIn">
+
+                                <img v-if="localImage"
+                                    :src="localImage" 
+                                    alt="picture-picture" 
+                                    width="100"
+                                    height="100"
+                                    class="img-thumbnail rounded-circle animate__animated animate__fadeIn">
+                            </div>
+                        </div>
+                    </v-container>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="orange darken-1" text @click="close">
+                        Cancelar
+                    </v-btn>
+                    <v-btn color="green darken-1" text @click="sendData">
+                        Guardar
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-form>
+    </v-dialog>
+  </v-row>
+</template>
+
+<script>
+import Reward from '@/models/Reward';
+import { RarityTypes } from '@/models/enums/RarityTypes';
+import { CommandTypes } from '@/models/enums/CommandTypes';
+
+export default {
+    data() {
+        return {
+            reward: new Reward(),
+            dialog: false,
+            valid: true,
+            inputRequired: [
+                v => !!v || 'Este campo es requerido',
+                v => v && v.trim().length > 0 || 'Este campo no puede tener solo espacios en blanco',
+            ],
+            numberRequired: [
+                v => !!v || 'Este campo es requerido',
+                v => v && !Number.isInteger(v) || 'Este campo solo acepta numeros',
+                v => (v && (v > 0 && v < 1000)) || 'La cantidad debe estar entre 1 y 1000',
+            ],
+            rarityTypes: [],
+            commandTypes: [],
+            file: null,
+            localImage: null
+        }
+    },
+    created () {
+        this.dialog = true;
+        this.createRarityArray();
+    },
+    methods: {
+        close(){
+            this.$emit('close');
+        },
+        createRarityArray(){
+            const rarityTypes = [];
+            for (let [key, value] of Object.entries(RarityTypes)) {
+                rarityTypes.push({ name: `${key.charAt(0).toUpperCase()}${key.slice(1)}`, value })
+            }
+            this.rarityTypes = rarityTypes;
+            const commandTypes = [];
+            for (let [key, value] of Object.entries(CommandTypes)) {
+                commandTypes.push({ name: `${key.charAt(0).toUpperCase()}${key.slice(1)}`, value })
+            }
+            this.commandTypes = commandTypes;
+        },
+        clearImage(){
+            this.localImage = null;
+        },
+        onSelectedImage(event){
+            const [image] = event.target.files;
+            if (!image) {
+                this.file = null;
+                return;
+            }
+                
+           
+            const fr = new FileReader();
+            fr.onload = (event) => {
+                console.log(event)
+                const image = new Image();
+                image.src = event.target.result;
+
+                image.onload = (event) => {
+                    const [image] = event.path;
+                    console.log(image)
+                    const { height, width } = image;
+                    console.log(height, width)
+
+                    if (height > 800 || width > 800 ) {
+                        const snackbar = { color: 'red', timeout: 3000, state: true , text: 'La imagen proporcionada debe ser menor a 800 x 800', top: true };
+                        return this.$store.commit('ui/snackbar', snackbar);
+                    }
+
+                    this.file = image;
+                    this.localImage = fr.result;
+                }
+            }
+            fr.readAsDataURL(image);
+        },
+        onSelectImage(){
+            this.$refs.imageSelector.click();
+        },
+        async sendData(){
+
+            if (!this.$refs.form.validate()) return;
+
+            const formData = new FormData();
+            formData.append('image', this.file);
+            formData.append('name', this.reward.name);
+            formData.append('title', this.reward.title);
+            formData.append('rarity', this.reward.rarity);
+            formData.append('amount', this.reward.amount);
+            formData.append('commandType', this.reward.commandType);
+
+            try {
+                const { status, data, message } = await this.$axios.$post(`${process.env.baseUrl}/reward/create`, formData);
+                console.log(status, data, message );
+                if ( status ) {
+                } else {
+                    //TODO: Add snackbar
+                }
+            } catch (error) {
+                console.log("Error", error);
+                //TODO: Add snackbar
+            }
+        }
+    },
+};
+</script>

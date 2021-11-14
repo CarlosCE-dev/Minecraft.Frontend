@@ -48,7 +48,8 @@ export default {
         close() {
             this.open = false;
         },
-        dialog({ message, open, resolver }) {
+        dialog({ title, message, open, resolver }) {
+            this.title = title
             this.message = message;
             this.open = open;
             this.resolver = resolver;
