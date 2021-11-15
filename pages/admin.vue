@@ -18,6 +18,7 @@
 
 <script>
 export default {
+    middleware: 'admin',
     head() {
         return {
             title: "Admin",

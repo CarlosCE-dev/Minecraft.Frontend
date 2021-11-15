@@ -12,6 +12,7 @@
 
 <script>
 export default {
+    name: 'loader-page',
     layout: 'loader',
     async mounted () {
 

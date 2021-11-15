@@ -1,7 +1,7 @@
 /**
  * The command types available
  */
- export const CommandTypes = {
+export const CommandTypes = {
     /**
      * Basic command when need to give a item
      */

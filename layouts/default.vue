@@ -32,6 +32,7 @@ import ModalConfirm from '~/modules/shared/components/ModalConfirm.vue'
 import { orientationType } from '@/modules/shared/helpers/orientation';
 
 export default {
+    name: "default",
     middleware: 'authenticated',
     components: {
         Appbar,

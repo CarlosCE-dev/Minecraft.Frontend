@@ -1,3 +1,5 @@
+import { RoleTypes } from "~/models/enums/RoleTypes"
+
 export const state = () => ({
     isAuthenticated: false,
     initApplication: false,
@@ -16,4 +18,8 @@ export const mutations = {
     init( state ){
         state.initApplication = true
     }
+}
+
+export const getters = {
+    isAdmin: ( state ) => parseInt(state.user?.role) === RoleTypes.admin,
 }

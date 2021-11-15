@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
     props: ['value','fixed'],
@@ -54,8 +54,8 @@ export default {
     data: () => ({
         fix: false,
         items: [
-            { name: 'Dashboard', route: "/", icon: 'mdi-home' },
-            { name: 'Admin',  route: "/admin", icon: 'mdi-shield-key' }, 
+            { name: 'Dashboard', route: "/", icon: 'mdi-home', admin: false },
+            { name: 'Admin',  route: "/admin", icon: 'mdi-shield-key', admin: true }, 
         ],
     }),
     computed: {
@@ -70,9 +70,12 @@ export default {
         ...mapState('auth', [
             "user"
         ]),
+        ...mapGetters('auth', [
+            "isAdmin"
+        ]),
         minecraftAvatar(){
             return `https://crafatar.com/avatars/${this.user.minecraft_id}`
-        }
+        },
     },
     methods: {
         logOut() {
@@ -82,6 +85,11 @@ export default {
             this.$router.push({ path: "auth-login" });
         }
     }, 
+    created () {
+        if (!this.isAdmin){
+            this.items = this.items.filter(i => !i.admin );
+        }
+    },
 }
 </script>
 
