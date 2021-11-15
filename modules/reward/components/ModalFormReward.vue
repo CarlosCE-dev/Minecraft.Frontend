@@ -108,6 +108,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import Reward from '@/models/Reward';
 import { RarityTypes } from '@/models/enums/RarityTypes';
 import { CommandTypes } from '@/models/enums/CommandTypes';
@@ -134,11 +136,20 @@ export default {
         }
     },
     created () {
+        if (this.rewardToEdit){
+            this.reward = new Reward(this.rewardToEdit);
+        }
         this.dialog = true;
         this.createRarityArray();
     },
+    computed: {
+        ...mapState('reward', [
+            "rewardToEdit"
+        ])
+    },
     methods: {
         close(){
+            this.$store.commit('reward/toEdit', null);
             this.$emit('close');
         },
         createRarityArray(){
@@ -193,6 +204,7 @@ export default {
             
 
             const formData = new FormData();
+            formData.append('id', this.reward.id);
             formData.append('image', this.file);
             formData.append('name', this.reward.name);
             formData.append('title', this.reward.title);
@@ -200,8 +212,10 @@ export default {
             formData.append('amount', this.reward.amount);
             formData.append('commandType', this.reward.commandType);
 
+            const route = (this.rewardToEdit) ? 'update' : 'create';
+
             try {
-                const { status, data, message } = await this.$axios.$post(`${process.env.baseUrl}/reward/create`, formData);
+                const { status, data, message } = await this.$axios.$post(`${process.env.baseUrl}/reward/${route}`, formData);
 
                 if (!status) {
                     const snackbar = { color: 'red', timeout: 3000, state: true , text: message, top: true };
@@ -215,8 +229,15 @@ export default {
                 const snackbar = { color: 'green', timeout: 3000, state: true , text: message, top: true };
                 this.$store.commit('ui/snackbar', snackbar);
 
+                if (this.rewardToEdit) {
+                    this.$store.commit('reward/update', data);
+                } else {
+                    this.$store.commit('reward/new', data);
+                }
+
                 this.$store.commit('ui/loader', false);
-                this.$emit('add', data);
+                this.$store.commit('reward/toEdit', null);
+                this.$emit('close');
 
             } catch (error) {
                 const snackbar = { color: 'red', timeout: 3000, state: true , text: this.$t('ErrorWhenUploadingImage'), top: true };

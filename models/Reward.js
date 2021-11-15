@@ -6,6 +6,24 @@ import { CommandTypes } from "./enums/CommandTypes";
  */
 export default class Reward {
     /**
+     * Default constructor for instance
+     * @param {object} The reward instance 
+     */
+     constructor(model = null){
+        this.name = model?.name;
+        this.title = model?.title;
+        this.rarity = parseInt(model?.rarity);
+        this.amount = model?.amount;
+        this.commandType = parseInt(model?.command_type);
+        this.chance = model?.chance;
+        this.img = model?.image;
+        this.id = model?.id;
+    }
+    /**
+     * 
+     */
+    id = 0;
+    /** 
      * Unique name of the reward
      */
     name = "";

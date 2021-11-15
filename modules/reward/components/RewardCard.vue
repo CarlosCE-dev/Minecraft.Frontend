@@ -26,6 +26,11 @@
             </v-list-item-avatar>
         </v-list-item>
         <v-card-actions v-if="crudActions">
+            <v-spacer></v-spacer>
+            <v-btn dark color="transparent" depressed @click="edit">
+                Editar
+                <v-icon right color="white">mdi-pencil</v-icon>
+            </v-btn>
         </v-card-actions>
     </v-card>
 </template>
@@ -50,6 +55,11 @@ export default {
         },
         rarityName(){
             return getNameOfRarity(this.reward.rarity);
+        }
+    },
+    methods: {
+        edit() {
+            this.$emit('edit', this.reward);
         }
     },
 }

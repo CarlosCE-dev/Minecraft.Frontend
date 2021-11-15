@@ -6,40 +6,51 @@
                 <v-divider></v-divider>
             </div>
         </v-col>
-        <v-col v-for="item in items" :key="item.id" cols="4">
-             <RewardCard :reward="item" />
+        <v-col v-for="item in items" :key="item.id" cols="3">
+             <RewardCard :reward="item" :crudActions="isAdmin" @edit="editReward"/>
         </v-col>
         <v-skeleton-loader v-if="moreDataToAvailable" v-intersect="loadNextPage" type="list-item@5" />
+
+        <!-- Modals -->
+        <ModalFormReward v-if="modalFormReward" @close="modalFormReward = false"/>
     </v-row>
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex'
 import RewardCard from '@/modules/reward/components/RewardCard'
+import ModalFormReward from '@/modules/reward/components/ModalFormReward'
 
 export default {
     components: {
         RewardCard,
+        ModalFormReward
     },
     data() {
         return {
-            pageSize: 25,
-            pageLoaded: 0,
-            items: [],
-            totalCount: 0,
+            modalFormReward: false,
         }
     },
     computed: {
         moreDataToAvailable () {
             return Math.ceil(this.totalCount / this.pageSize) > this.pageLoaded
-        }
+        },
+        ...mapGetters('auth', [
+            "isAdmin"
+        ]),
+        ...mapState('reward', [
+            "items",
+            "pageSize",
+            "totalCount",
+            "pageLoaded"
+        ])
     },
     methods: {
         async loadNextPage (entries) {
             if (entries[0].isIntersecting && this.moreDataToAvailable) {
                 const nextPage = this.pageLoaded + 1;
                 const { data } = await this.loadRewards(nextPage);
-                this.items = [...this.items, ...data];
-                this.pageLoaded = nextPage;
+                this.$store.commit('reward/addData', { data, nextPage });
             }
         },
         async loadRewards(page){
@@ -51,18 +62,14 @@ export default {
                 this.$store.commit('ui/snackbar', snackbar);
             }
         },
-        add(reward){
-            if (this.totalCount === this.items.length) {
-                this.totalCount = this.totalCount + 1;
-                this.items.push(reward);
-            }
+        editReward(reward){
+            this.$store.commit('reward/toEdit', reward);
+            this.modalFormReward = true;
         }
     },
     async mounted () {
         const { data, meta } = await this.loadRewards(1);
-        this.pageLoaded = 1;
-        this.totalCount = meta.total;
-        this.items = data;
+        this.$store.commit('reward/init', { data, meta });
     },
 }
 </script>

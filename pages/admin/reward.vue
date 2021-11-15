@@ -3,10 +3,10 @@
         <div class="ma-2 text-right">
             <v-btn color="primary" depressed @click="newReward">Crear nuevo premio</v-btn>
         </div>
-        <RewardList ref="rewardList"/>
+        <RewardList/>
 
         <!-- Modals -->
-        <ModalFormReward v-if="modalFormReward" @close="modalFormReward = false" @add="addReward"/>
+        <ModalFormReward v-if="modalFormReward" @close="modalFormReward = false"/>
     </div>
 </template>
 
@@ -28,10 +28,6 @@ export default {
         newReward() {
             this.modalFormReward = true;
         },
-        addReward(reward){
-            this.modalFormReward = false;
-            this.$refs.rewardList.add(reward);
-        }
     },
 }
 </script>
