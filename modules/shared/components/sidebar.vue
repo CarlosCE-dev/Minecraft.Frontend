@@ -56,6 +56,7 @@ export default {
         items: [
             { name: 'Dashboard', route: "/", icon: 'mdi-home', admin: false },
             { name: 'Admin',  route: "/admin", icon: 'mdi-shield-key', admin: true }, 
+            { name: 'Events',  route: "/event", icon: 'mdi-flare', admin: false }, 
         ],
     }),
     computed: {
