@@ -110,9 +110,12 @@
 <script>
 import { mapState } from 'vuex'
 
-import Reward from '@/models/Reward';
+// Enums
 import { RarityTypes } from '@/models/enums/RarityTypes';
 import { CommandTypes } from '@/models/enums/CommandTypes';
+
+// Models
+import Reward from '@/models/Reward';
 
 export default {
     data() {
@@ -120,15 +123,8 @@ export default {
             reward: new Reward(),
             dialog: false,
             valid: true,
-            inputRequired: [
-                v => !!v || 'Este campo es requerido',
-                v => v && v.trim().length > 0 || 'Este campo no puede tener solo espacios en blanco',
-            ],
-            numberRequired: [
-                v => !!v || 'Este campo es requerido',
-                v => v && !Number.isInteger(v) || 'Este campo solo acepta numeros',
-                v => (v && (v > 0 && v < 1000)) || 'La cantidad debe estar entre 1 y 1000',
-            ],
+            inputRequired: inputRequired(),
+            numberRequired: numberRequired(),
             rarityTypes: [],
             commandTypes: [],
             file: null,
@@ -139,8 +135,9 @@ export default {
         if (this.rewardToEdit){
             this.reward = new Reward(this.rewardToEdit);
         }
-        this.dialog = true;
         this.createRarityArray();
+        this.dialog = true;
+            console.log(this.reward)
     },
     computed: {
         ...mapState('reward', [

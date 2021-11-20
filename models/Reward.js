@@ -10,6 +10,7 @@ export default class Reward {
      * @param {object} The reward instance 
      */
      constructor(model = null){
+        if (!model) return;
         this.name = model?.name;
         this.title = model?.title;
         this.rarity = parseInt(model?.rarity);

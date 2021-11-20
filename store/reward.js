@@ -1,6 +1,6 @@
 export const state = () => ({
     items: [],
-    pageSize: 25,
+    pageSize: 20,
     pageLoaded: 0,
     totalCount: 0,
     rewardToEdit: null

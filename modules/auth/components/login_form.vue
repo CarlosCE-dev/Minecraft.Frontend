@@ -107,8 +107,13 @@
 </template>
 
 <script>
+
+// Components
 import LoginLogo from '@/modules/auth/components/login_logo.vue'
 import LoginHeader from '@/modules/auth/components/login_header.vue'
+
+// Helpers
+import { inputRequired, emailRequired } from '@/validators/rulesValidator';
 
 export default {
     components: {
@@ -120,14 +125,9 @@ export default {
         visibility: true,
         password: '',
         minecraftUsername: "",
-        inputRequired: [
-            (v) => !!v || 'Este campo es requerido',
-        ],
+        inputRequired: inputRequired(),
         email: '',
-        emailRules: [
-            (v) => !!v || 'Este campo es requerido',
-            (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'El correo no es valido'
-        ],
+        emailRules: emailRequired(),
         rememberMe: true,
         titleButton: "Iniciar sesión",
         redirectButton: "Crear usuario",
