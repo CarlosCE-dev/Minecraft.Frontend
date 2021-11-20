@@ -21,7 +21,7 @@ export default class Reward {
         this.id = model?.id;
     }
     /**
-     * 
+     * Id of element
      */
     id = 0;
     /** 

@@ -117,6 +117,9 @@ import { CommandTypes } from '@/models/enums/CommandTypes';
 // Models
 import Reward from '@/models/Reward';
 
+// Helpers
+import { inputRequired, numberRequired } from '@/validators/rulesValidator';
+
 export default {
     data() {
         return {
