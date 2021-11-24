@@ -14,8 +14,10 @@ export default class Group {
         this.title = model?.title;
         this.description = model?.description;
         this.isActive = model?.isActive;
-        this.startDate = model?.startDate;
-        this.endDate = model?.endDate;
+
+        if (!model?.start_date || !model?.end_date) return
+        this.startDate = new Date(model?.start_date).toISOString().substr(0, 10);
+        this.endDate = new Date(model?.end_date).toISOString().substr(0, 10);
     }
     /**
      * Primary key of group

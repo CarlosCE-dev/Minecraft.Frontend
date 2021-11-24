@@ -6,8 +6,8 @@
                 <v-divider></v-divider>
             </div>
         </v-col>
-        <v-col v-for="item in items" :key="item.id" cols="3">
-             <EventList :event="item"/>
+        <v-col v-for="item in items" :key="item.id" cols="12">
+             <EventCard :event="item" :crudActions="isAdmin" @edit="editGroup"/>
         </v-col>
         <v-skeleton-loader v-if="moreDataToAvailable" v-intersect="loadNextPage" type="list-item@5" />
 
@@ -17,15 +17,15 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 // Components
-import EventList from '@/modules/event/components/EventList'
+import EventCard from '@/modules/event/components/EventCard'
 import ModalFormEvent from '@/modules/event/components/ModalFormEvent'
 
 export default {
     components: {
-        EventList,
+        EventCard,
         ModalFormEvent
     },
     data() {
@@ -37,38 +37,41 @@ export default {
         moreDataToAvailable () {
             return Math.ceil(this.totalCount / this.pageSize) > this.pageLoaded
         },
-        ...mapState('event', [
+        ...mapState('group', [
             "items",
             "pageSize",
             "totalCount",
             "pageLoaded"
-        ])
+        ]),
+        ...mapGetters('auth', [
+            "isAdmin"
+        ]),
     },
     methods: {
         async loadNextPage (entries) {
             if (entries[0].isIntersecting && this.moreDataToAvailable) {
                 const nextPage = this.pageLoaded + 1;
                 const { data } = await this.loadEvents(nextPage);
-                this.$store.commit('event/addData', { data, nextPage });
+                this.$store.commit('group/addData', { data, nextPage });
             }
         },
         async loadEvents(page){
             try {
-                const { pages } = await this.$axios.$post(`${process.env.baseUrl}/event/pages`, { page });
+                const { pages } = await this.$axios.$post(`${process.env.baseUrl}/group/pages`, { page });
                 return { data: pages.data, meta: pages.meta }
             } catch (error) {
                 const snackbar = { color: 'green', timeout: 3000, state: true , text: this.$t('ErrorWhenObtainingEvents'), top: true };
                 this.$store.commit('ui/snackbar', snackbar);
             }
         },
-        editReward(reward){
-            this.$store.commit('event/toEdit', reward);
-            this.modalFormReward = true;
+        editGroup(group){
+            this.$store.commit('group/toEdit', group);
+            this.modalFormEvent = true;
         }
     },
     async mounted () {
         const { data, meta } = await this.loadEvents(1);
-        this.$store.commit('event/init', { data, meta });
+        this.$store.commit('group/init', { data, meta });
     },
 }
 </script>

@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
 
 // Models
 import Group from '@/models/Group';
@@ -127,14 +127,10 @@ export default {
             if (!this.$refs.form.validate()) return;
             this.$store.commit('ui/loader', true);
 
-            const payload = {
-
-            }
-
-            const route = (this.rewardToEdit) ? 'update' : 'create';
+            const route = (this.groupToEdit) ? 'update' : 'create';
 
             try {
-                const { status, data, message } = await this.$axios.$post(`${process.env.baseUrl}/group/${route}`, payload);
+                const { status, data, message } = await this.$axios.$post(`${process.env.baseUrl}/group/${route}`, this.group);
 
                 if (!status) {
                     const snackbar = { color: 'red', timeout: 3000, state: true , text: message, top: true };
@@ -148,7 +144,7 @@ export default {
                 const snackbar = { color: 'green', timeout: 3000, state: true , text: message, top: true };
                 this.$store.commit('ui/snackbar', snackbar);
 
-                if (this.rewardToEdit) {
+                if (this.groupToEdit) {
                     this.$store.commit('group/update', data);
                 } else {
                     this.$store.commit('group/new', data);
@@ -159,7 +155,7 @@ export default {
                 this.$emit('close');
 
             } catch (error) {
-                const snackbar = { color: 'red', timeout: 3000, state: true , text: this.$t('ErrorWhenUploadingImage'), top: true };
+                const snackbar = { color: 'red', timeout: 3000, state: true , text: this.$t('ErrorCreateGroup'), top: true };
                 this.$store.commit('ui/loader', false);
                 this.$store.commit('ui/snackbar', snackbar);
             }
