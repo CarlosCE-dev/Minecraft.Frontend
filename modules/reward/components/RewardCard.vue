@@ -27,7 +27,8 @@
         </v-list-item>
         <v-card-actions v-if="crudActions">
             <v-spacer></v-spacer>
-            <v-btn dark color="transparent" depressed @click="edit">
+            <v-checkbox v-model="checkbox" v-if="selectorActive" :value="reward.id" hide-details></v-checkbox>
+            <v-btn dark color="transparent" depressed @click="edit" v-else>
                 Editar
                 <v-icon right color="white">mdi-pencil</v-icon>
             </v-btn>
@@ -37,6 +38,7 @@
 
 <script>
 import { getNameOfRarity } from '@/modules/shared/helpers/rarityTypeHelper';
+import { mapState } from 'vuex';
 
 export default {
     props: {
@@ -48,6 +50,10 @@ export default {
             type: Boolean,
             default: false
         },
+        selectorActive: {
+            type: Boolean,
+            default: false
+        }
     },
     computed: {
         rarityColor() {
@@ -55,6 +61,17 @@ export default {
         },
         rarityName(){
             return getNameOfRarity(this.reward.rarity);
+        },
+        ...mapState('reward', [
+            "itemsSelected",
+        ]),
+        checkbox: {
+            get () {
+                return this.itemsSelected
+            },
+            set (value) {
+                this.$store.commit('reward/itemSelected', value);
+            }
         }
     },
     methods: {

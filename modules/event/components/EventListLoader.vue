@@ -70,6 +70,7 @@ export default {
         }
     },
     async mounted () {
+        if (this.items && this.items.length === this.totalCount) return;
         const { data, meta } = await this.loadEvents(1);
         this.$store.commit('group/init', { data, meta });
     },

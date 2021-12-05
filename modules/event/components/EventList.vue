@@ -30,7 +30,7 @@ export default {
                 const { data } = await this.$axios.$post(`${process.env.baseUrl}/group/getEvents`);
                 this.items = data;
             } catch (error) {
-                const snackbar = { color: 'green', timeout: 3000, state: true , text: this.$t('ErrorWhenObtainingEvents'), top: true };
+                const snackbar = { color: 'red', timeout: 3000, state: true , text: this.$t('ErrorWhenObtainingEvents'), top: true };
                 this.$store.commit('ui/snackbar', snackbar);
             }
         },

@@ -17,6 +17,8 @@
 
 
 <script>
+import { reverseDateRepresentation } from "@/modules/shared/helpers/dateHelper";
+
 export default {
     props: {
         value: {
@@ -51,7 +53,12 @@ export default {
                 return this.$store.commit('ui/snackbar', snackbar);
             }
 
-            this.$emit('onDatePickerConfirmed', this.dates );
+            const sortedDates = this.dates
+                .map(reverseDateRepresentation)
+                .sort()
+                .map(reverseDateRepresentation);
+
+            this.$emit('onDatePickerConfirmed', sortedDates);
             this.show = false;
         }
     }, 

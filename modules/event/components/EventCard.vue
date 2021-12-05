@@ -15,6 +15,7 @@
     </v-list-item>
     <v-card-actions>
         <v-spacer></v-spacer>
+        <v-btn outlined text color="orange" v-if="crudActions" :to="{ name: 'admin-group-id', params: { id: event.id }}"> Manager </v-btn>
         <v-btn outlined text color="orange" v-if="crudActions" @click="edit"> Edit </v-btn>
         <v-btn outlined text> More info </v-btn>
     </v-card-actions>

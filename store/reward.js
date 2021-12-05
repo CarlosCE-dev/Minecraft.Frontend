@@ -1,9 +1,12 @@
+import { getStockPerRarity } from "~/modules/shared/helpers/rarityTypeHelper";
+
 export const state = () => ({
-    items: [],
+    items: null,
     pageSize: 20,
     pageLoaded: 0,
     totalCount: 0,
-    rewardToEdit: null
+    rewardToEdit: null,
+    itemsSelected: []
 })
 
 export const mutations = {
@@ -32,6 +35,20 @@ export const mutations = {
             payload,
             ...state.items.slice(index + 1)
         ]
+    },
+    itemSelected(state, payload){
+        state.itemsSelected = payload;
+    },
+}
+
+export const getters = {
+    getTotalStock(state){
+        if (!state.items || state.itemsSelected.length === 0) return 0;
+
+        return state.items
+            .filter(i => state.itemsSelected.includes(i.id))
+            .map(i => getStockPerRarity(i.rarity))
+            .reduce((prev, next) => prev + next);
     }
 }
 

@@ -9,7 +9,13 @@ const addDaysToDate = (days = 1) => {
     return date.setDate(date.getDate() + days);
 }
 
+const reverseDateRepresentation = (date) => {
+    let parts = date.split('-');
+    return `${parts[0]}-${parts[1]}-${parts[2]}`;
+};
+
 export {
     getTomorrowDate,
-    addDaysToDate
+    addDaysToDate,
+    reverseDateRepresentation
 }

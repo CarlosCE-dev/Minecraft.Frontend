@@ -1,5 +1,5 @@
 export const state = () => ({
-    items: [],
+    items: null,
     pageSize: 20,
     pageLoaded: 0,
     totalCount: 0,

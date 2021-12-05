@@ -1,4 +1,4 @@
-import { addDaysToDate } from "../modules/shared/helpers/dateHelper";
+import { addDaysToDate } from "@/modules/shared/helpers/dateHelper";
 
 /**
  * Group of rewards

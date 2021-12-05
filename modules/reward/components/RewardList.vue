@@ -7,7 +7,7 @@
             </div>
         </v-col>
         <v-col v-for="item in items" :key="item.id" cols="3">
-             <RewardCard :reward="item" :crudActions="isAdmin" @edit="editReward"/>
+             <RewardCard :reward="item" :crudActions="isAdmin" :selectorActive="itemSelectionActive" @edit="editReward"/>
         </v-col>
         <v-skeleton-loader v-if="moreDataToAvailable" v-intersect="loadNextPage" type="list-item@5" />
 
@@ -22,6 +22,12 @@ import RewardCard from '@/modules/reward/components/RewardCard'
 import ModalFormReward from '@/modules/reward/components/ModalFormReward'
 
 export default {
+    props: {
+        itemSelectionActive: {
+            type: Boolean,
+            default: false 
+        },
+    },
     components: {
         RewardCard,
         ModalFormReward
@@ -58,7 +64,7 @@ export default {
                 const { pages } = await this.$axios.$post(`${process.env.baseUrl}/reward/pages`, { page });
                 return { data: pages.data, meta: pages.meta }
             } catch (error) {
-                const snackbar = { color: 'green', timeout: 3000, state: true , text: this.$t('ErrorWhenObtainingRewards'), top: true };
+                const snackbar = { color: 'red', timeout: 3000, state: true , text: this.$t('ErrorWhenObtainingRewards'), top: true };
                 this.$store.commit('ui/snackbar', snackbar);
             }
         },
@@ -68,6 +74,7 @@ export default {
         }
     },
     async mounted () {
+        if (this.items && this.items.length === this.totalCount) return;
         const { data, meta } = await this.loadRewards(1);
         this.$store.commit('reward/init', { data, meta });
     },

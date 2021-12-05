@@ -7,8 +7,8 @@
             </v-btn>
 
             <v-btn :to="{ name: 'admin-group' }">
-                <span>Groups</span>
-                <v-icon>mdi-heart</v-icon>
+                <span>Events</span>
+                <v-icon>mdi-calendar-range</v-icon>
             </v-btn>
 
         </v-bottom-navigation>

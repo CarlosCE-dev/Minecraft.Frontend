@@ -39,7 +39,7 @@ export default {
 
           // Store user data in store
           this.$store.commit('auth/setAuth', data.user );
-          this.$router.push({ name: route });
+          this.$router.push(route);
 
         } catch (error) {
 
