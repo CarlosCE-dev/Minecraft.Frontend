@@ -13,6 +13,15 @@ export default {
     ConfirmSave: '¿Estas seguro que quieres guardar los cambios realizado?',
     StockRewards: 'Stock de premios:',
     TotalRewardsSelected: 'Total de premios seleccionados:',
-    ErrorWhenLoadingRewardsSelected: 'Ocurrio un error al intentar obtener los premios de este evento',
-    ErrorWhenSavingRewardsOfEvent: 'Ocurrio un error al intentar guardar los premios de este evento',
+    ErrorWhenLoadingRewardsSelected: 'Ocurrio un error al intentar obtener los premios de este evento.',
+    ErrorWhenSavingRewardsOfEvent: 'Ocurrio un error al intentar guardar los premios de este evento.',
+    ErrorWhenDeleteReward: 'Ocurrio un error al intentar eliminar el premio.',
+    ErrorWhenDeleteEvent: 'Ocurrio un error al intentar eliminar el evento.',
+    ConfirmRewardDelete: '¿Estas seguro que quieres eliminar este premio?',
+    ConfirmEventDelete: '¿Estas seguro que quieres eliminar este evento?',
+    ConfirmStatusChange: "¿Estas seguro que quieres cambiar el status de este evento?",
+    Active: "Evento activo",
+    NoActive: "Evento desactivado",
+    ActiveEvent: "Activar evento",
+    DeactivateEvent: "Desactivar evento"
 }

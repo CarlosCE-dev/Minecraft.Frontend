@@ -4,7 +4,7 @@
         <v-form ref="form" v-model="valid" lazy-validation> 
             <v-card>
                 <v-card-title>
-                    <span class="text-h5">Crear nuevo evento</span>
+                    <span class="text-h5">{{ title }}</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
@@ -88,6 +88,12 @@ import ModalDatepicker from '@/modules/shared/components/ModalDatepicker.vue';
 export default {
     components: {
         ModalDatepicker,
+    },
+    props: {
+        title: {
+            type: String,
+            default: "Crear nuevo evento" 
+        },
     },
     data() {
         return {

@@ -32,6 +32,10 @@ export const mutations = {
             payload,
             ...state.items.slice(index + 1)
         ]
-    }
+    },
+    remove(state, payload){
+        const i = state.items.map(item => item.id).indexOf(payload);
+        state.items.splice(i, 1);
+    },
 }
 

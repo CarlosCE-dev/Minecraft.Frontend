@@ -12,6 +12,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
+
 export default {
     computed: {
         ...mapState('reward', [

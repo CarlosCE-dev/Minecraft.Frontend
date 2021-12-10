@@ -7,12 +7,12 @@
             </div>
         </v-col>
         <v-col v-for="item in items" :key="item.id" cols="12">
-             <EventCard :event="item" :crudActions="isAdmin" @edit="editGroup"/>
+            <EventCard :event="item" :crudActions="isAdmin" @edit="editGroup"/>
         </v-col>
         <v-skeleton-loader v-if="moreDataToAvailable" v-intersect="loadNextPage" type="list-item@5" />
 
         <!-- Modals -->
-        <ModalFormEvent v-if="modalFormEvent" @close="modalFormEvent = false"/>
+        <ModalFormEvent :title="modalFormTitle" v-if="modalFormEvent" @close="modalFormEvent = false"/>
     </v-row>
 </template>
 
@@ -31,6 +31,7 @@ export default {
     data() {
         return {
             modalFormEvent: false,
+            modalFormTitle: "Editar evento"
         }
     },
     computed: {
