@@ -4,7 +4,7 @@
         <v-form ref="form" v-model="valid" lazy-validation> 
             <v-card>
                 <v-card-title>
-                    <span class="text-h5">Crear nuevo premio</span>
+                    <span class="text-h5">{{ title }}</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
@@ -121,6 +121,12 @@ import Reward from '@/models/Reward';
 import { inputRequired, numberRequired } from '@/validators/rulesValidator';
 
 export default {
+    props: {
+        title: {
+            type: String,
+            default: "Crear nuevo premio" 
+        },
+    },
     data() {
         return {
             reward: new Reward(),
@@ -140,7 +146,6 @@ export default {
         }
         this.createRarityArray();
         this.dialog = true;
-            console.log(this.reward)
     },
     computed: {
         ...mapState('reward', [

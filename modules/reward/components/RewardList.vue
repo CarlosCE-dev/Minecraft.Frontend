@@ -12,12 +12,13 @@
         <v-skeleton-loader v-if="moreDataToAvailable" v-intersect="loadNextPage" type="list-item@5" />
 
         <!-- Modals -->
-        <ModalFormReward v-if="modalFormReward" @close="modalFormReward = false"/>
+        <ModalFormReward :title="modalFormTitle" v-if="modalFormReward" @close="modalFormReward = false"/>
     </v-row>
 </template>
 
 <script>
 import { mapGetters, mapState } from 'vuex'
+
 import RewardCard from '@/modules/reward/components/RewardCard'
 import ModalFormReward from '@/modules/reward/components/ModalFormReward'
 
@@ -35,6 +36,7 @@ export default {
     data() {
         return {
             modalFormReward: false,
+            modalFormTitle: "Editar premio"
         }
     },
     computed: {

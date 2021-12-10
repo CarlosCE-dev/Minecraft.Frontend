@@ -28,10 +28,16 @@
         <v-card-actions v-if="crudActions">
             <v-spacer></v-spacer>
             <v-checkbox v-model="checkbox" v-if="selectorActive" :value="reward.id" hide-details></v-checkbox>
-            <v-btn dark color="transparent" depressed @click="edit" v-else>
-                Editar
-                <v-icon right color="white">mdi-pencil</v-icon>
-            </v-btn>
+            <template v-else>
+                <v-spacer></v-spacer>
+                <v-btn dark color="transparent" depressed @click="edit">
+                    Editar
+                    <v-icon right color="white">mdi-pencil</v-icon>
+                </v-btn>
+                <v-btn dark small color="transparent" fab depressed @click="confirmRemove">
+                    <v-icon color="white">mdi-delete</v-icon>
+                </v-btn>
+            </template>
         </v-card-actions>
     </v-card>
 </template>
@@ -77,7 +83,42 @@ export default {
     methods: {
         edit() {
             this.$emit('edit', this.reward);
-        }
+        },
+        confirmRemove() {
+            this.$dialog.open({
+                title: this.$t('Alert'),
+                message: this.$t('ConfirmRewardDelete'),
+                resolver: (async (result) => {
+                    if (await result) {
+                        this.remove();
+                    }
+                }),
+            });
+        },
+        async remove() {
+            this.$store.commit('ui/loader', true);
+
+            try {
+                const payload = { rewardId: this.reward.id }
+                await new Promise(resolve => setTimeout(resolve, 300));
+                const { status, message } = await this.$axios.$post(`${process.env.baseUrl}/reward/delete`, payload);
+
+                const snackbar = { color: 'success', timeout: 3000, state: true , text: message, top: true };
+                if (status){
+                    this.$store.commit('reward/remove', this.reward.id);
+                } else {
+                    snackbar.color = 'yellow';
+                }
+
+                this.$store.commit('ui/loader', false);
+                this.$store.commit('ui/snackbar', snackbar);
+
+            } catch (error) {
+                const snackbar = { color: 'red', timeout: 3000, state: true , text: this.$t('ErrorWhenDeleteReward'), top: true };
+                this.$store.commit('ui/loader', false);
+                this.$store.commit('ui/snackbar', snackbar);
+            };
+        },
     },
 }
 </script>

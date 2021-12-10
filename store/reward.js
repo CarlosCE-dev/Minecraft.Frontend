@@ -25,6 +25,10 @@ export const mutations = {
             state.items.push(payload);
         }
     },
+    remove(state, payload){
+        const i = state.items.map(item => item.id).indexOf(payload);
+        state.items.splice(i, 1);
+    },
     toEdit(state, payload){
         state.rewardToEdit = payload;
     },
