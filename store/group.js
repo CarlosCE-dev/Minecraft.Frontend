@@ -37,5 +37,9 @@ export const mutations = {
         const i = state.items.map(item => item.id).indexOf(payload);
         state.items.splice(i, 1);
     },
+    changeStatus(state, payload){
+        const itemIndex = state.items.findIndex(i => i.id === payload.groupId)
+        state.items[itemIndex].is_active = payload.isActive;
+    },
 }
 

@@ -125,13 +125,16 @@ export default {
             this.$store.commit("ui/loader", true);
 
             try {
-                const payload = { groupId: this.event.id };
+                const payload = { 
+                    groupId: this.event.id, 
+                    isActive: this.event.is_active === 0 ? 1 : 0
+                };
                 await new Promise((resolve) => setTimeout(resolve, 300));
-                const { status, message } = await this.$axios.$post(`${process.env.baseUrl}/group/delete`, payload);
+                const { status, message } = await this.$axios.$post(`${process.env.baseUrl}/group/changeStatus`, payload);
 
                 const snackbar = { color: "success", timeout: 3000, state: true, text: message, top: true };
                 if (status) {
-                    this.$store.commit("event/remove", this.event.id);
+                    this.$store.commit("group/changeStatus", payload);
                 } else {
                     snackbar.color = "yellow";
                 }
