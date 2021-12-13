@@ -3,7 +3,8 @@ export const state = () => ({
     pageSize: 20,
     pageLoaded: 0,
     totalCount: 0,
-    groupToEdit: null
+    rewardToEdit: null,
+    itemsSelected: []
 })
 
 export const mutations = {
@@ -22,8 +23,12 @@ export const mutations = {
             state.items.push(payload);
         }
     },
+    remove(state, payload){
+        const i = state.items.map(item => item.id).indexOf(payload);
+        state.items.splice(i, 1);
+    },
     toEdit(state, payload){
-        state.groupToEdit = payload;
+        state.rewardToEdit = payload;
     },
     update(state, payload){
         const index = state.items.findIndex((item) => item.id === payload.id);
@@ -33,16 +38,7 @@ export const mutations = {
             ...state.items.slice(index + 1)
         ]
     },
-    remove(state, payload){
-        const i = state.items.map(item => item.id).indexOf(payload);
-        state.items.splice(i, 1);
+    itemSelected(state, payload){
+        state.itemsSelected = payload;
     },
-    changeStatus(state, payload){
-        const itemIndex = state.items.findIndex(i => i.id === payload.groupId)
-        state.items[itemIndex].is_active = payload.isActive;
-    },
-    disableClaim(state, payload){
-        
-    }
 }
-

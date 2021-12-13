@@ -13,7 +13,7 @@
     <!-- <ModalConfirm v-model="modalConfirm.state" :snackbar="modalConfirm"/> -->
     <ModalLoader v-if="loader" v-model="loader"/>
     <ModalAlert v-if="modalAlert.state" :alert="modalAlert" @close="modalAlert.state = false"/>
-    <ModalConfirm/>
+    <ModalConfirm />
 
   </v-app>
 </template>

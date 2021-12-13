@@ -31,8 +31,11 @@
             <v-btn outlined text color="orange" v-if="crudActions" @click="edit">
                 Edit
             </v-btn>
-            <v-btn text small outlined color="red" fab depressed @click="confirmRemove">
+            <v-btn text small outlined color="red" v-if="crudActions" fab depressed @click="confirmRemove">
                 <v-icon>mdi-delete</v-icon>
+            </v-btn>
+            <v-btn outlined text color="indigo" v-if="!crudActions" @click="claimReward">
+                Get random reward
             </v-btn>
         </v-card-actions>
     </v-card>
@@ -147,6 +150,9 @@ export default {
                 this.$store.commit("ui/snackbar", snackbar);
             }
         },
+        claimReward(){
+            this.$emit("randomReward", this.event);
+        }
     },
 };
 </script>
