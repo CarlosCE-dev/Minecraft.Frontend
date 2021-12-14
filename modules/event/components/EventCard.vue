@@ -21,11 +21,11 @@
             </v-list-item-content>
         </v-list-item>
         <v-card-actions>
+            <EventStatusButtons :status="this.event.status"/>
             <v-btn outlined text :color="getChangeStatusColor" v-if="crudActions" @click="confirmChangeStatus">
                 {{ getChangeStatusName }}
             </v-btn>
-            <v-spacer></v-spacer>
-            <v-btn outlined text color="indigo" v-if="crudActions && !event.is_active" :to="{ name: 'admin-group-id', params: { id: event.id } }">
+            <v-btn outlined text color="indigo" v-if="showManagerButton" :to="{ name: 'admin-group-id', params: { id: event.id } }">
                 Manager
             </v-btn>
             <v-btn outlined text color="orange" v-if="crudActions" @click="edit">
@@ -44,7 +44,13 @@
 <script>
 import { format } from "date-fns";
 
+// Components
+import EventStatusButtons from '@/modules/event/components/EventStatusButtons'
+
 export default {
+    components: {
+        EventStatusButtons,
+    },
     props: {
         event: {
             type: Object,
@@ -73,6 +79,9 @@ export default {
         },
         getChangeStatusName(){
             return this.event.is_active ? this.$t("DeactivateEvent") : this.$t("ActiveEvent");
+        },
+        showManagerButton(){
+            return this.crudActions && this.event.status === EventStatusTypes.created;
         }
     },
     methods: {

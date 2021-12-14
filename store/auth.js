@@ -1,4 +1,4 @@
-import { RoleTypes } from "~/models/enums/RoleTypes"
+import { RoleTypes, validAdminRoles } from "~/models/enums/RoleTypes"
 
 export const state = () => ({
     isAuthenticated: false,
@@ -21,5 +21,6 @@ export const mutations = {
 }
 
 export const getters = {
-    isAdmin: ( state ) => parseInt(state.user?.role) === RoleTypes.admin,
+    isAdmin: ( state ) =>  state.user.role === RoleTypes.admin,
+    isAdminOrModerator: ( state ) =>  validAdminRoles.includes(state.user.role)
 }

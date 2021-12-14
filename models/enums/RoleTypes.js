@@ -15,3 +15,8 @@ export const RoleTypes = {
     */
    user: 2
 }
+
+/**
+ * Vali admin roles
+ */
+export const validAdminRoles = [RoleTypes.admin, RoleTypes.moderator];
