@@ -29,5 +29,8 @@ export default {
             this.modalFormEvent = true;
         },
     },
+    mounted () {
+        this.$store.commit('reward/setClaimPage', false);
+    },
 }
 </script>

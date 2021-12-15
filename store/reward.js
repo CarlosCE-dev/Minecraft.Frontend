@@ -6,7 +6,8 @@ export const state = () => ({
     pageLoaded: 0,
     totalCount: 0,
     rewardToEdit: null,
-    itemsSelected: []
+    itemsSelected: [],
+    isClaimPage: false
 })
 
 export const mutations = {
@@ -43,6 +44,9 @@ export const mutations = {
     itemSelected(state, payload){
         state.itemsSelected = payload;
     },
+    setClaimPage(state, payload){
+        state.isClaimPage = payload
+    }
 }
 
 export const getters = {

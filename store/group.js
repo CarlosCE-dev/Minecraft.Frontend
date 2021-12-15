@@ -39,7 +39,7 @@ export const mutations = {
     },
     changeStatus(state, payload){
         const itemIndex = state.items.findIndex(i => i.id === payload.groupId)
-        state.items[itemIndex].is_active = payload.isActive;
+        state.items[itemIndex].status = payload.status;
     },
     disableClaim(state, payload){
         

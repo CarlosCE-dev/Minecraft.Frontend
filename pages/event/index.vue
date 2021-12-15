@@ -17,7 +17,9 @@ export default {
         EventList,
     },
     mounted () {
-        this.$store.commit('window/setPageTitle', this.$metaInfo.title)
+        this.$store.commit('window/setPageTitle', this.$metaInfo.title);
+        this.$store.commit('reward/setClaimPage', true);
+
     },
 }
 </script>

@@ -1,7 +1,7 @@
 /**
  * The event status types
  */
- export const EventStatusTypes = {
+export const EventStatusTypes = {
     /**
      * First status when a event is created
      */

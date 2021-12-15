@@ -73,10 +73,10 @@ export default {
             "user"
         ]),
         ...mapGetters('auth', [
-            "isAdmin"
+            "isAdminOrModerator"
         ]),
         minecraftAvatar(){
-            return `https://crafatar.com/avatars/${this.user.minecraft_id}`
+            return this.user.minecraft_id ? `https://crafatar.com/avatars/${this.user.minecraft_id}` : `https://i.imgur.com/cAFcdws.png`
         },
     },
     methods: {
@@ -88,7 +88,7 @@ export default {
         }
     }, 
     created () {
-        if (!this.isAdmin){
+        if (!this.isAdminOrModerator){
             this.items = this.items.filter(i => !i.admin );
         }
     },
