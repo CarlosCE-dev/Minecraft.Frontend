@@ -75,12 +75,18 @@ export default {
                 case "claim":
                     this.claimReward();
                     break;
+                case "details":
+                    this.showDetails();
+                    break;
                 default:
                     break;
             }
         },
         claimReward(){
             this.$emit("randomReward", this.event);
+        },
+        showDetails(){
+            this.$emit("details", this.event.id);
         }
     },
 };

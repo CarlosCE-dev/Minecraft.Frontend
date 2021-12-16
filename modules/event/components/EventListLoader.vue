@@ -7,12 +7,13 @@
             </div>
         </v-col>
         <v-col v-for="item in items" :key="item.id" cols="12">
-            <EventCard :event="item" :crudActions="isAdmin" @edit="editGroup"/>
+            <EventCard :event="item" :crudActions="isAdmin" @edit="editGroup" @details="showDetailsModal"/>
         </v-col>
         <v-skeleton-loader v-if="moreDataToAvailable" v-intersect="loadNextPage" type="list-item@5" />
 
         <!-- Modals -->
         <ModalFormEvent :title="modalFormTitle" v-if="modalFormEvent" @close="modalFormEvent = false"/>
+        <ModalEventDetails v-if="modalEventDetail" @close="modalEventDetail = false"/>
     </v-row>
 </template>
 
@@ -22,16 +23,19 @@ import { mapState, mapGetters } from 'vuex'
 // Components
 import EventCard from '@/modules/event/components/EventCard'
 import ModalFormEvent from '@/modules/event/components/ModalFormEvent'
+import ModalEventDetails from '@/modules/event/components/ModalEventDetails'
 
 export default {
     components: {
         EventCard,
-        ModalFormEvent
+        ModalFormEvent,
+        ModalEventDetails
     },
     data() {
         return {
             modalFormEvent: false,
-            modalFormTitle: "Editar evento"
+            modalFormTitle: "Editar evento",
+            modalEventDetail: false
         }
     },
     computed: {
@@ -42,7 +46,7 @@ export default {
             "items",
             "pageSize",
             "totalCount",
-            "pageLoaded"
+            "pageLoaded",
         ]),
         ...mapGetters('auth', [
             "isAdmin"
@@ -68,6 +72,10 @@ export default {
         editGroup(group){
             this.$store.commit('group/toEdit', group);
             this.modalFormEvent = true;
+        },
+        showDetailsModal(id){
+            this.$store.commit('reward/setDetailEvent', id);
+            this.modalEventDetail = true;
         }
     },
     async mounted () {

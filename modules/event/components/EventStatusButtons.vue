@@ -7,6 +7,7 @@
         <v-btn outlined text color="orange" v-if="showCrudButtons" @click="edit">
             Edit
         </v-btn>
+        <v-btn outlined text color="indigo" @click="details">Details</v-btn>
         <v-btn outlined text color="green" v-if="showStartButton" @click="confirmChangeStatus(eventStatusTypes.started)">Start</v-btn>
         <v-btn outlined text color="blue-grey" v-if="showPauseButton" @click="confirmChangeStatus(eventStatusTypes.paused)">Pause</v-btn>
         <v-btn outlined text color="blue" v-if="showRestartButton" @click="confirmChangeStatus(eventStatusTypes.started)">Restart</v-btn>
@@ -51,19 +52,19 @@ export default {
             "isClaimPage",
         ]),
         showStartButton() {
-            return this.status === this.eventStatusTypes.created && this.isAdmin
+            return this.status === this.eventStatusTypes.created && this.isAdmin && !this.isClaimPage
         },
         showCrudButtons() {
-            return this.status === this.eventStatusTypes.created && this.isAdminOrModerator
+            return this.status === this.eventStatusTypes.created && this.isAdminOrModerator && !this.isClaimPage
         },
         showPauseButton() {
-            return this.status === this.eventStatusTypes.started && this.isAdmin
+            return this.status === this.eventStatusTypes.started && this.isAdmin && !this.isClaimPage
         },
         showRestartButton() {
-            return this.status === this.eventStatusTypes.paused && this.isAdmin
+            return this.status === this.eventStatusTypes.paused && this.isAdmin && !this.isClaimPage
         },
         showCancelButton() {
-            return this.status === this.eventStatusTypes.started && this.isAdmin
+            return this.status === this.eventStatusTypes.started && this.isAdmin && !this.isClaimPage
         },
         showClaimRewardButton(){
             return this.isClaimPage
@@ -146,6 +147,9 @@ export default {
         },
         claim(){
             this.$emit('onButtonClick', 'claim');
+        },
+        details(){
+            this.$emit('onButtonClick', 'details');
         }
     },
 }
