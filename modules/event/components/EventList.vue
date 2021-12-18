@@ -73,7 +73,7 @@ export default {
                 this.$store.commit("ui/loader", false);
 
                 if (status){
-                    this.rewardModal = data;
+                    this.rewardModal = { ...data.reward, money: data.money };
                     this.rewardModalState = true;
 
                     this.items = this.items.map((i) => {

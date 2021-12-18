@@ -15,9 +15,13 @@
                             </v-row>
                         </template>
                     </v-img>
+                   
                 </v-card>
             </div>
             <span class="my-2 text-h6">{{ rarityName }}</span>
+            <div class="d-flex h-4 ">
+                {{ $t('MoneyGainByReward', { money: reward.money }) }}
+            </div>
             <div class="d-flex align-self-end ma-1">
                 <v-btn fab color="transparent" elevation="0" @click="close">
                     <v-icon>mdi-close</v-icon>

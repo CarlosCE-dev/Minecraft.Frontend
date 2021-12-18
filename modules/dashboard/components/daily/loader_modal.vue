@@ -24,8 +24,8 @@
     },
     methods: {
         async onModalShow() {
-            await new Promise(resolve => setTimeout(resolve, 4000))
-            this.$emit('close')
+            await new Promise(resolve => setTimeout(resolve, 4000));
+            this.$emit('close');
         }
     },
   }
