@@ -33,7 +33,12 @@ export default {
         async loadEvents(){
             try {
                 const { data } = await this.$axios.$post(`${process.env.baseUrl}/group/getEvents`);
-                this.items = data;
+                this.items = data.map(d => {
+                    return {
+                        ...d.event,
+                        not_available: d.notAvailable
+                    }
+                });
             } catch (error) {
                 const snackbar = { color: 'red', timeout: 3000, state: true , text: this.$t('ErrorWhenObtainingEvents'), top: true };
                 this.$store.commit('ui/snackbar', snackbar);
@@ -54,14 +59,21 @@ export default {
                     this.$store.commit("group/disableClaim");
                 } else {
                     snackbar.color = "orange";
+                    this.$store.commit("ui/snackbar", snackbar);
                 }
 
                 this.$store.commit("ui/loader", false);
-                this.$store.commit("ui/snackbar", snackbar);
 
                 if (status){
                     this.rewardModal = data;
                     this.rewardModalState = true;
+
+                    this.items = this.items.map((i) => {
+                        if (i.id === event.id){
+                            i.not_available = true;
+                        }
+                        return i;
+                    })
                 }
             } catch (error) {
                 const snackbar = { color: "red", timeout: 3000, state: true, text: this.$t("ErrorWhenDeleteEvent"), top: true };

@@ -37,6 +37,10 @@ export default {
             type: Number,
             required: true
         },
+        notAvailable: {
+            type: Boolean,
+            default: true
+        }
     },
     data() {
         return {
@@ -67,7 +71,7 @@ export default {
             return this.status === this.eventStatusTypes.started && this.isAdmin && !this.isClaimPage
         },
         showClaimRewardButton(){
-            return this.isClaimPage
+            return this.isClaimPage && !this.notAvailable
         }
     },
     methods: {
