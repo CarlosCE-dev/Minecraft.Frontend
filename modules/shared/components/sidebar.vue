@@ -54,11 +54,10 @@ export default {
     data: () => ({
         fix: false,
         items: [
-            { name: 'Dashboard', route: "/", icon: 'mdi-home', admin: false },
-            { name: 'Admin',  route: "/admin/reward", icon: 'mdi-shield-key', admin: true }, 
             { name: 'Events',  route: "/event", icon: 'mdi-font-awesome', admin: false }, 
             { name: 'Rewards',  route: "/reward", icon: 'mdi-gift', admin: false }, 
             { name: 'Store',  route: "/shop", icon: 'mdi-cart', admin: false }, 
+            { name: 'Admin',  route: "/admin/reward", icon: 'mdi-shield-key', admin: true }, 
         ],
     }),
     computed: {

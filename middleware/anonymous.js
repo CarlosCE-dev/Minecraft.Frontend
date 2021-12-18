@@ -11,6 +11,6 @@ export default function async ({ store, redirect, route, app }) {
     }
 
     if (store.state.auth.isAuthenticated ) {
-        return redirect({ name: "index" });
+        return redirect({ name: "event" });
     } 
 }
