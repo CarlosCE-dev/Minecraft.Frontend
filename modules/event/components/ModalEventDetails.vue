@@ -5,7 +5,12 @@
             <v-card-title>
                 <span class="text-h5">Evento</span>
             </v-card-title>
-            <v-card-text>
+            <v-card-text v-if="rewards.length === 0">
+                <v-alert dense type="info">
+                    No hay información para mostrar
+                </v-alert>
+            </v-card-text>
+            <v-card-text v-else>
                 <div class="d-flex justify-end mb-2">
                     <h4>Premios restantes: {{ rewardsLeft }}</h4>
                 </div>

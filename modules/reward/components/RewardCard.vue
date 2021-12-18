@@ -39,6 +39,12 @@
                 </v-btn>
             </template>
         </v-card-actions>
+        <v-card-actions v-if="isClaimRewardView">
+            <v-spacer></v-spacer>
+            <v-btn dark color="white" outlined depressed @click="onClaimClick">
+                Reclamar premio
+            </v-btn>
+        </v-card-actions>
     </v-card>
 </template>
 
@@ -57,6 +63,10 @@ export default {
             default: false
         },
         selectorActive: {
+            type: Boolean,
+            default: false
+        },
+        isClaimRewardView: {
             type: Boolean,
             default: false
         }
@@ -119,6 +129,9 @@ export default {
                 this.$store.commit('ui/snackbar', snackbar);
             };
         },
+        onClaimClick(){
+            this.$emit('claim', this.reward.userRewardId);
+        }
     },
 }
 </script>

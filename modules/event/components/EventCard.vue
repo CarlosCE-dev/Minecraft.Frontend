@@ -22,9 +22,7 @@
             </v-list-item-content>
         </v-list-item>
         <EventStatusButtons 
-            :id="this.event.id" 
-            :status="this.event.status" 
-            :notAvailable="this.event.not_available"
+            :event="this.event" 
             @onButtonClick="onEventButtonClick"
         />
     </v-card>

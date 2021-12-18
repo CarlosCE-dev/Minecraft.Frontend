@@ -23,5 +23,7 @@ export default {
     Active: "Evento activo",
     NoActive: "Evento desactivado",
     ActiveEvent: "Activar evento",
-    DeactivateEvent: "Desactivar evento"
+    DeactivateEvent: "Desactivar evento",
+    ClaimRewardMessage: "Recuerda que para reclamar este premio debes estar online en el server de Minecraft.",
+    Info: "Información"
 }

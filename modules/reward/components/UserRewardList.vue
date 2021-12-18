@@ -2,14 +2,16 @@
     <v-row no-gutters class="mt-4">
         <v-col cols="12">
             <div class="mb-2 mx-2">
-                <h2>Premios obtenidos</h2>
+                <div class="d-flex align-center">
+                    <h2>Premios obtenidos</h2>
+                    <v-btn color="primary" small class="ml-auto">Historial</v-btn>
+                </div>
                 <v-divider></v-divider>
             </div>
         </v-col>
         <v-col v-for="(item, i) in items" :key="i" cols="3">
-             <RewardCard :reward="item"/>
+             <RewardCard :reward="item" :isClaimRewardView="true" @claim="confirmClaim"/>
         </v-col>
-        <v-skeleton-loader v-if="moreDataToAvailable" v-intersect="loadNextPage" type="list-item@5" />
 
         <!-- Modals -->
         <ModalFormReward :title="modalFormTitle" v-if="modalFormReward" @close="modalFormReward = false"/>
@@ -17,18 +19,10 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
-
 import RewardCard from '@/modules/reward/components/RewardCard'
 import ModalFormReward from '@/modules/reward/components/ModalFormReward'
 
 export default {
-    props: {
-        itemSelectionActive: {
-            type: Boolean,
-            default: false 
-        },
-    },
     components: {
         RewardCard,
         ModalFormReward
@@ -36,54 +30,63 @@ export default {
     data() {
         return {
             modalFormReward: false,
-            modalFormTitle: "Editar premio"
+            modalFormTitle: "Editar premio",
+            items: []
         }
     },
-    computed: {
-        moreDataToAvailable () {
-            return Math.ceil(this.totalCount / this.pageSize) > this.pageLoaded
-        },
-        ...mapGetters('auth', [
-            "isAdmin"
-        ]),
-        ...mapState('userReward', [
-            "items",
-            "pageSize",
-            "totalCount",
-            "pageLoaded"
-        ])
-    },
     methods: {
-        async loadNextPage (entries) {
-            if (entries[0].isIntersecting && this.moreDataToAvailable) {
-                const nextPage = this.pageLoaded + 1;
-                const { data } = await this.loadRewards(nextPage);
-                this.$store.commit('userReward/addData', { data, nextPage });
-            }
-        },
-        async loadRewards(page){
+        async loadRewards(){
             try {
-                const { pages } = await this.$axios.$post(`${process.env.baseUrl}/reward/getUserRewardsPaginated`, { page });
-                const rewards = pages.data.map((r) => {
-                    r.reward.isClaim = r.is_claim;
-                    r.reward.userRewardId = r.id;
-                    return r.reward;
-                });
-                return { data: rewards, meta: pages.meta }
+                const { data } = await this.$axios.$post(`${process.env.baseUrl}/reward/userRewards`);
+                return data;
             } catch (error) {
                 const snackbar = { color: 'red', timeout: 3000, state: true , text: this.$t('ErrorWhenObtainingRewards'), top: true };
                 this.$store.commit('ui/snackbar', snackbar);
             }
         },
-        editReward(reward){
-            this.$store.commit('userReward/toEdit', reward);
-            this.modalFormReward = true;
-        }
+        confirmClaim(id){
+            this.$dialog.open({
+                title: this.$t('Info'),
+                message: this.$t('ClaimRewardMessage'),
+                resolver: (async (result) => {
+                    if (await result) {
+                        this.claimPrize(id);
+                    }
+                }),
+            });
+        },
+        async claimPrize(id) {
+            this.$store.commit('ui/loader', true);
+
+            try {
+                const payload = { userRewardId: id }
+                await new Promise(resolve => setTimeout(resolve, 300));
+                const { status, message } = await this.$axios.$post(`${process.env.baseUrl}/reward/claim`, payload);
+
+                const snackbar = { color: 'success', timeout: 3000, state: true , text: message, top: true };
+                if (status){
+                    this.items = this.items.filter(i => i.userRewardId !== id);
+                } else {
+                    snackbar.color = 'yellow';
+                }
+
+                this.$store.commit('ui/loader', false);
+                this.$store.commit('ui/snackbar', snackbar);
+
+            } catch (error) {
+                const snackbar = { color: 'red', timeout: 3000, state: true , text: this.$t('ErrorWhenDeleteReward'), top: true };
+                this.$store.commit('ui/loader', false);
+                this.$store.commit('ui/snackbar', snackbar);
+            };
+        },
     },
     async mounted () {
-        if (this.items && this.items.length === this.totalCount) return;
-        const { data, meta } = await this.loadRewards(1);
-        this.$store.commit('userReward/init', { data, meta });
+        const data = await this.loadRewards();
+        this.items = data.map((r) => {
+            r.reward.isClaim = r.is_claim;
+            r.reward.userRewardId = r.id;
+            return r.reward;
+        });
     },
 }
 </script>

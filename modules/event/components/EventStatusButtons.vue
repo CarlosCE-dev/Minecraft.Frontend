@@ -1,6 +1,6 @@
 <template>
     <v-card-actions>
-        <v-btn outlined text color="indigo" v-if="showCrudButtons" :to="{ name: 'admin-group-id', params: { id } }">
+        <v-btn outlined text color="indigo" v-if="showCrudButtons" :to="{ name: 'admin-group-id', params: { id: this.event.id } }">
             Manager
         </v-btn>
         <v-spacer></v-spacer>
@@ -15,9 +15,10 @@
         <v-btn text small outlined color="red" v-if="showCrudButtons" fab depressed @click="confirmRemove">
             <v-icon>mdi-delete</v-icon>
         </v-btn>
-        <v-btn outlined text color="indigo" v-if="showClaimRewardButton" @click="claim">
-            Get random reward
+        <v-btn outlined text color="indigo" v-if="showClaimRewardButton" @click="claim" :disabled="this.event.event_finish">
+            {{ this.event.event_finish ? "Event finished" : "Get random reward"}}
         </v-btn>
+        <v-btn outlined text color="green" v-if="showFinishButton" @click="confirmChangeStatus(eventStatusTypes.finished)">Finish</v-btn>
     </v-card-actions>
 </template>
 
@@ -29,18 +30,10 @@ import { EventStatusTypes } from "@/models/enums/EventStatusTypes"
 
 export default {
     props: {
-        id: {
-            type: Number,
-            required: true,
+        event: {
+            type: Object,
+            default: {},
         },
-        status: {
-            type: Number,
-            required: true
-        },
-        notAvailable: {
-            type: Boolean,
-            default: true
-        }
     },
     data() {
         return {
@@ -56,22 +49,27 @@ export default {
             "isClaimPage",
         ]),
         showStartButton() {
-            return this.status === this.eventStatusTypes.created && this.isAdmin && !this.isClaimPage
+            return this.event.status === this.eventStatusTypes.created && this.isAdmin && !this.isClaimPage
         },
         showCrudButtons() {
-            return this.status === this.eventStatusTypes.created && this.isAdminOrModerator && !this.isClaimPage
+            return this.event.status === this.eventStatusTypes.created && this.isAdminOrModerator && !this.isClaimPage
         },
         showPauseButton() {
-            return this.status === this.eventStatusTypes.started && this.isAdmin && !this.isClaimPage
+            return this.event.status === this.eventStatusTypes.started && this.isAdmin && !this.isClaimPage
         },
         showRestartButton() {
-            return this.status === this.eventStatusTypes.paused && this.isAdmin && !this.isClaimPage
+            return this.event.status === this.eventStatusTypes.paused && this.isAdmin && !this.isClaimPage
         },
         showCancelButton() {
-            return this.status === this.eventStatusTypes.started && this.isAdmin && !this.isClaimPage
+            return this.event.status === this.eventStatusTypes.started && this.isAdmin && !this.isClaimPage
         },
         showClaimRewardButton(){
-            return this.isClaimPage && !this.notAvailable
+            if (this.isClaimPage && this.event_finish) return true;
+            if (this.isClaimPage && !this.event.not_available) return true;
+            return false;
+        },
+        showFinishButton(){
+            return this.event.status === this.eventStatusTypes.started && this.isAdmin && !this.isClaimPage
         }
     },
     methods: {
@@ -93,7 +91,7 @@ export default {
             this.$store.commit("ui/loader", true);
 
             try {
-                const payload = { groupId: this.id };
+                const payload = { groupId: this.event.id };
                 await new Promise((resolve) => setTimeout(resolve, 300));
                 const { status, message } = await this.$axios.$post(`${process.env.baseUrl}/group/delete`, payload);
 
@@ -124,11 +122,12 @@ export default {
             });
         },
         async changeStatus(eventStatus){
+            console.log(eventStatus)
             this.$store.commit("ui/loader", true);
 
             try {
                 const payload = { 
-                    groupId: this.id, 
+                    groupId: this.event.id, 
                     status: eventStatus
                 };
                 await new Promise((resolve) => setTimeout(resolve, 300));

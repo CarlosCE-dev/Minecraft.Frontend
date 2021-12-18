@@ -7,8 +7,11 @@
             </div>
         </v-col>
         <v-col v-for="item in items" :key="item.id" cols="12">
-             <EventCard :event="item" @randomReward="getRandomReward"/>
+             <EventCard :event="item" @randomReward="getRandomReward" @details="showDetailsModal"/>
         </v-col>
+
+        <!-- Modals -->
+        <ModalEventDetails v-if="modalEventDetail" @close="modalEventDetail = false"/>
         <RewardModal :reward="rewardModal" v-if="rewardModalState" @close="rewardModalState = false"/>
     </v-row>
 </template>
@@ -16,17 +19,21 @@
 <script>
 import EventCard from '@/modules/event/components/EventCard'
 import RewardModal from '@/modules/reward/components/RewardModal'
+import ModalEventDetails from '@/modules/event/components/ModalEventDetails'
+
 
 export default {
     components: {
         EventCard,
         RewardModal,
+        ModalEventDetails
     },
     data() {
         return {
             items: [],
             rewardModalState: false,
-            rewardModal: null
+            rewardModal: null,
+            modalEventDetail: false
         }
     },
     methods: {
@@ -36,7 +43,8 @@ export default {
                 this.items = data.map(d => {
                     return {
                         ...d.event,
-                        not_available: d.notAvailable
+                        not_available: d.notAvailable,
+                        event_finish: d.eventFinished
                     }
                 });
             } catch (error) {
@@ -80,6 +88,10 @@ export default {
                 this.$store.commit("ui/loader", false);
                 this.$store.commit("ui/snackbar", snackbar);
             } 
+        },
+        showDetailsModal(id){
+            this.$store.commit('reward/setDetailEvent', id);
+            this.modalEventDetail = true;
         }
     },
     created () {
