@@ -4,7 +4,7 @@
             <div class="mb-2 mx-2">
                 <div class="d-flex align-center">
                     <h2>Premios obtenidos</h2>
-                    <v-btn color="primary" small class="ml-auto">Historial</v-btn>
+                    <v-btn color="primary" small class="ml-auto" @click="modalHistoryReward = true">Historial</v-btn>
                 </div>
                 <v-divider></v-divider>
             </div>
@@ -15,20 +15,24 @@
 
         <!-- Modals -->
         <ModalFormReward :title="modalFormTitle" v-if="modalFormReward" @close="modalFormReward = false"/>
+        <ModalHistoryReward v-if="modalHistoryReward" @close="modalHistoryReward = false" />
     </v-row>
 </template>
 
 <script>
 import RewardCard from '@/modules/reward/components/RewardCard'
 import ModalFormReward from '@/modules/reward/components/ModalFormReward'
+import ModalHistoryReward from "@/modules/reward/components/ModalHistoryReward";
 
 export default {
     components: {
         RewardCard,
-        ModalFormReward
+        ModalFormReward,
+        ModalHistoryReward
     },
     data() {
         return {
+            modalHistoryReward: false,
             modalFormReward: false,
             modalFormTitle: "Editar premio",
             items: []

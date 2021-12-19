@@ -30,6 +30,7 @@
 
 <script>
 import { format } from "date-fns";
+import { es } from 'date-fns/locale'
 
 // Components
 import EventStatusButtons from '@/modules/event/components/EventStatusButtons'
@@ -50,8 +51,8 @@ export default {
         eventDate() {
             return !this.event.end_date || !this.event.start_date
                 ? this.$t("DatesNotDefined")
-                : `${format(new Date(this.event.start_date), "MMMM d yyyy")} - ${format(
-                    new Date(this.event.end_date), "MMMM d yyyy")}`;
+                : `${format(new Date(this.event.start_date), "MMMM d yyyy", { locale: es })} - ${format(
+                    new Date(this.event.end_date), "MMMM d yyyy", { locale: es })}`;
         },
         getStatusName(){
             return getNameForEventStatusType(this.event.status);

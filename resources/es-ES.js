@@ -29,5 +29,7 @@ export default {
     MoneyGainByReward: "Has obtenido {money} PejeCoins al reclamar este premio!",
     BitcoinQuote: '"Creo que la tecnología se hará más grande y el precio del Pejecoin subirá, por lo que estoy decidido a seguir invirtiendo en el. No tengo la intención de vender mis Pejecoins. Tengo la intención de mantenerlos hasta que llegue un día en el que pueda usar mis Pejecoins por completo."',
     PejeCoinDescription: "Pejecoin es una plataforma de cadena de bloques descentralizada que establece una red de igual a igual que ejecuta y verifica de forma segura el código de la aplicación, llamados contratos inteligentes. Los contratos inteligentes permiten a los participantes realizar transacciones entre ellos sin una autoridad central confiable. Los registros de transacciones son inmutables, verificables y se distribuyen de forma segura a través de la red, lo que brinda a los participantes total propiedad y visibilidad de los datos de las transacciones. Las transacciones son enviadas y recibidas por cuentas de Pejecoin creadas por el usuario. Un remitente debe firmar transacciones y gastar Tortillas, la criptomoneda nativa de Pejecoin, como costo de procesamiento de transacciones en la red.",
-    ErrorWhenObtainingMoney: "Ocurrio un error al obtener tus Pejecoins."
+    ErrorWhenObtainingMoney: "Ocurrio un error al obtener tus Pejecoins.",
+    ErrorWhenObtainingHistory: "Ocurrio un error al obtener tu historial de ganancias.",
+    ErrorWhenObtainingRewardHistory: "Ocurrio un erro al obtener tu historial de premios reclamados."
 }
