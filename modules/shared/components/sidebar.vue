@@ -57,6 +57,7 @@ export default {
             { name: 'Events',  route: "/event", icon: 'mdi-font-awesome', admin: false }, 
             { name: 'Rewards',  route: "/reward", icon: 'mdi-gift', admin: false }, 
             { name: 'Store',  route: "/shop", icon: 'mdi-cart', admin: false }, 
+            { name: 'Settings',  route: "/settings", icon: 'mdi-cog', admin: false }, 
             { name: 'Admin',  route: "/admin/reward", icon: 'mdi-shield-key', admin: true }, 
         ],
     }),

@@ -122,7 +122,6 @@ export default {
             });
         },
         async changeStatus(eventStatus){
-            console.log(eventStatus)
             this.$store.commit("ui/loader", true);
 
             try {

@@ -3,7 +3,10 @@
         <v-col cols="12">
             <div class="mb-2 mx-2">
                 <div class="d-flex align-center">
-                    <h2>Premios obtenidos</h2>
+                    <div class="d-flex flex-column">
+                        <h2>Premios obtenidos</h2>
+                        {{ $t("RewardAvailableInfo") }}
+                    </div>
                     <v-btn color="primary" small class="ml-auto" @click="modalHistoryReward = true">Historial</v-btn>
                 </div>
                 <v-divider></v-divider>

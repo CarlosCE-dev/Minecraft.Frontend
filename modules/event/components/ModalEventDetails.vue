@@ -26,10 +26,7 @@
                                     Rareza
                                 </th>
                                 <th class="text-center small-column">
-                                    Cantidad
-                                </th>
-                                <th class="text-center small-column">
-                                    Premio
+                                    Premio restante
                                 </th>
                             </tr>
                         </thead>
@@ -47,7 +44,6 @@
                                         {{ rarityName(item.reward.rarity) }}
                                     </v-chip>
                                 </td>
-                                <td class="text-center">{{ item.reward.amount }}</td>
                                 <td class="text-center">{{ item.stockLeft }}</td>
                             </tr>
                         </tbody>

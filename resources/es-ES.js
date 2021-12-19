@@ -31,5 +31,8 @@ export default {
     PejeCoinDescription: "Pejecoin es una plataforma de cadena de bloques descentralizada que establece una red de igual a igual que ejecuta y verifica de forma segura el código de la aplicación, llamados contratos inteligentes. Los contratos inteligentes permiten a los participantes realizar transacciones entre ellos sin una autoridad central confiable. Los registros de transacciones son inmutables, verificables y se distribuyen de forma segura a través de la red, lo que brinda a los participantes total propiedad y visibilidad de los datos de las transacciones. Las transacciones son enviadas y recibidas por cuentas de Pejecoin creadas por el usuario. Un remitente debe firmar transacciones y gastar Tortillas, la criptomoneda nativa de Pejecoin, como costo de procesamiento de transacciones en la red.",
     ErrorWhenObtainingMoney: "Ocurrio un error al obtener tus Pejecoins.",
     ErrorWhenObtainingHistory: "Ocurrio un error al obtener tu historial de ganancias.",
-    ErrorWhenObtainingRewardHistory: "Ocurrio un erro al obtener tu historial de premios reclamados."
+    ErrorWhenObtainingRewardHistory: "Ocurrio un erro al obtener tu historial de premios reclamados.",
+    EventAvailableInfo: "Por cada evento activo puedes reclamar diariamente un premio. Cada evento visible tiene una fecha de inicio y fin; durante este tiempo puedes reclamar premios.",
+    RewardAvailableInfo: "Cada premio obtenido se mostrara en esta vista. Los cuales pueden ser reclamados para ser entregados a tu personajes de Minecraft",
+    ErrorWhenPasswordUpdate: "Se produjo un error al intentar cambiar la contraseña del usuario."
 }

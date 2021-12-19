@@ -90,7 +90,7 @@ export default {
             return `${getNameOfRarity(rarity).toLowerCase()}`
         },
         getDateWhenCreated(date){
-            return format(new Date(date), "dd/MM/yyyy HH:mm:ss", { locale: es });
+            return format(new Date(date), "dd/MM/yyyy HH:mmaaa", { locale: es });
         },
         async getHistory(){
             this.$store.commit('ui/loader', true);

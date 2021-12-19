@@ -15,7 +15,7 @@
             <v-text-field
                 v-if="loginForm"
                 color="green-light"
-                label="Enter your password"
+                label="Ingresa tu contraseña"
                 v-model="password"
                 :type="visibility ? 'password' : 'text'"
                 :rules="inputRequired"

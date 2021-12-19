@@ -2,12 +2,15 @@
     <v-row no-gutters class="mt-4">
         <v-col cols="12">
             <div class="mb-2 mx-2">
-                <h2>Eventos disponibles</h2>
+                <div>
+                    <h2>Eventos disponibles</h2>
+                    <span>{{ $t("EventAvailableInfo") }}</span>
+                </div>
                 <v-divider></v-divider>
             </div>
         </v-col>
         <v-col v-for="item in items" :key="item.id" cols="12">
-             <EventCard :event="item" @randomReward="getRandomReward" @details="showDetailsModal"/>
+            <EventCard :event="item" @randomReward="getRandomReward" @details="showDetailsModal"/>
         </v-col>
 
         <!-- Modals -->
