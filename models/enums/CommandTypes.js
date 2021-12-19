@@ -9,5 +9,9 @@ export const CommandTypes = {
     /**
      * Use to summon a mob in the game
      */
-    summon: 1
+    summon: 1,
+    /**
+     * Use to summon custom item in game
+     */
+    custom: 2
 }

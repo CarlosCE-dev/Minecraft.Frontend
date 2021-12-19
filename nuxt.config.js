@@ -3,8 +3,8 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - la_vecindad',
-    title: 'la_vecindad',
+    titleTemplate: '%s - La Vecindad',
+    title: 'La Vecindad',
     htmlAttrs: {
       lang: 'en'
     },
@@ -30,7 +30,6 @@ export default {
     scss: [
       'assets/scss/main.scss',
       'assets/scss/color.scss',
-      'assets/scss/table.scss',
     ]
   },
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins

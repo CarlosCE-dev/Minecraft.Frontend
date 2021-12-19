@@ -16,7 +16,3 @@ $ npm run start
 # generate static project
 $ npm run generate
 ```
-
-### Bugs
-[ ] Fix reward claim not showing up in reward list
-[ ] Historial de rewards

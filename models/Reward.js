@@ -13,9 +13,11 @@ export default class Reward {
         if (!model) return;
         this.name = model?.name;
         this.title = model?.title;
+        this.description = model?.description;
         this.rarity = parseInt(model?.rarity);
         this.amount = model?.amount;
         this.commandType = parseInt(model?.command_type);
+        this.customCommand = model?.custom_command;
         this.chance = model?.chance;
         this.img = model?.image;
         this.id = model?.id;
@@ -32,6 +34,10 @@ export default class Reward {
      * Display name of the reward
      */
     title = "";
+    /**
+     * Description for the reward
+     */
+    description = "";
     /**
      * Rarity type of the reward
      */
@@ -52,4 +58,8 @@ export default class Reward {
      * Image reference of the reward
      */
     img = "";
+    /**
+     * Custom command if needed
+     */
+    customCommand = ""
 }

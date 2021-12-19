@@ -26,6 +26,12 @@
             </v-list-item-avatar>
         </v-list-item>
         <v-card-actions v-if="crudActions">
+            <v-tooltip top v-if="reward.description">
+                <template v-slot:activator="{ on, attrs }">
+                    <v-icon color="white" dark v-bind="attrs" v-on="on">mdi-information</v-icon>
+                </template>
+                <span>{{reward.description}}</span>
+            </v-tooltip>
             <v-spacer></v-spacer>
             <v-checkbox v-model="checkbox" v-if="selectorActive" :value="reward.id" hide-details></v-checkbox>
             <template v-else>

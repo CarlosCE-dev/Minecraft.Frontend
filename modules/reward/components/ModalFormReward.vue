@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="600px">
+    <v-dialog v-model="dialog" persistent max-width="1000px">
         <v-form ref="form" v-model="valid" lazy-validation> 
             <v-card>
                 <v-card-title>
@@ -9,7 +9,17 @@
                 <v-card-text>
                     <v-container>
                         <v-row>
-                            <v-col cols="12">
+                            <v-col cols="6">
+                                <v-text-field
+                                    color="green-light"
+                                    label="Titulo del premio"
+                                    v-model="reward.title"
+                                    :rules="inputRequired"
+                                    required
+                                    outlined
+                                ></v-text-field>
+                            </v-col>
+                            <v-col cols="6">
                                 <v-text-field
                                     color="green-light"
                                     label="Nombre clave del premio"
@@ -22,14 +32,13 @@
                             <v-col cols="12">
                                 <v-text-field
                                     color="green-light"
-                                    label="Titulo del premio"
-                                    v-model="reward.title"
-                                    :rules="inputRequired"
+                                    label="Descripción del premio"
+                                    v-model="reward.description"
                                     required
                                     outlined
                                 ></v-text-field>
                             </v-col>
-                            <v-col cols="12">
+                            <v-col cols="2">
                                 <v-text-field
                                     type="number"
                                     color="green-light"
@@ -40,7 +49,7 @@
                                     outlined
                                 ></v-text-field>
                             </v-col>
-                            <v-col cols="12">
+                            <v-col cols="5" class="d-flex">
                                 <v-select
                                     :items="rarityTypes"
                                     item-text="name"
@@ -51,8 +60,9 @@
                                     required
                                     outlined
                                 ></v-select>
+                                <v-avatar size="20" :color="rarityColor" class="ml-1 mt-4"></v-avatar>
                             </v-col>
-                            <v-col cols="12">
+                            <v-col cols="5">
                                 <v-select
                                     :items="commandTypes"
                                     item-text="name"
@@ -63,6 +73,17 @@
                                     required
                                     outlined
                                 ></v-select>
+                            </v-col>
+                            <v-col cols="12" v-if="reward.commandType === commandTypesObject.custom">
+                                <v-text-field
+                                    type="text"
+                                    color="green-light"
+                                    label="Comando personalizado"
+                                    v-model="reward.customCommand"
+                                    :rules="inputRequired"
+                                    required
+                                    outlined
+                                ></v-text-field>
                             </v-col>
                         </v-row>
                         <div class="d-flex justify-end align-center">
@@ -119,6 +140,7 @@ import Reward from '@/models/Reward';
 
 // Helpers
 import { inputRequired, numberRequired } from '@/validators/rulesValidator';
+import { getNameOfRarity } from '@/modules/shared/helpers/rarityTypeHelper';
 
 export default {
     props: {
@@ -137,7 +159,8 @@ export default {
             rarityTypes: [],
             commandTypes: [],
             file: null,
-            localImage: null
+            localImage: null,
+            commandTypesObject: CommandTypes
         }
     },
     created () {
@@ -150,7 +173,10 @@ export default {
     computed: {
         ...mapState('reward', [
             "rewardToEdit"
-        ])
+        ]),
+        rarityColor() {
+            return `${getNameOfRarity(this.reward.rarity).toLowerCase()}`
+        },
     },
     methods: {
         close(){
@@ -213,9 +239,11 @@ export default {
             formData.append('image', this.file);
             formData.append('name', this.reward.name);
             formData.append('title', this.reward.title);
+            formData.append('description', this.reward.description);
             formData.append('rarity', this.reward.rarity);
             formData.append('amount', this.reward.amount);
             formData.append('commandType', this.reward.commandType);
+            formData.append('customCommand', this.reward.customCommand);
 
             const route = (this.rewardToEdit) ? 'update' : 'create';
 
