@@ -38,7 +38,15 @@
                                     </v-avatar>
                                     <v-avatar size="20" :color="rarityColor" v-else></v-avatar>
                                 </td>
-                                <td>{{ item.reward.title }}</td>
+                                <td class="d-flex align-center">
+                                    {{ item.reward.title }}
+                                    <v-tooltip top v-if="item.reward.description">
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-icon class="ml-auto" color="blue" dark v-bind="attrs" v-on="on">mdi-information</v-icon>
+                                        </template>
+                                        <span>{{item.reward.description}}</span>
+                                    </v-tooltip>
+                                </td>
                                 <td class="text-center">
                                     <v-chip :color="rarityColor(item.reward.rarity)" dark small>
                                         {{ rarityName(item.reward.rarity) }}
