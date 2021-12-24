@@ -11,10 +11,10 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="red darken-1" text @click="cancel">
-                        Cancelar
+                        {{ $t('Cancel') }}
                     </v-btn>
                     <v-btn color="green darken-1" text @click="confirm">
-                        Confirmar
+                        {{ $t('Confirm') }}
                     </v-btn>
                 </v-card-actions>
             </v-card>

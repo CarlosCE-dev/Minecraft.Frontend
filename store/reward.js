@@ -57,10 +57,11 @@ export const getters = {
     getTotalStock(state){
         if (!state.items || state.itemsSelected.length === 0) return 0;
 
-        return state.items
+        const items = state.items
             .filter(i => state.itemsSelected.includes(i.id))
-            .map(i => getStockPerRarity(i.rarity))
-            .reduce((prev, next) => prev + next);
+            .map(i => getStockPerRarity(i.rarity));
+
+        return items.length > 0 ? items.reduce((prev, next) => prev + next) : 0;
     }
 }
 

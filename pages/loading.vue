@@ -6,12 +6,17 @@
             <div class="sk-cube4 sk-cube"></div>
             <div class="sk-cube3 sk-cube"></div>
         </div>
-        <strong class="fade-in">Loading...</strong>
+        <strong class="fade-in">{{ $t("LoadingBlocks") }}</strong>
     </div>
 </template>
 
 <script>
 export default {
+    head() {
+        return {
+            title: this.$t("Loading"),
+        }
+    },
     name: 'loader-page',
     layout: 'loader',
     async mounted () {

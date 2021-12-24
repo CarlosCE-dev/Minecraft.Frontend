@@ -1,24 +1,24 @@
 <template>
     <v-card-actions>
         <v-btn outlined text color="indigo" v-if="showCrudButtons" :to="{ name: 'admin-group-id', params: { id: this.event.id } }">
-            Manager
+            {{ $t("Manager") }}
         </v-btn>
         <v-spacer></v-spacer>
         <v-btn outlined text color="orange" v-if="showCrudButtons" @click="edit">
-            Edit
+            {{ $t("Edit") }}
         </v-btn>
-        <v-btn outlined text color="indigo" @click="details">Details</v-btn>
-        <v-btn outlined text color="green" v-if="showStartButton" @click="confirmChangeStatus(eventStatusTypes.started)">Start</v-btn>
-        <v-btn outlined text color="blue-grey" v-if="showPauseButton" @click="confirmChangeStatus(eventStatusTypes.paused)">Pause</v-btn>
-        <v-btn outlined text color="blue" v-if="showRestartButton" @click="confirmChangeStatus(eventStatusTypes.started)">Restart</v-btn>
-        <v-btn outlined text color="amber" v-if="showCancelButton" @click="confirmChangeStatus(eventStatusTypes.canceled)">Cancel</v-btn>
+        <v-btn outlined text color="indigo" @click="details">{{ $t("Details") }}</v-btn>
+        <v-btn outlined text color="green" v-if="showStartButton" @click="confirmChangeStatus(eventStatusTypes.started)">{{ $t("Start") }}</v-btn>
+        <v-btn outlined text color="blue-grey" v-if="showPauseButton" @click="confirmChangeStatus(eventStatusTypes.paused)">{{ $t("Pause") }}</v-btn>
+        <v-btn outlined text color="blue" v-if="showRestartButton" @click="confirmChangeStatus(eventStatusTypes.started)">{{ $t("Restart") }}</v-btn>
+        <v-btn outlined text color="amber" v-if="showCancelButton" @click="confirmChangeStatus(eventStatusTypes.canceled)">{{ $t("Cancel") }}</v-btn>
         <v-btn text small outlined color="red" v-if="showCrudButtons" fab depressed @click="confirmRemove">
             <v-icon>mdi-delete</v-icon>
         </v-btn>
         <v-btn outlined text color="indigo" v-if="showClaimRewardButton" @click="claim" :disabled="this.event.event_finish">
-            {{ this.event.event_finish ? "Event finished" : "Get random reward"}}
+            {{ this.event.event_finish ? $t("EventFinished") : $t("GetReward") }}
         </v-btn>
-        <v-btn outlined text color="green" v-if="showFinishButton" @click="confirmChangeStatus(eventStatusTypes.finished)">Finish</v-btn>
+        <v-btn outlined text color="green" v-if="showFinishButton" @click="confirmChangeStatus(eventStatusTypes.finished)">{{ $t("Finish") }}</v-btn>
     </v-card-actions>
 </template>
 

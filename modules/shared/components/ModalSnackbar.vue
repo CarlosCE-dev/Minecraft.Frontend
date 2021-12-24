@@ -7,7 +7,7 @@
                 <v-icon>mdi-</v-icon>
                 <span class="black--text">{{ snackbar.text }}</span>
                 <v-btn color="black" text @click="show = false">
-                    Close
+                    {{ $t('Close') }}
                 </v-btn>
         </v-snackbar>
     </div>

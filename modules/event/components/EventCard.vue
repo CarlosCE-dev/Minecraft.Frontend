@@ -8,7 +8,6 @@
                         dark
                         :color="getStatusColor"
                         class="ml-2 align-self-top">
-
                         {{ getStatusName }}
                     </v-chip>
                 </v-list-item-title>
@@ -55,7 +54,7 @@ export default {
                     new Date(this.event.end_date), "MMMM d yyyy", { locale: es })}`;
         },
         getStatusName(){
-            return getNameForEventStatusType(this.event.status);
+            return this.$t(getNameForEventStatusType(this.event.status));
         },
         getStatusColor(){
             return getColorForEventStatusType(this.event.status);

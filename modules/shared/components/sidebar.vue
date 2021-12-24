@@ -23,7 +23,7 @@
                 <v-list-item-icon>
                     <v-icon>{{item.icon}}</v-icon>
                 </v-list-item-icon>
-                <v-list-item-title>{{item.name}}</v-list-item-title>
+                <v-list-item-title>{{ itemName(item.name) }}</v-list-item-title>
             </v-list-item>
         </v-list>
 
@@ -33,7 +33,7 @@
                     <v-list-item-icon>
                         <v-icon>mdi-login-variant</v-icon>
                     </v-list-item-icon>
-                    <v-list-item-title>Log out</v-list-item-title>
+                    <v-list-item-title>{{ $t('LogOut') }}</v-list-item-title>
                 </v-list-item>
             </v-list>
         </template>
@@ -56,7 +56,7 @@ export default {
         items: [
             { name: 'Events',  route: "/event", icon: 'mdi-font-awesome', admin: false }, 
             { name: 'Rewards',  route: "/reward", icon: 'mdi-gift', admin: false }, 
-            { name: 'Store',  route: "/shop", icon: 'mdi-cart', admin: false }, 
+            { name: 'Shop',  route: "/shop", icon: 'mdi-cart', admin: false }, 
             { name: 'Settings',  route: "/settings", icon: 'mdi-cog', admin: false }, 
             { name: 'Admin',  route: "/admin/reward", icon: 'mdi-shield-key', admin: true }, 
         ],
@@ -86,6 +86,9 @@ export default {
             this.$axios.setToken(false);
             this.$store.commit('auth/logOut');
             this.$router.push({ path: "auth-login" });
+        },
+        itemName(name){
+            return this.$t(name);
         }
     }, 
     created () {

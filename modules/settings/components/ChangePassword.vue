@@ -2,7 +2,7 @@
     <v-card class="">
         <div class="d-flex green-light pa-2">
             <v-icon medium color="white">mdi-lock-reset</v-icon>
-            <strong class="ml-1 font-weight-black white--text subtitle1">Cambiar contraseña </strong>
+            <strong class="ml-1 font-weight-black white--text subtitle1">{{ $t('ChangePassword') }}</strong>
         </div>
         <v-card-text>
             <v-form ref="form" v-model="valid" lazy-validation>
@@ -11,9 +11,9 @@
                     outlined
                     color="green-light"
                     v-model="actualPassword" 
-                    placeholder="Escribe tu contraseña actual" 
+                    :placeholder="$t('EnterCurrentPassword')" 
                     :rules="passwordRules"
-                    label="Contraseña actual" 
+                    :label="$t('CurrentPassword')" 
                     required
                     :type="showActual ? 'text' : 'password'"
                     @click:append="showActual = !showActual"
@@ -24,8 +24,8 @@
                     class="mb-1"
                     color="green-light"
                     v-model="password" 
-                    label="Contraseña nueva"
-                    placeholder="Escribe tu nueva contraseña" 
+                    :label="$t('NewPassword')" 
+                    :placeholder="$t('EnterNewPassword')" 
                     :rules="passwordRules" 
                     required
                     :type="show ? 'text' : 'password'"
@@ -36,16 +36,16 @@
                     class="mb-1"
                     outlined
                     color="green-light"
-                    placeholder="Confirma tu nueva contraseña" 
+                    :label="$t('ConfirmPassword')" 
+                    :placeholder="$t('ConfirmNewPassword')" 
                     :rules="checkPassword()" 
                     required
-                    label="Confirmar contraseña"
                     type="password"
                     autocomplete="false"
                 ></v-text-field>
                 <div class="text-right">
                     <v-btn :disabled="!valid" color="success" @click="validate">
-                        Actualizar contraseña
+                        {{ $t('UpdatePassword') }}
                     </v-btn>
                 </div>
             </v-form>
@@ -99,7 +99,7 @@ export default {
             };
         },
         checkPassword() {
-            return [ this.password === this.password_confirm || "La contraseña debe coincidir"];
+            return [ this.password === this.password_confirm || this.$('PasswordCheck') ];
         },
    },
 }

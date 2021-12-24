@@ -21,6 +21,6 @@ export const mutations = {
 }
 
 export const getters = {
-    isAdmin: ( state ) =>  state.user.role === RoleTypes.admin,
+    isAdmin: ( state ) =>  state.user?.role === RoleTypes.admin,
     isAdminOrModerator: ( state ) =>  validAdminRoles.includes(state.user.role)
 }

@@ -37,7 +37,7 @@
             <template v-else>
                 <v-spacer></v-spacer>
                 <v-btn dark color="transparent" depressed @click="edit">
-                    Editar
+                    {{ $t('Edit') }}
                     <v-icon right color="white">mdi-pencil</v-icon>
                 </v-btn>
                 <v-btn dark small color="transparent" fab depressed @click="confirmRemove">
@@ -48,7 +48,7 @@
         <v-card-actions v-if="isClaimRewardView">
             <v-spacer></v-spacer>
             <v-btn dark color="white" outlined depressed @click="onClaimClick">
-                Reclamar premio
+                {{ $t('ClaimPrize') }}
             </v-btn>
         </v-card-actions>
     </v-card>

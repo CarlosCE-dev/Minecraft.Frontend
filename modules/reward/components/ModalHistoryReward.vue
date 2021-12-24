@@ -3,11 +3,11 @@
     <v-dialog v-model="dialog" persistent max-width="1000px">
         <v-card>
             <v-card-title>
-                <span class="text-h5">Historial de premios reclamados</span>
+                <span class="text-h5">{{ $t('HistoryRewardsClaim') }}</span>
             </v-card-title>
             <v-card-text v-if="items.length === 0">
                 <v-alert dense type="info">
-                    No hay información para mostrar
+                    {{ $t('NoInfoToShow') }}
                 </v-alert>
             </v-card-text>
             <v-card-text v-else>
@@ -17,16 +17,16 @@
                             <tr>
                                 <th class="text-left small-column"></th>
                                 <th class="text-left">
-                                    Title
+                                    {{ $t('Name') }}
                                 </th>
                                 <th class="text-center">
-                                    Fecha obtenido
+                                    {{ $t('DateObtain') }}
                                 </th>
                                 <th class="text-center medium-column">
-                                    Rareza
+                                    {{ $t('Rare') }}
                                 </th>
                                 <th class="text-center small-column">
-                                    Cantidad
+                                    {{ $t("Amount") }}
                                 </th>
                             </tr>
                         </thead>
@@ -62,7 +62,7 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="orange darken-1" text @click="close">
-                    Cerrar
+                    {{ $t('Close') }}
                 </v-btn>
             </v-card-actions>
         </v-card>

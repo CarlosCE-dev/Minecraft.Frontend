@@ -11,7 +11,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="green darken-1" text @click="closeModal">
-                        Ok
+                        {{ $t('Confirm') }}
                     </v-btn>
                 </v-card-actions>
             </v-card>

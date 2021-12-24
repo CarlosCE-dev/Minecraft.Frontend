@@ -4,7 +4,7 @@
             {{ $t('TotalRewardsSelected') }} {{ itemsSelected.length }} <br>
             {{ $t('StockRewards')}} {{ getTotalStock }}
             <div class="text-right">
-                <v-btn outlined color="white" @click="confirmChanges">Guardar cambios</v-btn>
+                <v-btn outlined color="white" @click="confirmChanges">{{ $t("SaveChanges") }}</v-btn>
             </div>
         </div>
     </v-card>

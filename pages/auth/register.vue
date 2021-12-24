@@ -14,7 +14,7 @@ export default {
     layout: 'auth',
     head() {
         return {
-            title: "Register",
+            title: this.$t("Register")
         }
     },
     mounted () {

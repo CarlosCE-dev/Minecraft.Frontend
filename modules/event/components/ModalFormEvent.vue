@@ -4,7 +4,7 @@
         <v-form ref="form" v-model="valid" lazy-validation> 
             <v-card>
                 <v-card-title>
-                    <span class="text-h5">{{ title }}</span>
+                    <span class="text-h5">{{ $t(title) }}</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
@@ -12,7 +12,7 @@
                             <v-col cols="12">
                                 <v-text-field
                                     color="green-light"
-                                    label="Titulo del evento"
+                                    :label="$t('EventTitle')"
                                     v-model="group.title"
                                     :rules="inputRequired"
                                     required
@@ -26,14 +26,14 @@
                                     required
                                     :rules="inputRequired"
                                     name="input-7-4"
-                                    label="Descripción del evento"
+                                    :label="$t('EventDescription')"
                                     v-model="group.description"
                                 ></v-textarea>
                             </v-col>
                             <v-col cols="6">
                                 <v-text-field
                                     color="green-light"
-                                    label="Fecha de inicio del evento"
+                                    :label="$t('EventStartDate')"
                                     v-model="group.startDate"
                                     prepend-icon="mdi-calendar"
                                     @click="modalDatepicker = true"
@@ -45,7 +45,7 @@
                             <v-col cols="6">
                                 <v-text-field
                                     color="green-light"
-                                    label="Fecha final del evento"
+                                    :label="$t('EventEndDate')"
                                     v-model="group.endDate"
                                     prepend-icon="mdi-calendar"
                                     @click="modalDatepicker = true"
@@ -61,10 +61,10 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="orange darken-1" text @click="close">
-                        Cancelar
+                        {{ $t('Cancel') }}
                     </v-btn>
                     <v-btn color="green darken-1" text @click="sendData">
-                        Guardar
+                        {{ $t('SaveChanges') }}
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -92,7 +92,7 @@ export default {
     props: {
         title: {
             type: String,
-            default: "Crear nuevo evento" 
+            default: "NewEvent"
         },
     },
     data() {

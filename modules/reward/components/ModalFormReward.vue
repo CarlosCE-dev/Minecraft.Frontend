@@ -4,7 +4,7 @@
         <v-form ref="form" v-model="valid" lazy-validation> 
             <v-card>
                 <v-card-title>
-                    <span class="text-h5">{{ title }}</span>
+                    <span class="text-h5">{{ $t(title) }}</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
@@ -12,7 +12,7 @@
                             <v-col cols="6">
                                 <v-text-field
                                     color="green-light"
-                                    label="Titulo del premio"
+                                    :label="$t('RewardTitle')"
                                     v-model="reward.title"
                                     :rules="inputRequired"
                                     required
@@ -22,7 +22,7 @@
                             <v-col cols="6">
                                 <v-text-field
                                     color="green-light"
-                                    label="Nombre clave del premio"
+                                    :label="$t('RewardName')"
                                     v-model="reward.name"
                                     :rules="inputRequired"
                                     required
@@ -32,7 +32,7 @@
                             <v-col cols="12">
                                 <v-text-field
                                     color="green-light"
-                                    label="Descripción del premio"
+                                    :label="$t('RewardDescription')"
                                     v-model="reward.description"
                                     required
                                     outlined
@@ -42,7 +42,7 @@
                                 <v-text-field
                                     type="number"
                                     color="green-light"
-                                    label="Cantidad a entregar"
+                                    :label="$t('RewardAmount')"
                                     v-model="reward.amount"
                                     :rules="numberRequired"
                                     required
@@ -55,7 +55,7 @@
                                     item-text="name"
                                     item-value="value"
                                     color="green-light"
-                                    label="Rareza"
+                                    :label="$t('Rare')"
                                     v-model="reward.rarity"
                                     required
                                     outlined
@@ -68,7 +68,7 @@
                                     item-text="name"
                                     item-value="value"
                                     color="green-light"
-                                    label="Tipo de comando"
+                                    :label="$t('CommandType')"
                                     v-model="reward.commandType"
                                     required
                                     outlined
@@ -78,7 +78,7 @@
                                 <v-text-field
                                     type="text"
                                     color="green-light"
-                                    label="Comando personalizado"
+                                    :label="$t('CustomCommand')"
                                     v-model="reward.customCommand"
                                     :rules="inputRequired"
                                     required
@@ -87,7 +87,7 @@
                             </v-col>
                         </v-row>
                         <div class="d-flex justify-end align-center">
-                            Subir imagen
+                            {{ $t('UploadImage') }}
                             <input type="file" v-show="false" accept="image/png, image/jpeg" ref="imageSelector" @change="onSelectedImage">
                             <v-btn class="ml-2" fab color="primary" depressed small @click="onSelectImage">
                                 <v-icon>mdi-upload</v-icon>
@@ -116,10 +116,10 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="orange darken-1" text @click="close">
-                        Cancelar
+                        {{ $t('Cancel') }}
                     </v-btn>
                     <v-btn color="green darken-1" text @click="sendData">
-                        Guardar
+                        {{ $t('SaveChanges') }}
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -146,7 +146,7 @@ export default {
     props: {
         title: {
             type: String,
-            default: "Crear nuevo premio" 
+            default: "CreateNewReward" 
         },
     },
     data() {

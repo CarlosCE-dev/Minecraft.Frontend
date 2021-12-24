@@ -13,7 +13,7 @@ export default {
     },
     head() {
         return {
-            title: "Settings",
+            title: this.$t("Settings"),
         }
     },
     mounted () {

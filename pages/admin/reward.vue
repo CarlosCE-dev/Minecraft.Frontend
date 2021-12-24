@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="ma-2 text-right">
-            <v-btn color="primary" depressed @click="newReward">Crear nuevo premio</v-btn>
+            <v-btn color="primary" depressed @click="newReward">{{ $t("CreateNewReward") }}</v-btn>
         </div>
         <RewardList/>
 

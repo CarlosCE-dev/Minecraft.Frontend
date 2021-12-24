@@ -10,7 +10,7 @@ import EventList from '@/modules/event/components/EventList'
 export default {
     head() {
         return {
-            title: "Eventos",
+            title: this.$t("Events")
         }
     },
     components: {

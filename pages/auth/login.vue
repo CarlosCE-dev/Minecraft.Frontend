@@ -14,7 +14,7 @@ export default {
   layout: 'auth',
   head() {
     return {
-      title: "Login",
+      title: this.$t("Login")
     }
   },
   mounted () {

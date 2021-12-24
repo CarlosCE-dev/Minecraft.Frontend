@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="ma-2 text-right">
-            <v-btn color="primary" depressed @click="newEvent">Crear nuevo evento</v-btn>
+            <v-btn color="primary" depressed @click="newEvent">{{ $t('NewEvent') }}</v-btn>
         </div>
         <EventListLoader />
 

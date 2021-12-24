@@ -8,8 +8,8 @@
                 v-model="dates"
                 scrollable>
                 <v-spacer></v-spacer>
-                <v-btn text color="orange" @click="show = false">Cancel</v-btn>
-                <v-btn text color="success" @click="confirm">Confirmar</v-btn>
+                <v-btn text color="orange" @click="show = false">{{ $t('Cancel') }}</v-btn>
+                <v-btn text color="success" @click="confirm">{{ $t('Confirm') }}</v-btn>
             </v-date-picker>
         </v-dialog>
     </div>

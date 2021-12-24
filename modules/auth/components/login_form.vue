@@ -5,7 +5,7 @@
         <v-form ref="form" v-model="valid" lazy-validation>
             <v-text-field
                 color="green-light"
-                label="Ingresa tu correo"
+                :label='$t("EnterPassword")'
                 v-model="email"
                 :rules="emailRules"
                 required
@@ -15,7 +15,7 @@
             <v-text-field
                 v-if="loginForm"
                 color="green-light"
-                label="Ingresa tu contraseña"
+                :label='$t("EnterPassword")'
                 v-model="password"
                 :type="visibility ? 'password' : 'text'"
                 :rules="inputRequired"
@@ -32,8 +32,8 @@
              <v-text-field
                 v-if="!loginForm"
                 color="green-light"
-                label="Cuenta de minecraft"
-                placeholder="Nombre exacto de tu cuenta de minecraft"
+                :label='$t("MinecraftAccount")'
+                :placeholder='$t("MinecraftAccountPlaceholder")'
                 v-model="minecraftUsername"
                 :rules="inputRequired"
                 required
@@ -42,11 +42,11 @@
 
             <small v-if="!loginForm">
                 <v-icon small color="orange">mdi-alert-circle</v-icon>
-                Para evitar errores asegurarte de escribir el nombre exacto de la cuenta de minecraft que utilizas
+                {{ $t("MinecraftAccountHelper") }}
             </small>
 
             <v-checkbox v-if="loginForm"
-                        label="Mantener sesión iniciada" 
+                        :label='$t("KeepSession")'
                         dense
                         hide-details 
                         hint-text
@@ -82,15 +82,15 @@
         <v-dialog v-model="registerFormSuccess" persistent max-width="290">
             <v-card>
                 <v-card-title class="text-h5">
-                    Exito!
+                    {{ $t("Success") }}
                 </v-card-title>
                 <v-card-text>
-                    Se creo el usuario exitosamente, contacte el administrador para que te proporcione la clave de acceso del usuario registrado
+                    {{ $t("SuccessLoginMessage") }}
                 </v-card-text>
                 <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="green darken-1" text to="/auth/login">
-                    Ok
+                    {{ $t("Confirm") }}
                 </v-btn>
                 </v-card-actions>
             </v-card>

@@ -2,7 +2,7 @@
     <v-row no-gutters class="mt-4">
         <v-col cols="12">
             <div class="mb-2 mx-2">
-                <h2>Eventos</h2>
+                <h2>{{ $t("Events") }}</h2>
                 <v-divider></v-divider>
             </div>
         </v-col>
@@ -12,7 +12,7 @@
         <v-skeleton-loader v-if="moreDataToAvailable" v-intersect="loadNextPage" type="list-item@5" />
 
         <!-- Modals -->
-        <ModalFormEvent :title="modalFormTitle" v-if="modalFormEvent" @close="modalFormEvent = false"/>
+        <ModalFormEvent title="EditEvent" v-if="modalFormEvent" @close="modalFormEvent = false"/>
         <ModalEventDetails v-if="modalEventDetail" @close="modalEventDetail = false"/>
     </v-row>
 </template>
@@ -34,7 +34,6 @@ export default {
     data() {
         return {
             modalFormEvent: false,
-            modalFormTitle: "Editar evento",
             modalEventDetail: false
         }
     },

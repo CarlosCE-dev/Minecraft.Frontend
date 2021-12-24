@@ -3,7 +3,7 @@ export default {
     middleware: 'redirect',
     head() {
         return {
-            title: "Home",
+            title: this.$t("Shop"),
         }
     },
     mounted () {

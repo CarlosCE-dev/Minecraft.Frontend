@@ -3,16 +3,16 @@
     <v-dialog v-model="dialog" persistent max-width="1000px">
         <v-card>
             <v-card-title>
-                <span class="text-h5">Evento</span>
+                <span class="text-h5">{{ $t("EventRewards") }}</span>
             </v-card-title>
             <v-card-text v-if="rewards.length === 0">
                 <v-alert dense type="info">
-                    No hay información para mostrar
+                    {{ $t("NoInfoToShow") }}
                 </v-alert>
             </v-card-text>
             <v-card-text v-else>
                 <div class="d-flex justify-end mb-2">
-                    <h4>Premios restantes: {{ rewardsLeft }}</h4>
+                    <h4>{{ $t("TotalRewardsLeft") }} {{ rewardsLeft }}</h4>
                 </div>
                 <v-simple-table dense>
                     <template v-slot:default>
@@ -20,13 +20,13 @@
                             <tr>
                                 <th class="text-left small-column"></th>
                                 <th class="text-left">
-                                    Title
+                                    {{ $t("Name") }}
                                 </th>
                                 <th class="text-center medium-column">
-                                    Rareza
+                                    {{ $t("Rare") }}
                                 </th>
                                 <th class="text-center small-column">
-                                    Premio restante
+                                    {{ $t("RewardsLeft") }}
                                 </th>
                             </tr>
                         </thead>
@@ -61,7 +61,7 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="orange darken-1" text @click="close">
-                    Cerrar
+                    {{ $t("Close") }}
                 </v-btn>
             </v-card-actions>
         </v-card>

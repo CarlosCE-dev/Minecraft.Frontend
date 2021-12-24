@@ -13,7 +13,7 @@ export default {
     },
     head() {
         return {
-            title: "Premios",
+            title: this.$t("Rewards")
         }
     },
     mounted () {

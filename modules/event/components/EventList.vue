@@ -3,7 +3,7 @@
         <v-col cols="12">
             <div class="mb-2 mx-2">
                 <div>
-                    <h2>Eventos disponibles</h2>
+                    <h2>{{ $t("EventsAvailable") }}</h2>
                     <span>{{ $t("EventAvailableInfo") }}</span>
                 </div>
                 <v-divider></v-divider>

@@ -2,12 +2,12 @@
     <div class="content ma-0 pa-0 pb-1">
         <v-bottom-navigation :value="value" background-color="green" horizontal dark class="elevation-0">
             <v-btn :to="{ name: 'admin-reward' }">
-                <span>Rewards</span>
+                <span>{{ $t("Rewards") }}</span>
                 <v-icon>mdi-gift</v-icon>
             </v-btn>
 
             <v-btn :to="{ name: 'admin-group' }">
-                <span>Events</span>
+                <span>{{ $t("Events") }}</span>
                 <v-icon>mdi-calendar-range</v-icon>
             </v-btn>
 
@@ -21,7 +21,7 @@ export default {
     middleware: 'admin',
     head() {
         return {
-            title: "Admin",
+            title: this.$t("Admin"),
         }
     },
     data() {

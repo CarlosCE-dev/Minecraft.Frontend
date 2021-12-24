@@ -2,7 +2,7 @@
     <v-row no-gutters class="mt-4">
         <v-col cols="12">
             <div class="mb-2 mx-2">
-                <h2>Premios disponibles</h2>
+                <h2>{{ $t('RewardsAvailable') }}</h2>
                 <v-divider></v-divider>
             </div>
         </v-col>
@@ -12,7 +12,7 @@
         <v-skeleton-loader v-if="moreDataToAvailable" v-intersect="loadNextPage" type="list-item@5" />
 
         <!-- Modals -->
-        <ModalFormReward :title="modalFormTitle" v-if="modalFormReward" @close="modalFormReward = false"/>
+        <ModalFormReward title="EditReward" v-if="modalFormReward" @close="modalFormReward = false"/>
     </v-row>
 </template>
 
@@ -36,7 +36,6 @@ export default {
     data() {
         return {
             modalFormReward: false,
-            modalFormTitle: "Editar premio"
         }
     },
     computed: {
