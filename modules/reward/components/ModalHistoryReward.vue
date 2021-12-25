@@ -19,14 +19,11 @@
                                 <th class="text-left">
                                     {{ $t('Name') }}
                                 </th>
-                                <th class="text-center">
+                                <th class="text-center large-column">
                                     {{ $t('DateObtain') }}
                                 </th>
                                 <th class="text-center medium-column">
                                     {{ $t('Rare') }}
-                                </th>
-                                <th class="text-center small-column">
-                                    {{ $t("Amount") }}
                                 </th>
                             </tr>
                         </thead>
@@ -39,10 +36,10 @@
                                     <v-avatar size="20" :color="rarityColor" v-else></v-avatar>
                                 </td>
                                 <td class="d-flex align-center">
-                                    {{ item.reward.title }}
+                                    {{ item.reward.title }} {{ amountItem(item.reward.amount)}}
                                     <v-tooltip top v-if="item.reward.description">
                                         <template v-slot:activator="{ on, attrs }">
-                                            <v-icon class="ml-auto" color="blue" dark v-bind="attrs" v-on="on">mdi-information</v-icon>
+                                            <v-icon class="ml-auto" color="blue" dark v-bind="attrs" v-on="on">mdi-help-circle-outline</v-icon>
                                         </template>
                                         <span>{{item.reward.description}}</span>
                                     </v-tooltip>
@@ -53,7 +50,6 @@
                                         {{ rarityName(item.reward.rarity) }}
                                     </v-chip>
                                 </td>
-                                <td class="text-center">{{ item.reward.amount }}</td>
                             </tr>
                         </tbody>
                     </template>
@@ -100,6 +96,9 @@ export default {
         getDateWhenCreated(date){
             return format(new Date(date), "dd/MM/yyyy HH:mmaaa", { locale: es });
         },
+        amountItem(amount){
+            return amount > 1 ? `(x${amount})` : "";
+        },
         async getHistory(){
             this.$store.commit('ui/loader', true);
             try {
@@ -126,5 +125,8 @@ export default {
 }
 .medium-column {
     width: 50px;
+}
+.large-column {
+    width: 200px;
 }
 </style>

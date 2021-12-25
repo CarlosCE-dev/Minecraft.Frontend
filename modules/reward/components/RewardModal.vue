@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent max-width="400px">
         <v-card :color="`${rarityColor} lighten-1`" dark class="d-flex flex-column align-center">
-            <span class="my-4 text-h5">{{ reward.title }} x{{ reward.amount }}</span>
+            <span class="my-4 text-h5">{{ reward.title }} {{ rewardAmount }}</span>
             <div class="d-flex justify-center flex-row">
                 <v-card :color="`${rarityColor} lighten-2`" elevation="0" v-if="reward.image" width="300">
                     <v-img :src="reward.image" 
@@ -15,10 +15,12 @@
                             </v-row>
                         </template>
                     </v-img>
-                   
                 </v-card>
             </div>
             <span class="my-2 text-h6">{{ rarityName }}</span>
+            <span class="my-2 caption" v-if="reward.description && reward.description !== ''">
+                {{ reward.description }}
+            </span>
             <div class="d-flex h-4 ">
                 {{ $t('MoneyGainByReward', { money: reward.money }) }}
             </div>
@@ -49,6 +51,9 @@ export default {
         rarityName(){
             return getNameOfRarity(this.reward.rarity);
         },
+        rewardAmount(){
+            return this.reward.amount > 1 ? `x${this.reward.amount}` : ""
+        }
     },
     created() {
         this.dialog = true;

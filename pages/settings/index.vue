@@ -1,7 +1,9 @@
 <template>
-    <div>
-        <ChangePassword />
-    </div>
+    <v-row no-gutters>
+        <v-col cols="4">
+            <ChangePassword />
+        </v-col>
+    </v-row>
 </template>
 
 <script>

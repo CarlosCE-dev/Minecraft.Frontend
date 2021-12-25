@@ -1,16 +1,15 @@
 <template>
-    <v-card outlined class="mx-2 mb-2" :color="rarityColor" dark>
+    <v-card outlined class="mx-2 my-2" :color="rarityColor" dark>
         <v-list-item three-line>
             <v-list-item-content>
-                <div class="text-overline mb-4">
+                <v-list-item-title class="text-h5">
                     <v-badge :color="`${rarityColor} lighten-1`" :content="reward.amount">
-                        {{ reward.name }}
-                    </v-badge>
-                </div>
-                <v-list-item-title class="text-h5 mb-1">
-                    {{ reward.title }}
+                        {{ reward.title }}
+                    </v-badge><br>
+                    <span class="caption">{{ rarityName }}</span>
                 </v-list-item-title>
-                <v-list-item-subtitle>{{ rarityName }}</v-list-item-subtitle>
+                <v-list-item-subtitle>
+                </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-avatar rounded size="80" :color="`${rarityColor} lighten-1`" v-if="reward.image">
                 <v-img :src="reward.image" 
@@ -28,7 +27,7 @@
         <v-card-actions v-if="crudActions">
             <v-tooltip top v-if="reward.description">
                 <template v-slot:activator="{ on, attrs }">
-                    <v-icon color="white" dark v-bind="attrs" v-on="on">mdi-information</v-icon>
+                    <v-icon color="white" dark v-bind="attrs" v-on="on">mdi-help-circle-outline</v-icon>
                 </template>
                 <span>{{reward.description}}</span>
             </v-tooltip>
@@ -36,9 +35,8 @@
             <v-checkbox v-model="checkbox" v-if="selectorActive" :value="reward.id" hide-details></v-checkbox>
             <template v-else>
                 <v-spacer></v-spacer>
-                <v-btn dark color="transparent" depressed @click="edit">
-                    {{ $t('Edit') }}
-                    <v-icon right color="white">mdi-pencil</v-icon>
+                <v-btn dark color="transparent" fab small depressed @click="edit">
+                    <v-icon color="white">mdi-pencil</v-icon>
                 </v-btn>
                 <v-btn dark small color="transparent" fab depressed @click="confirmRemove">
                     <v-icon color="white">mdi-delete</v-icon>
@@ -46,6 +44,12 @@
             </template>
         </v-card-actions>
         <v-card-actions v-if="isClaimRewardView">
+            <v-tooltip top v-if="reward.description">
+                <template v-slot:activator="{ on, attrs }">
+                    <v-icon color="white" dark v-bind="attrs" v-on="on">mdi-help-circle-outline</v-icon>
+                </template>
+                <span>{{reward.description}}</span>
+            </v-tooltip>
             <v-spacer></v-spacer>
             <v-btn dark color="white" outlined depressed @click="onClaimClick">
                 {{ $t('ClaimPrize') }}

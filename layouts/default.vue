@@ -2,10 +2,8 @@
   <v-app class="content">
 
     <Sidebar class="sidebar" v-model="drawer" :fixed="fixed"/>
-
-    <Appbar class="appbar" @action="drawerController"/>
      
-    <v-main class="mx-md-4 mx-2 pb-4 content">
+    <v-main class="mx-md-4 mx-2 my-2 pb-2 content">
         <nuxt/>
     </v-main>
 
@@ -21,7 +19,6 @@
 <script>
 import { mapGetters } from "vuex";
 
-import Appbar from '@/modules/shared/components/appbar.vue'
 import Sidebar from '@/modules/shared/components/sidebar.vue'
 import ModalLoader from '@/modules/shared/components/ModalLoader.vue'
 import ModalSnackbar from '@/modules/shared/components/ModalSnackbar.vue'
@@ -35,7 +32,6 @@ export default {
     name: "default",
     middleware: 'authenticated',
     components: {
-        Appbar,
         Sidebar,
         ModalLoader,
         ModalSnackbar,

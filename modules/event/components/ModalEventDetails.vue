@@ -39,10 +39,10 @@
                                     <v-avatar size="20" :color="rarityColor" v-else></v-avatar>
                                 </td>
                                 <td class="d-flex align-center">
-                                    {{ item.reward.title }}
+                                    {{ item.reward.title }} {{ amountItem(item.reward.amount)}}
                                     <v-tooltip top v-if="item.reward.description">
                                         <template v-slot:activator="{ on, attrs }">
-                                            <v-icon class="ml-auto" color="blue" dark v-bind="attrs" v-on="on">mdi-information</v-icon>
+                                            <v-icon class="ml-auto" color="blue" dark v-bind="attrs" v-on="on">mdi-help-circle-outline</v-icon>
                                         </template>
                                         <span>{{item.reward.description}}</span>
                                     </v-tooltip>
@@ -101,6 +101,9 @@ export default {
         },
         rarityColor(rarity) {
             return `${getNameOfRarity(rarity).toLowerCase()}`
+        },
+        amountItem(amount){
+            return amount > 1 ? `(x${amount})` : "";
         },
         async getEventData(){
             this.$store.commit('ui/loader', true);

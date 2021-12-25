@@ -1,9 +1,9 @@
 <template>
-    <v-card class="">
-        <div class="d-flex green-light pa-2">
-            <v-icon medium color="white">mdi-lock-reset</v-icon>
-            <strong class="ml-1 font-weight-black white--text subtitle1">{{ $t('ChangePassword') }}</strong>
-        </div>
+    <v-card class="" dense>
+        <v-card-title>
+            <v-icon medium color="black">mdi-lock-reset</v-icon>
+            <strong class="ml-1 font-weight-black  subtitle1">{{ $t('ChangePassword') }}</strong>
+        </v-card-title>
         <v-card-text>
             <v-form ref="form" v-model="valid" lazy-validation>
                 <v-text-field :append-icon="showActual ? 'mdi-eye' : 'mdi-eye-off'"
