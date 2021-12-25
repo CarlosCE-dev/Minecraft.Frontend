@@ -1,16 +1,14 @@
 <template>
-    <div class="content ma-0 pa-0 pb-1">
-        <v-bottom-navigation :value="value" background-color="green" horizontal dark class="elevation-0">
+    <div class="ma-0 pa-0 pb-1">
+        <v-bottom-navigation :value="value" background-color="green-primary" dark class="elevation-0 rounded">
             <v-btn :to="{ name: 'admin-reward' }">
                 <span>{{ $t("Rewards") }}</span>
                 <v-icon>mdi-gift</v-icon>
             </v-btn>
-
             <v-btn :to="{ name: 'admin-group' }">
                 <span>{{ $t("Events") }}</span>
                 <v-icon>mdi-calendar-range</v-icon>
             </v-btn>
-
         </v-bottom-navigation>
         <nuxt-child />
     </div>
