@@ -66,9 +66,7 @@ export default {
                 const { status, message, data } = await this.$axios.$post(`${process.env.baseUrl}/reward/getRandomReward`, payload);
 
                 const snackbar = { color: "success", timeout: 3000, state: true, text: message, top: true };
-                if (status) {
-                    this.$store.commit("group/disableClaim");
-                } else {
+                if (!status) {
                     snackbar.color = "orange";
                     this.$store.commit("ui/snackbar", snackbar);
                 }
@@ -84,7 +82,7 @@ export default {
                             i.not_available = true;
                         }
                         return i;
-                    })
+                    });
                 }
             } catch (error) {
                 const snackbar = { color: "red", timeout: 3000, state: true, text: this.$t("ErrorWhenDeleteEvent"), top: true };

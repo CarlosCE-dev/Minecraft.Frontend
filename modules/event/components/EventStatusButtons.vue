@@ -7,7 +7,7 @@
         <v-btn outlined text color="orange" v-if="showCrudButtons" @click="edit">
             {{ $t("Edit") }}
         </v-btn>
-        <v-btn outlined text color="indigo" @click="details">{{ $t("Details") }}</v-btn>
+        <v-btn outlined text color="indigo" @click="details">{{ $t("RewardsAvailable") }}</v-btn>
         <v-btn outlined text color="green" v-if="showStartButton" @click="confirmChangeStatus(eventStatusTypes.started)">{{ $t("Start") }}</v-btn>
         <v-btn outlined text color="blue-grey" v-if="showPauseButton" @click="confirmChangeStatus(eventStatusTypes.paused)">{{ $t("Pause") }}</v-btn>
         <v-btn outlined text color="blue" v-if="showRestartButton" @click="confirmChangeStatus(eventStatusTypes.started)">{{ $t("Restart") }}</v-btn>
@@ -15,8 +15,8 @@
         <v-btn text small outlined color="red" v-if="showCrudButtons" fab depressed @click="confirmRemove">
             <v-icon>mdi-delete</v-icon>
         </v-btn>
-        <v-btn outlined text color="indigo" v-if="showClaimRewardButton" @click="claim" :disabled="this.event.event_finish">
-            {{ this.event.event_finish ? $t("EventFinished") : $t("GetReward") }}
+        <v-btn outlined text color="indigo" v-if="showClaimRewardButton" @click="claim" :disabled="this.event.not_available">
+            {{ this.event.not_available ? $t("RewardAlreadyClaim") : $t("GetReward") }}
         </v-btn>
         <v-btn outlined text color="green" v-if="showFinishButton" @click="confirmChangeStatus(eventStatusTypes.finished)">{{ $t("Finish") }}</v-btn>
     </v-card-actions>
@@ -64,8 +64,8 @@ export default {
             return this.event.status === this.eventStatusTypes.started && this.isAdmin && !this.isClaimPage
         },
         showClaimRewardButton(){
-            if (this.isClaimPage && this.event_finish) return true;
-            if (this.isClaimPage && !this.event.not_available) return true;
+            if (this.isClaimPage && this.event.event_finish) return false;
+            if (this.isClaimPage ) return true;
             return false;
         },
         showFinishButton(){

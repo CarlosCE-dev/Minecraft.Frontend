@@ -19,6 +19,9 @@
                     </div>
                 </v-list-item-subtitle>
             </v-list-item-content>
+            <v-list-item-icon>
+                {{ timeRemaining }}
+            </v-list-item-icon>
         </v-list-item>
         <EventStatusButtons 
             :event="this.event" 
@@ -28,7 +31,7 @@
 </template>
 
 <script>
-import { format } from "date-fns";
+import { format, formatDistance, startOfToday, differenceInDays } from "date-fns";
 import { es } from 'date-fns/locale'
 
 // Components
@@ -50,13 +53,18 @@ export default {
         eventDate() {
             return !this.event.end_date || !this.event.start_date
                 ? this.$t("DatesNotDefined")
-                : `${format(new Date(this.event.start_date), "MMMM d yyyy", { locale: es })} - ${format(
-                    new Date(this.event.end_date), "MMMM d yyyy", { locale: es })}`;
+                : `Fin de evento: ${this.capitalizeFirstLetter(format(new Date(this.event.end_date), "MMMM d", { locale: es }))}`;
         },
         getStatusName(){
+            if (this.event.event_finish) {
+                return this.$t(getNameForEventStatusType(4));
+            }
             return this.$t(getNameForEventStatusType(this.event.status));
         },
         getStatusColor(){
+            if (this.event.event_finish) {
+                return getColorForEventStatusType(4);
+            }
             return getColorForEventStatusType(this.event.status);
         },
         getChangeStatusColor(){
@@ -65,6 +73,12 @@ export default {
         getChangeStatusName(){
             return this.event.is_active ? this.$t("DeactivateEvent") : this.$t("ActiveEvent");
         },
+        timeRemaining(){
+            const endDate = new Date(this.event.end_date);
+            return this.exceedsDays(endDate)
+                ? `${this.$t("TimeLeft")} ${formatDistance(endDate, new Date(), { locale: es, includeSeconds: false })}`
+                : this.$t("EventOver");
+        }
     },
     methods: {
         edit() {
@@ -90,6 +104,12 @@ export default {
         },
         showDetails(){
             this.$emit("details", this.event.id);
+        },
+        exceedsDays(date) {
+            return differenceInDays(date, startOfToday()) >= 0;
+        },
+        capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
         }
     },
 };

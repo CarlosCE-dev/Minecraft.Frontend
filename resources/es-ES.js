@@ -54,8 +54,8 @@ export default {
     EventRewards: "Premios disponibles del evento",
     Events: "Eventos",
     EventsAvailable: "Eventos disponibles",
-    Finish: "Terminar",
-    Finished: "Terminado",
+    Finish: "Finalizar",
+    Finished: "Finalizado",
     GetReward: "Obtener premio",
     History: "Historial",
     HistoryMoney: "Historial de tus Pejecoins",
@@ -94,7 +94,7 @@ export default {
     Settings: "Ajustes",
     Shop: "Tienda",
     Start: "Iniciar",
-    Started: "Iniciado",
+    Started: "Activo",
     StockRewards: 'Stock de premios:',
     Success: "Exito",
     SuccessLoginMessage: "Se creo el usuario exitosamente, contacte el administrador para que te proporcione la clave de acceso del usuario registrado",
@@ -111,5 +111,8 @@ export default {
     RewardDescription: "Descripción del premio",
     RewardAmount: "Cantidad a entregar",
     CommandType: "Tipo de comando",
-    CustomCommand: "Comando personalizado"
+    CustomCommand: "Comando personalizado",
+    EventOver: "Evento concluido",
+    TimeLeft: "Tiempo restante:",
+    RewardAlreadyClaim: "Premio diario reclamado"
 }
