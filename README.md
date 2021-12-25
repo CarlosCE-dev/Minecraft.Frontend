@@ -18,11 +18,11 @@ $ npm run generate
 ```
 
 ### To do
-- [ ] Fix login design
-- [ ] Fix event card design
+- [X] Fix login design
+- [X] Fix event card design
 - [ ] Add animation
-- [ ] Fix reward card design
-- [ ] Fix text description
+- [X] Fix reward card design
+- [X] Fix text description
 - [ ] Add animation when claiming reward
 - [ ] Add boton when reward obtain
-- [ ] Fix buttons
+- [X] Fix buttons
