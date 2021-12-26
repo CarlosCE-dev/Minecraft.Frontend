@@ -8,6 +8,7 @@ export default {
     Admin: "Admin",
     Alert: 'Alerta',
     Amount: "Cantidad",
+    BackHome: "Regresar al inicio",
     BitcoinQuote: '"Creo que la tecnología se hará más grande y el precio del Pejecoin subirá, por lo que estoy decidido a seguir invirtiendo en el. No tengo la intención de vender mis Pejecoins. Tengo la intención de mantenerlos hasta que llegue un día en el que pueda usar mis Pejecoins por completo."',
     Cancel: "Cancelar",
     Canceled: "Cancelado",

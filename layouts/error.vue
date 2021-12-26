@@ -1,12 +1,15 @@
 <template>
-  <div>
-      <h1 v-if="error.statusCode === 404"></h1>
+  <div class="d-flex align-center justify-center flex-column">
+      <h1 class="text-h1" v-if="error.statusCode">
+        {{ error.statusCode }}
+      </h1>
       <h1 v-else>
         {{ otherError }}
       </h1>
-      <NuxtLink to="/event">
-        Home
-      </NuxtLink>
+      <v-btn to="/event" text>
+        <v-icon left color="primary">mdi-home</v-icon>
+        {{ $t('BackHome') }}
+      </v-btn>
   </div>
 </template>
 
