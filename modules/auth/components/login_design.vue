@@ -1,8 +1,6 @@
 <template>
     <div class="login__design d-flex flex-row justify-end">
-        <!-- <img src="~/assets/images/city-01.jpg"  class="login__image" alt=""> -->
-        <div class="login__squares_pattern login__squares_pattern--middle"></div>
-        <div class="login__squares_pattern login__squares_pattern--top"></div>
+        <img src="~/assets/images/mc_bg01.png"  class="login__image" alt="">
         <div class="d-flex align-end justify-center pb-4">
             <p class="login__text white--text caption d-none">
                 Lorem Ipsum is simply dummy text of the printing and typesetting 
@@ -45,27 +43,6 @@
     width: 65%;
 }
 
-.login__squares_pattern {
-    display: block;
-    z-index: 1;
-    position: absolute;
-    background-image: repeating-linear-gradient(to bottom, transparent, transparent 5px, $primary-light 5px, $primary-light 10px),
-        repeating-linear-gradient(to right, lighten($primary-light, 5%), lighten($primary-light, 5%) 5px,  $primary-light 5px,  $primary-light 10px);
-}
-
-.login__squares_pattern--middle {
-    right: 60%;
-    top: 45%;
-    width: 120px;
-    height: 120px;
-}
-
-.login__squares_pattern--top {
-    right: 20%;
-    top: 2%;
-    width: 170px;
-    height: 170px;
-}
 @media screen and (max-width: $large-size) {
     .login__design {
         width: 50%;

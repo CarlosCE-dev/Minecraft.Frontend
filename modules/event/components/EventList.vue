@@ -10,7 +10,7 @@
             </div>
         </v-col>
         <v-col v-for="item in items" :key="item.id" cols="12">
-            <EventCard :event="item" @randomReward="getRandomReward" @details="showDetailsModal"/>
+            <EventCard class="animate__animated animate__fadeIn animate__fast" :event="item" @randomReward="getRandomReward" @details="showDetailsModal"/>
         </v-col>
 
         <!-- Modals -->

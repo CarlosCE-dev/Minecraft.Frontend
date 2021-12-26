@@ -3,14 +3,28 @@
     <v-dialog v-model="dialog" persistent max-width="1000px">
         <v-form ref="form" v-model="valid" lazy-validation> 
             <v-card>
-                <v-card-title>
+                <v-card-title class="d-flex">
                     <span class="text-h5">{{ $t(title) }}</span>
+                    <div class="ml-auto selector">
+                        <v-select :items="commandTypes"
+                            item-text="name"
+                            item-value="value"
+                            color="green-light"
+                            :label="$t('CommandType')"
+                            v-model="reward.commandType"
+                            required
+                            outlined
+                            dense
+                            hide-details
+                        ></v-select>
+                    </div>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
                         <v-row>
                             <v-col cols="6">
                                 <v-text-field
+                                    :disabled="isEffectCommand"
                                     color="green-light"
                                     :label="$t('RewardTitle')"
                                     v-model="reward.title"
@@ -19,7 +33,8 @@
                                     outlined
                                 ></v-text-field>
                             </v-col>
-                            <v-col cols="6">
+                            <StatusEffectInputs :showInputs="isEffectCommand" @onEffect="applyEffect"/>
+                            <v-col cols="6" :class="isEffectCommand ? 'd-none' : ''">
                                 <v-text-field
                                     color="green-light"
                                     :label="$t('RewardName')"
@@ -31,6 +46,7 @@
                             </v-col>
                             <v-col cols="12">
                                 <v-text-field
+                                    :disabled="isEffectCommand"
                                     color="green-light"
                                     :label="$t('RewardDescription')"
                                     v-model="reward.description"
@@ -40,6 +56,7 @@
                             </v-col>
                             <v-col cols="2">
                                 <v-text-field
+                                    :disabled="isEffectCommand"
                                     type="number"
                                     color="green-light"
                                     :label="$t('RewardAmount')"
@@ -62,19 +79,7 @@
                                 ></v-select>
                                 <v-avatar size="20" :color="rarityColor" class="ml-1 mt-4"></v-avatar>
                             </v-col>
-                            <v-col cols="5">
-                                <v-select
-                                    :items="commandTypes"
-                                    item-text="name"
-                                    item-value="value"
-                                    color="green-light"
-                                    :label="$t('CommandType')"
-                                    v-model="reward.commandType"
-                                    required
-                                    outlined
-                                ></v-select>
-                            </v-col>
-                            <v-col cols="12" v-if="reward.commandType === commandTypesObject.custom">
+                            <v-col cols="12" v-if="isCustomCommand">
                                 <v-text-field
                                     type="text"
                                     color="green-light"
@@ -130,6 +135,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { formatDuration } from "date-fns";
 
 // Enums
 import { RarityTypes } from '@/models/enums/RarityTypes';
@@ -142,7 +148,13 @@ import Reward from '@/models/Reward';
 import { inputRequired, numberRequired } from '@/validators/rulesValidator';
 import { getNameOfRarity } from '@/modules/shared/helpers/rarityTypeHelper';
 
+// Components
+import StatusEffectInputs from '@/modules/reward/components/StatusEffectInputs'
+
 export default {
+    components: {
+        StatusEffectInputs,
+    },
     props: {
         title: {
             type: String,
@@ -177,6 +189,20 @@ export default {
         rarityColor() {
             return `${getNameOfRarity(this.reward.rarity).toLowerCase()}`
         },
+        isEffectCommand(){
+            return this.reward.commandType === this.commandTypesObject.effect
+        },
+        isCustomCommand(){
+            return this.reward.commandType === this.commandTypesObject.custom
+        }
+    },
+    watch: {
+        isEffectCommand(value) {
+            if (!value) {
+                this.reward = new Reward();
+                this.$refs.form.resetValidation()
+            }
+        }
     },
     methods: {
         close(){
@@ -198,12 +224,18 @@ export default {
         clearImage(){
             this.localImage = null;
         },
+        applyEffect(effect){
+            this.reward.description = effect.description;
+            this.reward.amount = 1;
+            this.reward.title = `${effect.name} Lvl ${effect.level} (${formatDuration({[effect.timeUnit]:effect.duration})})`;
+            this.reward.customCommand = effect.effectType;
+            this.reward.name = `${effect.name.toLowerCase().trim().replaceAll(" ", "_")} ${effect.timeInSeconds} ${effect.level} 1`;
+        },
         onSelectedImage(event){
             const [image] = event.target.files;
             if (!image) {
                 return this.file = null;
             }
-                
            
             const fr = new FileReader();
             fr.onload = (event) => {
@@ -283,3 +315,9 @@ export default {
     },
 };
 </script>
+
+<style lang="scss" scoped>
+.selector {
+    width: 200px;
+}
+</style>

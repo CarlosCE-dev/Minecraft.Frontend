@@ -7,7 +7,11 @@
             </div>
         </v-col>
         <v-col v-for="item in items" :key="item.id" cols="12">
-            <EventCard :event="item" :crudActions="isAdmin" @edit="editGroup" @details="showDetailsModal"/>
+            <EventCard class="animate__animated animate__fadeIn animate__fast" 
+                :event="item" 
+                :crudActions="isAdmin" 
+                @edit="editGroup" 
+                @details="showDetailsModal"/>
         </v-col>
         <v-skeleton-loader v-if="moreDataToAvailable" v-intersect="loadNextPage" type="list-item@5" />
 

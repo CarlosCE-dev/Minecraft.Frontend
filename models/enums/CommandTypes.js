@@ -13,5 +13,9 @@ export const CommandTypes = {
     /**
      * Use to summon custom item in game
      */
-    custom: 2
+    custom: 2,
+    /**
+     * Use to add effects to a player
+     */
+    effect: 3
 }

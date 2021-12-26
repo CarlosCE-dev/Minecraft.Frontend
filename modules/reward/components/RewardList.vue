@@ -7,7 +7,10 @@
             </div>
         </v-col>
         <v-col v-for="item in items" :key="item.id" cols="3">
-             <RewardCard :reward="item" :crudActions="isAdmin" :selectorActive="itemSelectionActive" @edit="editReward"/>
+             <RewardCard :reward="item" 
+                :crudActions="isAdmin" 
+                :selectorActive="itemSelectionActive" 
+                @edit="editReward"/>
         </v-col>
         <v-skeleton-loader v-if="moreDataToAvailable" v-intersect="loadNextPage" type="list-item@5" />
 

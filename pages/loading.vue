@@ -26,6 +26,7 @@ export default {
             this.$store.commit('auth/init');
         }
 
+        await new Promise(resolve => setTimeout(resolve, 500));
         // Get the route that the user try to navigate
         const token = localStorage.getItem("x-token");
         let route = ( this.$cookies.get('routePath') ) ? this.$cookies.get('routePath') : "index";
@@ -82,7 +83,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: $deep;
+  background-color: $primary-light;
   -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
           animation: sk-foldCubeAngle 2.4s infinite linear both;
   -webkit-transform-origin: 100% 100%;
@@ -145,7 +146,7 @@ export default {
   }
 }
 .fade-in {
-  color: $deep;
+  color: $primary-light;
 	opacity: 1;
 	animation-name: fadeInOpacity;
 	animation-iteration-count: 1;

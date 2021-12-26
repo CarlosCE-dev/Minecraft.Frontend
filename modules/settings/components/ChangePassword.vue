@@ -99,7 +99,7 @@ export default {
             };
         },
         checkPassword() {
-            return [ this.password === this.password_confirm || this.$('PasswordCheck') ];
+            return [ this.password === this.password_confirm || this.$t('PasswordCheck') ];
         },
    },
 }

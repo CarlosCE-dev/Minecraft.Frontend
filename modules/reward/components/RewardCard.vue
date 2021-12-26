@@ -1,5 +1,5 @@
 <template>
-    <v-card outlined class="mx-2 my-2" :color="rarityColor" dark>
+    <v-card outlined class="mx-2 my-2 animate__animated animate__fadeIn animate__fast" :color="rarityColor" dark>
         <v-list-item three-line>
             <v-list-item-content>
                 <v-list-item-title class="text-h5">
