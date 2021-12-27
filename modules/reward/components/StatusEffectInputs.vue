@@ -49,7 +49,7 @@
 import { EffectTypes } from '@/models/enums/EffectTypes';
 import { TimeUnits } from '@/models/enums/TimeUnits';
 import { getDescriptionForEffect } from '@/modules/shared/helpers/effectTypeHelper';
-import { getTimeInSeconds } from '@/modules/shared/helpers/timeHelper';
+import { getTimeInSeconds, getTimeBySeconds } from '@/modules/shared/helpers/timeHelper';
 
 import { numberRequired } from '@/validators/rulesValidator';
 
@@ -59,13 +59,17 @@ export default {
             type: Boolean,
             default: false
         },
+        effect: {
+            type: Object,
+            default: null
+        }
     },
     data() {
         return {
             timeUnits: [],
             timeUnit: 1,
             effectTypes: [],
-            effectType: 1,
+            effectType: 0,
             level: 1,
             duration: 10,
             numberRequired: numberRequired(),
@@ -73,6 +77,13 @@ export default {
     },
     created () {
         this.createArray();
+        if (this.effect){
+            this.effectType = this.effect.type;
+            this.timeUnit = this.effect.timeUnit;
+            const timeUnitName = this.timeUnits.find(t => t.value === this.timeUnit).name;
+            this.duration = getTimeBySeconds(timeUnitName.toLowerCase(), this.effect.duration);
+            this.level = this.effect.level;
+        }
     },
     computed: {
         changeData() {
@@ -93,6 +104,7 @@ export default {
             value.level = isFinite(value.duration) ? value.level : 1;
             value.name = this.effectTypes.find(e => e.value === value.effectType).name;
             value.timeUnit = this.timeUnits.find(e => e.value === value.timeUnit).name.toLowerCase();
+            value.timeUnitType = this.timeUnit;
             value.description = getDescriptionForEffect(value.effectType);
             value.timeInSeconds = getTimeInSeconds(value.timeUnit, value.duration);
             this.$emit("onEffect", value);

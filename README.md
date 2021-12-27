@@ -20,9 +20,10 @@ $ npm run generate
 ### To do
 - [X] Fix login design
 - [X] Fix event card design
-- [ ] Add animation
+- [X] Add animation
 - [X] Fix reward card design
 - [X] Fix text description
 - [ ] Add animation when claiming reward
-- [ ] Add boton when reward obtain
+- [ ] Fix reward text
+- [ ] Fix reward update (check functionality)
 - [X] Fix buttons

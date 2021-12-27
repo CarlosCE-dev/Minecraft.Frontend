@@ -1,16 +1,17 @@
 <template>
     <v-card outlined class="mx-2 my-2 animate__animated animate__fadeIn animate__fast" :color="rarityColor" dark>
         <v-list-item three-line>
-            <v-list-item-content>
-                <v-list-item-title class="text-h5">
-                    <v-badge :color="`${rarityColor} lighten-1`" :content="reward.amount">
-                        {{ reward.title }}
-                    </v-badge><br>
-                    <span class="caption">{{ rarityName }}</span>
-                </v-list-item-title>
-                <v-list-item-subtitle>
-                </v-list-item-subtitle>
-            </v-list-item-content>
+            <div class="d-flex flex-column w-100">
+                <div class="text-h6">
+                    {{ reward.title }}
+                    <v-badge v-if="reward.amount > 1" 
+                        class="ml-1"
+                        :color="`${rarityColor} lighten-1`" 
+                        :content="`x${reward.amount}`">
+                    </v-badge>
+                </div>
+                <span class="caption">{{ rarityName }}</span>
+            </div>
             <v-list-item-avatar rounded size="80" :color="`${rarityColor} lighten-1`" v-if="reward.image">
                 <v-img :src="reward.image" 
                     :lazy-src="reward.image"
@@ -146,6 +147,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped lang="scss">
+.w-100 {
+    width: 100%;
+}
 </style>

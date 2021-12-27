@@ -33,7 +33,7 @@
                                     outlined
                                 ></v-text-field>
                             </v-col>
-                            <StatusEffectInputs :showInputs="isEffectCommand" @onEffect="applyEffect"/>
+                            <StatusEffectInputs :showInputs="isEffectCommand" :effect="effectObject" @onEffect="applyEffect"/>
                             <v-col cols="6" :class="isEffectCommand ? 'd-none' : ''">
                                 <v-text-field
                                     color="green-light"
@@ -94,7 +94,7 @@
                         <div class="d-flex justify-end align-center">
                             {{ $t('UploadImage') }}
                             <input type="file" v-show="false" accept="image/png, image/jpeg" ref="imageSelector" @change="onSelectedImage">
-                            <v-btn class="ml-2" fab color="primary" depressed small @click="onSelectImage">
+                            <v-btn class="ml-2" fab color="primary" depressed small @click="onSelectImage" :disabled="isEffectCommand">
                                 <v-icon>mdi-upload</v-icon>
                             </v-btn>
                             <v-btn v-if="localImage" class="ml-2" fab color="red" depressed small @click="clearImage" dark>
@@ -172,12 +172,23 @@ export default {
             commandTypes: [],
             file: null,
             localImage: null,
-            commandTypesObject: CommandTypes
+            commandTypesObject: CommandTypes,
+            effectObject: null
         }
     },
     created () {
         if (this.rewardToEdit){
             this.reward = new Reward(this.rewardToEdit);
+            if (this.isEffectCommand){
+                const [ _, duration, level ] = this.reward.name.split(" ");
+                const [ effectType, timeUnit ] = this.reward.customCommand.split(",");
+                this.effectObject = { 
+                    type: parseInt(effectType), 
+                    duration: parseInt(duration), 
+                    level: parseInt(level),
+                    timeUnit: parseInt(timeUnit)
+                };
+            }
         }
         this.createRarityArray();
         this.dialog = true;
@@ -199,7 +210,9 @@ export default {
     watch: {
         isEffectCommand(value) {
             if (!value) {
+                const id = this.reward.id;
                 this.reward = new Reward();
+                this.reward.id = id;
                 this.$refs.form.resetValidation()
             }
         }
@@ -228,7 +241,7 @@ export default {
             this.reward.description = effect.description;
             this.reward.amount = 1;
             this.reward.title = `${effect.name} Lvl ${effect.level} (${formatDuration({[effect.timeUnit]:effect.duration})})`;
-            this.reward.customCommand = effect.effectType;
+            this.reward.customCommand = `${effect.effectType},${effect.timeUnitType}`;
             this.reward.name = `${effect.name.toLowerCase().trim().replaceAll(" ", "_")} ${effect.timeInSeconds} ${effect.level} 1`;
         },
         onSelectedImage(event){
