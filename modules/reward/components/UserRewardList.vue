@@ -7,33 +7,39 @@
                         <h2>{{ $t('RewardsObtain') }}</h2>
                         {{ $t("RewardAvailableInfo") }}
                     </div>
-                    <v-btn color="primary" small class="ml-auto" @click="modalHistoryReward = true">{{ $t('History') }}</v-btn>
+                    <v-btn color="primary" small class="ml-auto" @click="modalHistoryReward = true">{{$t('History')}}</v-btn>
                 </div>
                 <v-divider></v-divider>
             </div>
         </v-col>
-        <v-col v-for="(item, i) in items" :key="i" cols="3">
-             <RewardCard :reward="item" :isClaimRewardView="true" @claim="confirmClaim"/>
+        <v-col v-for="(item, i) in items" :key="i" cols="4">
+             <RewardCard :reward="item" :isClaimRewardView="true" @claim="confirmClaim" @gift="showGiftModal"/>
         </v-col>
 
         <!-- Modals -->
         <ModalHistoryReward v-if="modalHistoryReward" @close="modalHistoryReward = false" />
+        <ModalSelectUser v-if="modalSelectUser" 
+            :id="userRewardId" 
+            @close="modalSelectUser = false"
+            @gift="confirmGift" />
     </v-row>
 </template>
 
 <script>
 import RewardCard from '@/modules/reward/components/RewardCard'
 import ModalHistoryReward from "@/modules/reward/components/ModalHistoryReward";
+import ModalSelectUser from "@/modules/reward/components/ModalSelectUser";
 
 export default {
     components: {
         RewardCard,
-        ModalHistoryReward
+        ModalHistoryReward,
+        ModalSelectUser
     },
     data() {
         return {
             modalHistoryReward: false,
-            modalFormReward: false,
+            modalSelectUser: false,
             items: []
         }
     },
@@ -47,6 +53,22 @@ export default {
                 this.$store.commit('ui/snackbar', snackbar);
             }
         },
+        showGiftModal(userRewardId){
+            this.userRewardId = userRewardId;
+            this.modalSelectUser = true;
+        },
+        confirmGift(giftUser){
+            this.modalSelectUser = false;
+            this.$dialog.open({
+                title: this.$t('Info'),
+                message: `Quieres regalar esto al usuario ${giftUser.minecraft_username}?`,
+                resolver: (async (result) => {
+                    if (await result) {
+                        this.claimPrize(this.userRewardId, giftUser.id);
+                    }
+                }),
+            });
+        },
         confirmClaim(id){
             this.$dialog.open({
                 title: this.$t('Info'),
@@ -58,11 +80,14 @@ export default {
                 }),
             });
         },
-        async claimPrize(id) {
+        async claimPrize(id, giftUser = null) {
             this.$store.commit('ui/loader', true);
 
             try {
-                const payload = { userRewardId: id }
+                const payload = { userRewardId: id };
+                if (giftUser){
+                    payload.userGiftId = giftUser;
+                }
                 await new Promise(resolve => setTimeout(resolve, 300));
                 const { status, message } = await this.$axios.$post(`${process.env.baseUrl}/reward/claim`, payload);
 
@@ -93,7 +118,3 @@ export default {
     },
 }
 </script>
-
-<style>
-
-</style>

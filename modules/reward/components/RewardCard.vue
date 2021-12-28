@@ -52,8 +52,11 @@
                 <span>{{reward.description}}</span>
             </v-tooltip>
             <v-spacer></v-spacer>
+            <v-btn dark color="white" outlined depressed @click="onGiftClick">
+                {{ $t('Gift') }}
+            </v-btn>
             <v-btn dark color="white" outlined depressed @click="onClaimClick">
-                {{ $t('ClaimPrize') }}
+                {{ $t('Claim') }}
             </v-btn>
         </v-card-actions>
     </v-card>
@@ -142,6 +145,9 @@ export default {
         },
         onClaimClick(){
             this.$emit('claim', this.reward.userRewardId);
+        },
+        onGiftClick(){
+            this.$emit('gift', this.reward.userRewardId);
         }
     },
 }

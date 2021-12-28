@@ -13,6 +13,7 @@ export default {
     Cancel: "Cancelar",
     Canceled: "Cancelado",
     ChangePassword: "Cambiar contraseña",
+    Claim: "Reclamar",
     ClaimPrize: "Reclamar premio",
     ClaimRewardMessage: "Recuerda que para reclamar este premio debes estar online en el server de Minecraft.",
     Close: "Cerrar",
@@ -68,6 +69,8 @@ export default {
     Finish: "Finalizar",
     Finished: "Finalizado",
     GetReward: "Obtener premio",
+    Gift: "Regalar",
+    GiftPrize: "Regalar premio",
     History: "Historial",
     HistoryMoney: "Historial de tus Pejecoins",
     HistoryRewardsClaim: "Historial de premios reclamados",
@@ -121,4 +124,6 @@ export default {
     UnitTime: "Unidad de tiempo",
     UpdatePassword: "Actualizar contraseña",
     UploadImage: "Subir imagen",
+    UsersOnline: "Usuarios online",
+    UsersOnlineHelp: "Se puede regalar premios a cualquier usuario que se encuentre online en el server"
 }
