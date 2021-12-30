@@ -3,11 +3,11 @@
         <v-snackbar v-model="show" 
             :timeout="snackbar.timeout" 
             :color="snackbar.color" 
-            :top="snackbar.top" outlined>
-                <v-icon>mdi-</v-icon>
-                <span class="black--text">{{ snackbar.text }}</span>
-                <v-btn color="black" text @click="show = false">
-                    {{ $t('Close') }}
+            :top="snackbar.top"
+            dark>
+                <span class="white--text">{{ snackbar.text }}</span>
+                <v-btn x-small fab text @click="show = false">
+                    <v-icon color="white">mdi-close</v-icon>
                 </v-btn>
         </v-snackbar>
     </div>

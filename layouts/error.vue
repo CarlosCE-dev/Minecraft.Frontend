@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex align-center justify-center flex-column">
-      <h1 class="text-h1" v-if="error.statusCode">
+        <h1 class="text-h1"  v-if="error.statusCode">
         {{ error.statusCode }}
       </h1>
       <h1 v-else>
