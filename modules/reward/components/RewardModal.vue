@@ -3,7 +3,7 @@
     <v-dialog v-model="dialog" persistent max-width="500px">
         <v-sheet :color="`${rarityColor}`" rounder outlined>
             <v-card light class="d-flex flex-column align-center" elevation="0" outlined>
-                <v-card-title>
+                <v-card-title v-if="!reward">
                     {{ $t('ClickChest') }}
                 </v-card-title>
                 <Card :reward="reward" v-if="reward" />

@@ -11,24 +11,11 @@
                 </v-alert>
             </v-card-text>
             <v-card-text v-else>
-                <v-simple-table dense>
-                    <template v-slot:default>
-                    <thead>
-                        <tr>
-                            <th class="text-left"></th>
-                            <th class="text-left">
-                                {{ $t('DateObtain') }}
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="item in items" :key="item.id">
-                            <td>{{ item.text }}</td>
-                            <td>{{ item.date }}</td>
-                        </tr>
-                    </tbody>
-                    </template>
-                </v-simple-table>
+                <div v-for="item in items" :key="item.id" class="black--text">
+                    <ByGift :item="item" v-if="item.gain_type === moneyGainTypes.byGift"/>
+                    <ByReward :item="item" v-if="item.gain_type === moneyGainTypes.byReward"/>
+                    <hr class="opacity">
+                </div>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
@@ -42,14 +29,26 @@
 </template>
 
 <script>
-import { format } from "date-fns";
-import { es } from 'date-fns/locale'
+
+
+
+// Models
+import { MoneyGainTypes } from '@/models/enums/GainTypes';
+
+// Components
+import ByReward from "@/modules/shop/components/ModalMoneyHistory/ByReward";
+import ByGift from "@/modules/shop/components/ModalMoneyHistory/ByGift";
 
 export default {
+    components: {
+        ByReward,
+        ByGift
+    },
     data() {
         return {
             dialog: true,
-            items: []
+            items: [],
+            moneyGainTypes: MoneyGainTypes
         }
     },
     created () {
@@ -66,15 +65,8 @@ export default {
 
                 await new Promise(resolve => setTimeout(resolve, 600));
                 const { data } = await this.$axios.$post(`${process.env.baseUrl}/money/history`);
-                
-
-                this.items = data.map((d) => {
-                    return {
-                        text: `Obtuviste ${d.amount} Pejecoins por haber reclamado un premio`,
-                        date: format(new Date(d.created_at), "yyyy MMMM d HH:mmaaa", { locale: es }),
-                        id: d.id,
-                    }
-                });
+                this.items = data;
+               
                 this.$store.commit('ui/loader', false);
 
             } catch (error) {
@@ -87,3 +79,9 @@ export default {
     },
 };
 </script>
+
+<style scoped lang="scss">
+.opacity {
+    opacity: 0.4;
+}
+</style>

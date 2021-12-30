@@ -28,26 +28,33 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in items" :key="item.reward.id">
+                            <tr v-for="{ reward, created_at, id, giftUser } in items" :key="id">
                                 <td>
-                                    <v-avatar size="20" v-if="item.reward.image">
-                                        <img :src="item.reward.image" alt="item.reward.title">
+                                    <v-avatar size="20" v-if="reward.image">
+                                        <img :src="reward.image" :alt="reward.title">
                                     </v-avatar>
                                     <v-avatar size="20" :color="rarityColor" v-else></v-avatar>
                                 </td>
                                 <td class="d-flex align-center">
-                                    {{ item.reward.title }} {{ amountItem(item.reward.amount)}}
-                                    <v-tooltip top v-if="item.reward.description">
+                                    {{ reward.title }} 
+                                    {{ amountItem(reward.amount)}} 
+                                    <v-tooltip top v-if="reward.description">
                                         <template v-slot:activator="{ on, attrs }">
-                                            <v-icon class="ml-auto" color="blue" dark v-bind="attrs" v-on="on">mdi-help-circle-outline</v-icon>
+                                            <v-icon class="ml-1 mr-auto" color="blue" dark v-bind="attrs" v-on="on">mdi-help-circle-outline</v-icon>
                                         </template>
-                                        <span>{{item.reward.description}}</span>
+                                        <span>{{reward.description}}</span>
                                     </v-tooltip>
+                                    <v-chip v-if="giftUser" small class="ml-auto">
+                                        <v-avatar left>
+                                            <v-img :src="minecraftAvatar(giftUser.minecraft_id)"></v-img>
+                                        </v-avatar>
+                                        {{ $t('GiftTo') }} {{ giftUser.minecraft_username }}
+                                    </v-chip>
                                 </td>
-                                <td class="text-center">{{ getDateWhenCreated(item.created_at) }}</td>
+                                <td class="text-center">{{ getDateWhenCreated(created_at) }}</td>
                                 <td class="text-center">
-                                    <v-chip :color="rarityColor(item.reward.rarity)" dark small>
-                                        {{ rarityName(item.reward.rarity) }}
+                                    <v-chip :color="rarityColor(reward.rarity)" dark small>
+                                        {{ rarityName(reward.rarity) }}
                                     </v-chip>
                                 </td>
                             </tr>
@@ -98,6 +105,9 @@ export default {
         },
         amountItem(amount){
             return amount > 1 ? `(x${amount})` : "";
+        },
+        minecraftAvatar(id){
+            return id ? `https://crafatar.com/avatars/${id}` : `https://i.imgur.com/cAFcdws.png`
         },
         async getHistory(){
             this.$store.commit('ui/loader', true);

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import ModalMoneyHistory from "@/modules/shop/components/ModalMoneyHistory";
+import ModalMoneyHistory from "@/modules/shop/components/ModalMoneyHistory/Index";
 import UserMoney from "@/modules/shop/components/UserMoney";
 import AboutMoney from "@/modules/shop/components/AboutMoney";
 import QuoteMoney from "@/modules/shop/components/QuoteMoney";
