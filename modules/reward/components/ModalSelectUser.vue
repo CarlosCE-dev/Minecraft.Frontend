@@ -7,11 +7,10 @@
             </v-card-title>
             <v-card-text v-if="items.length === 0">
                 <v-alert dense type="info">
-                    {{ $t('NoInfoToShow') }}
+                    {{ $t('NoUsersOnline') }}
                 </v-alert>
             </v-card-text>
             <v-card-text v-else>
-                
                 <span class="black--text">{{ $t('UsersOnlineHelp') }}</span>
                 <v-simple-table dense>
                     <template v-slot:default>
@@ -53,7 +52,7 @@
                 <v-btn color="orange darken-1" text @click="close">
                     {{ $t('Close') }}
                 </v-btn>
-                <v-btn color="green darken-1" text @click="sendGift">
+                <v-btn color="green darken-1" text @click="sendGift" :disabled="!this.selected">
                     {{ $t('Accept') }}
                 </v-btn>
             </v-card-actions>
@@ -99,7 +98,7 @@ export default {
                 this.$store.commit('ui/loader', false);
 
             } catch (error) {
-                const snackbar = { color: 'red', timeout: 3000, state: true , text: this.$t('ErrorWhenObtainingRewardHistory'), top: true };
+                const snackbar = { color: 'red', timeout: 3000, state: true , text: this.$t('ErrorWhenObtainingUsersOnline'), top: true };
                 this.$store.commit('ui/loader', false);
                 this.$store.commit('ui/snackbar', snackbar);
             }

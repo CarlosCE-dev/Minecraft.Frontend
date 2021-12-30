@@ -16,6 +16,7 @@
                             outlined
                             dense
                             hide-details
+                            :disabled="rewardToEdit"
                         ></v-select>
                     </div>
                 </v-card-title>
@@ -94,10 +95,24 @@
                         <div class="d-flex justify-end align-center">
                             {{ $t('UploadImage') }}
                             <input type="file" v-show="false" accept="image/png, image/jpeg" ref="imageSelector" @change="onSelectedImage">
-                            <v-btn class="ml-2" fab color="primary" depressed small @click="onSelectImage" :disabled="isEffectCommand">
+                            <v-btn class="ml-2" 
+                                fab 
+                                color="primary" 
+                                depressed 
+                                small 
+                                @click="onSelectImage" 
+                                :disabled="isEffectCommand">
                                 <v-icon>mdi-upload</v-icon>
                             </v-btn>
-                            <v-btn v-if="localImage" class="ml-2" fab color="red" depressed small @click="clearImage" dark>
+                            <v-btn v-if="localImage" 
+                                class="ml-2" 
+                                fab 
+                                color="red" 
+                                depressed 
+                                small 
+                                @click="clearImage" 
+                                dark 
+                                :disabled="isEffectCommand">
                                 <v-icon>mdi-broom</v-icon>
                             </v-btn>
                             <div class="ml-2">

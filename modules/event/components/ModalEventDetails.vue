@@ -116,7 +116,7 @@ export default {
                 this.$store.commit('ui/loader', false);
 
             } catch (error) {
-                const snackbar = { color: 'red', timeout: 3000, state: true , text: "Error", top: true };
+                const snackbar = { color: 'red', timeout: 3000, state: true , text: this.$t("ErrorWhenEventDetails"), top: true };
                 this.$store.commit('ui/loader', false);
                 this.$store.commit('ui/snackbar', snackbar);
             }

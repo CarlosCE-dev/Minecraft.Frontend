@@ -142,7 +142,7 @@ export default {
                 this.$store.commit("ui/loader", false);
                 this.$store.commit("ui/snackbar", snackbar);
             } catch (error) {
-                const snackbar = { color: "red", timeout: 3000, state: true, text: this.$t("ErrorWhenDeleteEvent"), top: true };
+                const snackbar = { color: "red", timeout: 3000, state: true, text: this.$t("ErrorWhenStatusEvent"), top: true };
                 this.$store.commit("ui/loader", false);
                 this.$store.commit("ui/snackbar", snackbar);
             }

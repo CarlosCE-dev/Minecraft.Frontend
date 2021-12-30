@@ -15,7 +15,11 @@
 
         <!-- Modals -->
         <ModalEventDetails v-if="modalEventDetail" @close="modalEventDetail = false"/>
-        <RewardModal :reward="rewardModal" v-if="rewardModalState" @close="rewardModalState = false"/>
+        <RewardModal :eventId="rewardModalEventId" 
+            v-if="rewardModalState" 
+            @close="rewardModalState = false"
+            @remove="removeEvent"
+        />
     </v-row>
 </template>
 
@@ -35,7 +39,7 @@ export default {
         return {
             items: [],
             rewardModalState: false,
-            rewardModal: null,
+            rewardModalEventId: null,
             modalEventDetail: false
         }
     },
@@ -56,39 +60,16 @@ export default {
             }
         },
         async getRandomReward(event){
-            this.$store.commit("ui/loader", true);
-
-            try {
-                const payload = { 
-                    groupId: event.id, 
-                };
-                await new Promise((resolve) => setTimeout(resolve, 300));
-                const { status, message, data } = await this.$axios.$post(`${process.env.baseUrl}/reward/getRandomReward`, payload);
-
-                const snackbar = { color: "success", timeout: 3000, state: true, text: message, top: true };
-                if (!status) {
-                    snackbar.color = "orange";
-                    this.$store.commit("ui/snackbar", snackbar);
+            this.rewardModalState = true;
+            this.rewardModalEventId = event.id;
+        },
+        removeEvent(id){
+            this.items = this.items.map((i) => {
+                if (i.id === id){
+                    i.not_available = true;
                 }
-
-                this.$store.commit("ui/loader", false);
-
-                if (status){
-                    this.rewardModal = { ...data.reward, money: data.money };
-                    this.rewardModalState = true;
-
-                    this.items = this.items.map((i) => {
-                        if (i.id === event.id){
-                            i.not_available = true;
-                        }
-                        return i;
-                    });
-                }
-            } catch (error) {
-                const snackbar = { color: "red", timeout: 3000, state: true, text: this.$t("ErrorWhenDeleteEvent"), top: true };
-                this.$store.commit("ui/loader", false);
-                this.$store.commit("ui/snackbar", snackbar);
-            } 
+                return i;
+            });
         },
         showDetailsModal(id){
             this.$store.commit('reward/setDetailEvent', id);

@@ -7,6 +7,15 @@ const rarityTypes = {
     5: "Mythic",
 }
 
+const rarityGiftCost = {
+    0: 1,
+    1: 5,
+    2: 10,
+    3: 15,
+    4: 20,
+    5: 25,
+}
+
 /**
  * Reward stock available for each type
  */
@@ -32,7 +41,12 @@ const getStockPerRarity = (rarityType) => {
     return stockPerRarity[parseInt(rarityType)];
 }
 
+const getAmountByGift = (rarityType) => {
+    return rarityGiftCost[parseInt(rarityType)];
+}
+
 export {
     getNameOfRarity,
-    getStockPerRarity
+    getStockPerRarity,
+    getAmountByGift
 }
