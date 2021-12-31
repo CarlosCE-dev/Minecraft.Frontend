@@ -136,4 +136,5 @@ export default {
     UploadImage: "Subir imagen",
     UsersOnline: "Usuarios online",
     UsersOnlineHelp: "Se puede regalar premios a cualquier usuario que se encuentre online en el server.",
+    Roulette: "Ruleta"
 }

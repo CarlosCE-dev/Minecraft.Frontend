@@ -17,6 +17,7 @@
     "cross-env": "^7.0.2",
     "date-fns": "^2.25.0",
     "nuxt": "^2.15.7",
+    "vue-fortune-wheel": "git+https://github.com/rezafrad/vue-fortune-wheel.git",
     "vuetify": "^2.5.5"
   },
   "devDependencies": {

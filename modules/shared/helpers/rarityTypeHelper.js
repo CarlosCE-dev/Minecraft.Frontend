@@ -16,6 +16,14 @@ const rarityGiftCost = {
     5: 25,
 }
 
+const hexColorRarity = {
+    0: "#989898",
+    1: "#2F8D31",
+    2: "#4B4FF0",
+    3: "#974AB7",
+    4: "#EAA91A",
+    5: "#F4CA2C",
+}
 /**
  * Reward stock available for each type
  */
@@ -45,8 +53,13 @@ const getAmountByGift = (rarityType) => {
     return rarityGiftCost[parseInt(rarityType)];
 }
 
+const getHexColorOfRarity = (rarityType) => {
+    return hexColorRarity[parseInt(rarityType)];
+}
+
 export {
     getNameOfRarity,
     getStockPerRarity,
-    getAmountByGift
+    getAmountByGift,
+    getHexColorOfRarity
 }

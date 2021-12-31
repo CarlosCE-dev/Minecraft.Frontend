@@ -12,14 +12,7 @@
     </div>
 </template>
 
-<script>
-    export default {
-        
-    }
-</script>
-
 <style lang="scss" scoped>
-
 .login__text {
     text-align: center;
     width: 80%;
