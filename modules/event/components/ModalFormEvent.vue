@@ -3,8 +3,23 @@
     <v-dialog v-model="dialog" persistent max-width="600px">
         <v-form ref="form" v-model="valid" lazy-validation> 
             <v-card>
-                <v-card-title>
+                 <v-card-title class="d-flex">
                     <span class="text-h5">{{ $t(title) }}</span>
+                    <div class="ml-auto selector">
+                        <v-select
+                            dense
+                            :disabled="disableType"
+                            :items="eventTypes"
+                            item-text="name"
+                            item-value="value"
+                            color="green-light"
+                            :label="$t('EventType')"
+                            v-model="group.type"
+                            required
+                            outlined
+                            hide-details
+                        ></v-select>
+                    </div>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
@@ -54,6 +69,18 @@
                                     outlined
                                 ></v-text-field>
                             </v-col>
+                            <v-col cols="3">
+                                <v-text-field
+                                    v-if="group.type === eventTypesObject.roulette"
+                                    type="number"
+                                    color="green-light"
+                                    :label="$t('Price')"
+                                    v-model="group.price"
+                                    :rules="numberRequired"
+                                    required
+                                    outlined
+                                ></v-text-field>
+                            </v-col>
                         </v-row>
                         <ModalDatepicker v-model="modalDatepicker" :groupDates="groupDates" @onDatePickerConfirmed="updateDates" />
                     </v-container>
@@ -79,8 +106,11 @@ import { mapState } from 'vuex';
 // Models
 import Group from '@/models/Group';
 
+// Enums
+import { EventTypes } from '@/models/enums/EventTypes';
+
 // Helpers
-import { inputRequired } from '@/validators/rulesValidator';
+import { inputRequired, numberRequired } from '@/validators/rulesValidator';
 
 // Components
 import ModalDatepicker from '@/modules/shared/components/ModalDatepicker.vue';
@@ -101,13 +131,19 @@ export default {
             dialog: false,
             valid: true,
             inputRequired: inputRequired(),
-            modalDatepicker: false
+            numberRequired: numberRequired(),
+            modalDatepicker: false,
+            eventTypes: [],
+            disableType: false,
+            eventTypesObject: EventTypes,
         }
     },
     created () {
         if (this.groupToEdit){
             this.group = new Group(this.groupToEdit);
+            this.disableType = true;
         }
+        this.createArray();
         this.dialog = true;
     },
     computed: {
@@ -119,6 +155,13 @@ export default {
         }
     },
     methods: {
+        createArray(){
+            const eventTypes = [];
+            for (let [key, value] of Object.entries(EventTypes)) {
+                eventTypes.push({ name: `${key.charAt(0).toUpperCase()}${key.slice(1)}`, value })
+            }
+            this.eventTypes = eventTypes;
+        },
         updateDates(dates){
             const [startDate, endDate] = dates;
             this.group.startDate = startDate;
@@ -171,3 +214,9 @@ export default {
     },
 };
 </script>
+
+<style lang="scss" scoped>
+.selector {
+    width: 200px;
+}
+</style>

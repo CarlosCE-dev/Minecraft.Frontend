@@ -14,6 +14,8 @@ export default class Group {
         this.title = model?.title;
         this.description = model?.description;
         this.isActive = model?.isActive;
+        this.type = model?.type;
+        this.price = model?.price;
 
         if (!model?.start_date || !model?.end_date) return
         this.startDate = new Date(model?.start_date).toISOString().substr(0, 10);
@@ -38,9 +40,17 @@ export default class Group {
     /**
      * Start date of the group
      */
-    startDate = new Date().toISOString().substr(0, 10)
+    startDate = new Date().toISOString().substr(0, 10);
     /**
      * End date of the group
      */
-    endDate = new Date(addDaysToDate(5)).toISOString().substr(0, 10)
+    endDate = new Date(addDaysToDate(5)).toISOString().substr(0, 10);
+    /**
+     * Type based on the event types
+     */
+    type = 0;
+    /**
+     * Price cost for event
+     */
+    price = 20;
 }
