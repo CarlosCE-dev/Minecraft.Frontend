@@ -96,6 +96,7 @@ export default {
     MoneyGainByReward: "Has obtenido {money} PejeCoins al reclamar este premio!",
     MoneyHistoryGift: "Gastaste {amount} Pejecoins al haber regalado un premio al usuario {user}",
     MoneyHistoryReward: "Obtuviste {amount} Pejecoins por haber reclamado el premio {title}",
+    MoneyHistoryRoulette: "Gastaste {amount} Pejecoins en la rouleta por el premio {title}",
     Name: "Nombre",
     NewEvent: "Crear nuevo evento",
     NewPassword: "Contraseña nueva",
@@ -120,6 +121,7 @@ export default {
     RewardsLeft: "Premios restantes:",
     RewardsObtain: "Premios ganados",
     RewardTitle: "Titulo del premio",
+    Roulette: "Ruleta",
     SaveChanges: "Guardar cambios",
     Settings: "Ajustes",
     Shop: "Tienda",
@@ -136,5 +138,4 @@ export default {
     UploadImage: "Subir imagen",
     UsersOnline: "Usuarios online",
     UsersOnlineHelp: "Se puede regalar premios a cualquier usuario que se encuentre online en el server.",
-    Roulette: "Ruleta"
 }

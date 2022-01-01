@@ -18,12 +18,9 @@ $ npm run generate
 ```
 
 ### To do
-- [X] Fix login design
-- [X] Fix event card design
-- [X] Add animation
-- [X] Fix reward card design
-- [X] Fix text description
-- [ ] Add animation when claiming reward
-- [ ] Fix reward text
-- [ ] Fix reward update (check functionality)
-- [X] Fix buttons
+- Add functionality to create event type
+- Fix design in card
+- Fix translations in roulette page
+- Fix design in roulette pages
+- Add history of roulette
+- Add sound in roulette pages

@@ -14,6 +14,7 @@
                 <div v-for="item in items" :key="item.id" class="black--text">
                     <ByGift :item="item" v-if="item.gain_type === moneyGainTypes.byGift"/>
                     <ByReward :item="item" v-if="item.gain_type === moneyGainTypes.byReward"/>
+                    <ByRoulette :item="item" v-if="item.gain_type === moneyGainTypes.byRoulette"/>
                     <hr class="opacity">
                 </div>
             </v-card-text>
@@ -38,11 +39,13 @@ import { MoneyGainTypes } from '@/models/enums/GainTypes';
 // Components
 import ByReward from "@/modules/shop/components/ModalMoneyHistory/ByReward";
 import ByGift from "@/modules/shop/components/ModalMoneyHistory/ByGift";
+import ByRoulette from "@/modules/shop/components/ModalMoneyHistory/ByRoulette";
 
 export default {
     components: {
         ByReward,
-        ByGift
+        ByGift,
+        ByRoulette
     },
     data() {
         return {

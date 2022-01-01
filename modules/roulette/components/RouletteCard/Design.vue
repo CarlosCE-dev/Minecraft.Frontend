@@ -1,6 +1,7 @@
 <template>
     <div class="container-design">
-        <img v-for="(r, index) in rewards" 
+        <img v-for="(r, index) in rewards"
+            class="no-select" 
             :key="r.id" 
             :class="getRewardClass(index)"
             :src="r.image">

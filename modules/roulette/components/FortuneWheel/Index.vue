@@ -1,7 +1,14 @@
 <template>
-	<v-card width="550px" class="pa-4 d-flex align-center justify-center flex-column">
-		<h1>Roulette</h1>
+	<v-card  
+		class="pa-4 d-flex flex-column" 
+		:class="disableWheel ? 'roulette-card': ''">
+		<div class="d-flex flex-column align-start justify-center mb-2">
+			<h1>Roulette</h1>
+			<span>Precio por juego: 20 Pejecoins</span>
+		</div>
+		<hr class="mb-1">
 		<FortuneWheel style="width: 500px"
+			:prizeId="prizeId"
 			:duration="15000"
 			:angleBase="60"
 			:canvas="canvasOptions"
@@ -14,7 +21,7 @@
 		<v-fade-transition>
 			<v-overlay v-if="overlay" absolute color="black" opacity="0.3">
 				<div class="d-flex flex-column align-center justify-conter">
-					<h1>Verificando billetera</h1>
+					<h1>{{overlayMessage}}</h1>
 					<v-progress-circular indeterminate 
 						color="primary" 
 						width="10"
@@ -23,6 +30,9 @@
 				</div>
 			</v-overlay>
         </v-fade-transition>
+		<RouletteModalPrize v-if="modalPrizeState" 
+			:reward="modalPrizeReward" 
+			@close="modalPrizeState = false"/>
 	</v-card>
 </template>
 
@@ -32,37 +42,53 @@ import 'vue-fortune-wheel/lib/vue-fortune-wheel.css'
 
 import { getHexColorOfRarity } from '@/modules/shared/helpers/rarityTypeHelper';
 
+import RouletteModalPrize from '@/modules/roulette/components/RouletteModalPrize'
+
 export default {
     components: {
         FortuneWheel,
+		RouletteModalPrize
     },
     data() {
 		return {
+			prizeId: '1',
 			overlay: false,
+			overlayMessage: '',
 			canvasVerify: true, // Whether the turntable in canvas mode is enabled for verification
 			canvasOptions: {
 				borderWidth: 6,
 				borderColor: '#584b43',
 				imageSize: 30,
-				btnText: "Spin"
+				btnText: "Spin",
+				btnColor: "#EAA91A"
 			},
 			items: [],
-			disableWheel: false
+			rewards: [],
+			disableWheel: false,
+			modalPrizeState: false,
+			modalPrizeReward: null,
 		}
 	},
 	async created () {
+		this.overlayMessage = this.$t('LoadingBlocks');
 		this.overlay = true;
 		const data = await this.getRouletteData();
-		this.items = data.rewards.map((i) => {
+
+		if (data.length === 0) {
+			this.disableWheel = true;
+		}
+
+		this.rewards = data;
+		this.items = data.map((i) => {
 			const prize = {
-				id: i.id,
+				id: i.id.toString(),
 				contentType: 'image',
-				imageUri: i.image,
-				value: i.title,
-				bgColor: getHexColorOfRarity(i.rarity),
-				weight: i.chance
+				imageUri: i.reward.image,
+				value: i.reward.title,
+				bgColor: getHexColorOfRarity(i.reward.rarity),
+				weight: i.reward.chance
 			};
-			return prize
+			return prize;
 		}).sort(() => Math.random() - 0.5);
 
 		await new Promise(resolve => setTimeout(resolve, 2000));
@@ -72,18 +98,29 @@ export default {
 		async getRouletteData(){
 			const payload = { groupId: this.$route.params.id }
             try {
-                const { data } = await this.$axios.$post(`${process.env.baseUrl}/roulette/items`, payload);
+
+				await new Promise(resolve => setTimeout(resolve, 500));
+                const { status, data, message } = await this.$axios.$post(`${process.env.baseUrl}/roulette/items`, payload);
+				if (!status){
+					const snackbar = { color: 'orange', timeout: 3000, state: true , text: message, top: true };
+                	this.$store.commit('ui/snackbar', snackbar);
+					this.$router.push('/roulette');	
+					return [];
+				}
                 return data;
             } catch (error) {
                 const snackbar = { color: 'red', timeout: 3000, state: true , text: "", top: true };
                 this.$store.commit('ui/snackbar', snackbar);
+				return [];
             }
 		},
 		onImageRotateStart() {
-			console.log('onRotateStart')
+			this.disableWheel = true;
 		},
 		async onCanvasRotateStart(rotate) {
+			this.overlayMessage = "Verificando billetera";
 			this.overlay = true;
+			await new Promise(resolve => setTimeout(resolve, 1000));
 			const valid = await this.checkMoney();
 			this.overlay = false;
 			if (!valid){
@@ -93,18 +130,29 @@ export default {
 
 			rotate();
 		},
-		onRotateEnd(prize) {
-			console.log("Prize obtain");
-			
+		async onRotateEnd(prize) {
+			this.overlayMessage = "Procesando premio";
+			this.overlay = true;
+
+			await new Promise(resolve => setTimeout(resolve, 500));
+			this.overlay = false;
+			this.disabledWheel = false;	
+
+			const item = this.rewards.find(r => r.id.toString() === prize.id);
+			this.modalPrizeReward = item.reward;
+			this.modalPrizeState = true;
 		},
 		async checkMoney(){
             try {
-                const { status, message } = await this.$axios.$post(`${process.env.baseUrl}/roulette/checkWallet`);
+				const payload = { groupId: this.$route.params.id }
+                const { status, message, data } = await this.$axios.$post(`${process.env.baseUrl}/roulette/checkWallet`, payload);
 				if (!status) {
                 	const snackbar = { color: 'orange', timeout: 3000, state: true , text: message, top: true };
 					this.$store.commit('ui/snackbar', snackbar);
 					return false;
 				}	
+				this.prizeId = data.toString();
+				this.$store.commit('auth/removeMoney', 20);
                 return true;
             } catch (error) {
 				const snackbar = { color: 'red', timeout: 3000, state: true , text: "", top: true };
@@ -117,6 +165,19 @@ export default {
 </script>
 
 <style lang="scss">
+.roulette-card .fw-btn__btn {
+	background: gray !important;
+}
+.roulette-card .fw-btn__btn::before {
+	border-bottom:  18px solid gray !important;
+}
+.roulette-card .fw-btn__btn:hover {
+	-webkit-box-shadow:none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+	cursor: not-allowed !important;
+}
+
 .fw-btn__btn {
 	cursor:pointer;
 	transition: box-shadow ease .200s;

@@ -9,5 +9,9 @@
     /**
      * Remove money from user when sending gifts
      */
-    byGift: 1
+    byGift: 1,
+     /**
+     * Remove money from user when playing the roulette
+     */
+    byRoulette: 2
 }

@@ -17,6 +17,9 @@ export const mutations = {
     },
     init( state ){
         state.initApplication = true
+    },
+    removeMoney( state, payload ) {
+        state.user.money = state.user.money - payload;
     }
 }
 
