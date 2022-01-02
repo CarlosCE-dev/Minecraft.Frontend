@@ -30,16 +30,13 @@
 </template>
 
 <script>
-
-
-
 // Models
 import { MoneyGainTypes } from '@/models/enums/GainTypes';
 
 // Components
-import ByReward from "@/modules/shop/components/ModalMoneyHistory/ByReward";
-import ByGift from "@/modules/shop/components/ModalMoneyHistory/ByGift";
-import ByRoulette from "@/modules/shop/components/ModalMoneyHistory/ByRoulette";
+import ByReward from "@/modules/shared/components/UserMoney/ModalMoneyHistory/ByReward";
+import ByGift from "@/modules/shared/components/UserMoney/ModalMoneyHistory/ByGift";
+import ByRoulette from "@/modules/shared/components/UserMoney/ModalMoneyHistory/ByRoulette";
 
 export default {
     components: {

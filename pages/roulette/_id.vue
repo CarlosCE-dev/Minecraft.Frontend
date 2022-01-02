@@ -1,18 +1,18 @@
 <template>
     <div class="d-flex flex-wrap">
         <FortuneWheel />
-        <RouletteStatus />
+        <UserMoney />
     </div>
 </template>
 
 <script>
 import FortuneWheel from '@/modules/roulette/components/FortuneWheel/Index'
-import RouletteStatus from '@/modules/roulette/components/RouletteStatus'
+import UserMoney from "@/modules/shared/components/UserMoney/MoneyStatusCard";
 
 export default {
     components: {
         FortuneWheel,
-        RouletteStatus
+        UserMoney
     },
 }
 </script>

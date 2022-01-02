@@ -83,6 +83,7 @@ export default {
 
                 if (status){
                     this.reward = { ...data.reward, money: data.money };
+                    this.$store.commit("auth/addMoney", data.money);
                     this.$emit('remove', this.eventId);
                 }
             } catch (error) {
