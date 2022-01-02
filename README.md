@@ -18,9 +18,10 @@ $ npm run generate
 ```
 
 ### To do
-- Add functionality to create event type
-- Fix design in card
-- Fix translations in roulette page
-- Fix design in roulette pages
-- Add history of roulette
-- Add sound in roulette pages
+- Duplicate event
+- [X] Fix design in card
+- [X] Fix translations in roulette page
+- [ ] Fix message in axios petition
+- [X] Fix design in roulette pages
+- [ ] Add history of roulette
+- [ ] Add sound in roulette pages

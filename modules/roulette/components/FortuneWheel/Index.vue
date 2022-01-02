@@ -3,8 +3,8 @@
 		class="pa-4 d-flex flex-column" 
 		:class="disableWheel ? 'roulette-card': ''">
 		<div class="d-flex flex-column align-start justify-center mb-2">
-			<h1>Roulette</h1>
-			<span>Precio por juego: 20 Pejecoins</span>
+			<h1>{{ $t('Roulette') }}</h1>
+			<span>{{ $t('PrizePerGift') }} {{ event.price }} Pejecoins</span>
 		</div>
 		<hr class="mb-1">
 		<FortuneWheel style="width: 500px"
@@ -51,16 +51,17 @@ export default {
     },
     data() {
 		return {
+			event: {},
 			prizeId: '1',
 			overlay: false,
 			overlayMessage: '',
-			canvasVerify: true, // Whether the turntable in canvas mode is enabled for verification
+			canvasVerify: true,
 			canvasOptions: {
 				borderWidth: 6,
 				borderColor: '#584b43',
 				imageSize: 30,
 				btnText: "Spin",
-				btnColor: "#EAA91A"
+				btnColor: "#EAA91A",
 			},
 			items: [],
 			rewards: [],
@@ -74,12 +75,13 @@ export default {
 		this.overlay = true;
 		const data = await this.getRouletteData();
 
-		if (data.length === 0) {
-			this.disableWheel = true;
+		if (data.length === null) {
+			return this.disableWheel = true;
 		}
 
-		this.rewards = data;
-		this.items = data.map((i) => {
+		this.rewards = data.items;
+		this.event = data.event
+		this.items = data.items.map((i) => {
 			const prize = {
 				id: i.id.toString(),
 				contentType: 'image',
@@ -89,7 +91,7 @@ export default {
 				weight: i.reward.chance
 			};
 			return prize;
-		}).sort(() => Math.random() - 0.5);
+		});
 
 		await new Promise(resolve => setTimeout(resolve, 2000));
 		this.overlay = false;
@@ -105,20 +107,20 @@ export default {
 					const snackbar = { color: 'orange', timeout: 3000, state: true , text: message, top: true };
                 	this.$store.commit('ui/snackbar', snackbar);
 					this.$router.push('/roulette');	
-					return [];
+					return null;
 				}
                 return data;
             } catch (error) {
-                const snackbar = { color: 'red', timeout: 3000, state: true , text: "", top: true };
+                const snackbar = { color: 'red', timeout: 3000, state: true , text: this.$t('ErrorWhenLoadingRouletteData'), top: true };
                 this.$store.commit('ui/snackbar', snackbar);
-				return [];
+				return null;
             }
 		},
 		onImageRotateStart() {
 			this.disableWheel = true;
 		},
 		async onCanvasRotateStart(rotate) {
-			this.overlayMessage = "Verificando billetera";
+			this.overlayMessage = this.$t('VerifyWallet');
 			this.overlay = true;
 			await new Promise(resolve => setTimeout(resolve, 1000));
 			const valid = await this.checkMoney();
@@ -131,7 +133,7 @@ export default {
 			rotate();
 		},
 		async onRotateEnd(prize) {
-			this.overlayMessage = "Procesando premio";
+			this.overlayMessage = this.$t('ProcessingPrize');
 			this.overlay = true;
 
 			await new Promise(resolve => setTimeout(resolve, 500));
@@ -152,10 +154,10 @@ export default {
 					return false;
 				}	
 				this.prizeId = data.toString();
-				this.$store.commit('auth/removeMoney', 20);
+				this.$store.commit('auth/removeMoney', this.event.price);
                 return true;
             } catch (error) {
-				const snackbar = { color: 'red', timeout: 3000, state: true , text: "", top: true };
+				const snackbar = { color: 'red', timeout: 3000, state: true , text: this.$t('ErrorWhenObtainingMoney'), top: true };
                 this.$store.commit('ui/snackbar', snackbar);
 				return false;
             }

@@ -3,7 +3,7 @@
         <v-dialog v-model="dialog" persistent max-width="300">
             <v-card>
                 <v-card-title class="text-h5">
-                    Has ganado:
+                    {{ $t('YouWin') }}
                 </v-card-title>
                 <v-card-text class="black--text">
                     <h4>
@@ -23,6 +23,10 @@
                             </v-row>
                         </template>
                     </v-img>
+                    <span class="my-2 caption d-flex align-center card__description" v-if="reward.description && reward.description !== ''">
+                        <v-icon left color="info">mdi-alert-circle-outline</v-icon>
+                        {{ reward.description }}
+                    </span>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>

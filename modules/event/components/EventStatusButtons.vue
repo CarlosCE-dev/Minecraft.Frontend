@@ -8,6 +8,7 @@
             {{ $t("Edit") }}
         </v-btn>
         <v-btn outlined text color="indigo" @click="details">{{ $t("RewardsAvailable") }}</v-btn>
+        <v-btn outlined text color="green" v-if="showCreatedButton" @click="confirmChangeStatus(eventStatusTypes.created)">{{ $t("Back") }}</v-btn>
         <v-btn outlined text color="green" v-if="showStartButton" @click="confirmChangeStatus(eventStatusTypes.started)">{{ $t("Start") }}</v-btn>
         <v-btn outlined text color="blue-grey" v-if="showPauseButton" @click="confirmChangeStatus(eventStatusTypes.paused)">{{ $t("Pause") }}</v-btn>
         <v-btn outlined text color="blue" v-if="showRestartButton" @click="confirmChangeStatus(eventStatusTypes.started)">{{ $t("Restart") }}</v-btn>
@@ -48,6 +49,9 @@ export default {
         ...mapState('reward', [
             "isClaimPage",
         ]),
+        showCreatedButton() {
+            return this.event.status === this.eventStatusTypes.started && this.isAdmin && !this.isClaimPage
+        },
         showStartButton() {
             return this.event.status === this.eventStatusTypes.created && this.isAdmin && !this.isClaimPage
         },

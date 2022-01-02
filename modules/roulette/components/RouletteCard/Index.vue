@@ -3,9 +3,12 @@
         <Design :rewards="item.rewards" />
         <v-card-title class="card__title black--text">{{ item.title }}</v-card-title>
         <v-btn outlined class="card__button" :to="`roulette/${item.id}`">
-            Spin the wheel
+            {{ $t('Play') }}
             <v-icon right>mdi-chevron-right</v-icon>
         </v-btn>
+        <v-chip class="span__text" color="primary" small>
+            {{ $t('Price') }}: {{ item.price }}
+        </v-chip>
     </v-card>
 </template>
 
@@ -28,6 +31,11 @@ export default {
 <style lang="scss">
 .container-card {
     overflow:hidden;
+}
+.span__text {
+    position:absolute;
+    right: 20px;
+    top: 60px;
 }
 .card__title {
     position:relative;
