@@ -21,7 +21,8 @@ $ npm run generate
 - Duplicate event
 - [X] Fix design in card
 - [X] Fix translations in roulette page
-- [ ] Fix message in axios petition
+- [X] Fix message in axios petition
 - [X] Fix design in roulette pages
+- [ ] Fix pejecoins card to be usable in different places
 - [ ] Add history of roulette
 - [ ] Add sound in roulette pages

@@ -75,7 +75,7 @@ export default {
 		this.overlay = true;
 		const data = await this.getRouletteData();
 
-		if (data.length === null) {
+		if (data === null) {
 			return this.disableWheel = true;
 		}
 
