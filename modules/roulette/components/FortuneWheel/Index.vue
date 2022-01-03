@@ -143,6 +143,13 @@ export default {
 			const item = this.rewards.find(r => r.id.toString() === prize.id);
 			this.modalPrizeReward = item.reward;
 			this.modalPrizeState = true;
+
+			const newPrize = {
+				id: new Date().valueOf(),
+				created_at: new Date(),
+				reward: item.reward
+			}
+			this.$store.commit('roulette/addHistory', newPrize);
 		},
 		async checkMoney(){
             try {

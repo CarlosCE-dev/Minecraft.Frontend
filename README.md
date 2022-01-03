@@ -23,6 +23,6 @@ $ npm run generate
 - [X] Fix translations in roulette page
 - [X] Fix message in axios petition
 - [X] Fix design in roulette pages
-- [ ] Fix pejecoins card to be usable in different places
+- [X] Fix pejecoins card to be usable in different places
 - [ ] Add history of roulette
 - [ ] Add sound in roulette pages
