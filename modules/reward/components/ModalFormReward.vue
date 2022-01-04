@@ -257,7 +257,7 @@ export default {
             this.reward.amount = 1;
             this.reward.title = `${effect.name} Lvl ${effect.level} (${formatDuration({[effect.timeUnit]:effect.duration})})`;
             this.reward.customCommand = `${effect.effectType},${effect.timeUnitType}`;
-            this.reward.name = `${effect.name.toLowerCase().trim().replaceAll(" ", "_")} ${effect.timeInSeconds} ${effect.level} 1`;
+            this.reward.name = `${effect.name.toLowerCase().trim().replaceAll(" ", "_")} ${effect.timeInSeconds} ${effect.level} false`;
         },
         onSelectedImage(event){
             const [image] = event.target.files;

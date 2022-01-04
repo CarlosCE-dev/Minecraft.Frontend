@@ -53,7 +53,7 @@
                     {{ $t('Close') }}
                 </v-btn>
                 <v-btn color="green darken-1" text @click="sendGift" :disabled="!this.selected">
-                    {{ $t('Accept') }}
+                    {{ $t('Confirm') }}
                 </v-btn>
             </v-card-actions>
         </v-card>

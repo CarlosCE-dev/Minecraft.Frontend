@@ -7,13 +7,16 @@ const rarityTypes = {
     5: "Mythic",
 }
 
+/**
+ * Gift cost by rarity
+ */
 const rarityGiftCost = {
-    0: 1,
+    0: 5,
     1: 5,
     2: 10,
-    3: 15,
+    3: 10,
     4: 20,
-    5: 25,
+    5: 20,
 }
 
 const hexColorRarity = {

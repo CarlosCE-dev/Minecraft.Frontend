@@ -26,6 +26,11 @@
 </template>
 
 <script>
+
+// Helpers
+import { getAmountByGift } from '@/modules/shared/helpers/rarityTypeHelper';
+
+// Components
 import RewardCard from '@/modules/reward/components/RewardCard'
 import ModalHistoryReward from "@/modules/reward/components/ModalHistoryReward";
 import ModalSelectUser from "@/modules/reward/components/ModalSelectUser";
@@ -58,10 +63,12 @@ export default {
             this.modalSelectUser = true;
         },
         confirmGift(giftUser){
+            const reward = this.items.find(i => i.userRewardId === this.userRewardId);
+            const amount = getAmountByGift(reward.rarity);
             this.modalSelectUser = false;
             this.$dialog.open({
                 title: this.$t('Info'),
-                message: `Quieres regalar esto al usuario ${giftUser.minecraft_username}?`,
+                message: `Quieres regalar ${reward.title} al usuario ${giftUser.minecraft_username}? Costo por enviar el regalo: ${amount}`,
                 resolver: (async (result) => {
                     if (await result) {
                         this.claimPrize(this.userRewardId, giftUser.id);
@@ -95,7 +102,7 @@ export default {
                 if (status){
                     this.items = this.items.filter(i => i.userRewardId !== id);
                 } else {
-                    snackbar.color = 'yellow';
+                    snackbar.color = 'orange';
                 }
 
                 this.$store.commit('ui/loader', false);
