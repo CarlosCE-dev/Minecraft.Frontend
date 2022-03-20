@@ -23,6 +23,9 @@ export const mutations = {
     },
     removeMoney( state, payload ) {
         state.user.money = state.user.money - payload;
+    },
+    setDiscordUser(state){
+        state.user.discord_id = true;
     }
 }
 

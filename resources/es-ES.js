@@ -153,4 +153,10 @@ export default {
     UsersOnlineHelp: "Se puede regalar premios a cualquier usuario que se encuentre online en el server.",
     VerifyWallet: "Verificando billetera",
     YouWin: "Has ganado:",
+    DiscordAccessDenied: "El propietario del recurso o el servidor de autorización denegó la solicitud",
+    DiscordAccountInfo: "Reclama moneda diarias utilizando tu cuenta de discord :D",
+    AddAccount: "Agregar cuenta",
+    GoEventPage: "Regresar a la pagina de eventos",
+    DiscordAccountAdded: 'Tu cuenta de discord fue agregada exitosamente',
+    DiscordAccountWasAdded: 'Tu cuenta de discord ya fue agregada exitosamente',
 }

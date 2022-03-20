@@ -5,7 +5,7 @@
         <v-form ref="form" v-model="valid" lazy-validation>
             <v-text-field
                 color="green-light"
-                :label='$t("EnterPassword")'
+                :label='$t("EnterEmail")'
                 v-model="email"
                 :rules="emailRules"
                 required

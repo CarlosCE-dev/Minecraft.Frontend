@@ -4,6 +4,7 @@
     <Sidebar class="sidebar" v-model="drawer" :fixed="fixed"/>
      
     <v-main class="mx-md-4 mx-2 my-2 pb-2 content">
+        <DiscordAlert v-if="!user.discord_id" />
         <nuxt/>
     </v-main>
 
@@ -17,13 +18,14 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 import Sidebar from '@/modules/shared/components/sidebar.vue'
 import ModalLoader from '@/modules/shared/components/ModalLoader.vue'
 import ModalSnackbar from '@/modules/shared/components/ModalSnackbar.vue'
 import ModalAlert from '~/modules/shared/components/ModalAlert.vue'
 import ModalConfirm from '~/modules/shared/components/ModalConfirm.vue'
+import DiscordAlert from '~/modules/shared/components/DiscordAlert.vue'
 
 // Helpers
 import { orientationType } from '@/modules/shared/helpers/orientation';
@@ -36,7 +38,8 @@ export default {
         ModalLoader,
         ModalSnackbar,
         ModalAlert,
-        ModalConfirm
+        ModalConfirm,
+        DiscordAlert
     },
     data() {
         return {
@@ -65,6 +68,9 @@ export default {
             "getLoader",
             "getSnackbar",
             "getAlert"
+        ]),
+        ...mapState('auth', [
+            "user"
         ]),
         loader(){
             return this.getLoader
